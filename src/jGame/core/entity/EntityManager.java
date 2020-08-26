@@ -64,6 +64,7 @@ public class EntityManager {
 	public synchronized static void removeEntity(Entity entity) {
 		if (ENTITIES_LIST.contains(entity))
 			ENTITIES_TO_REMOVE_LIST.add(entity);
+
 	}
 	
 	/**
@@ -114,7 +115,7 @@ public class EntityManager {
 	public static synchronized void tickEntities() {
 
 		// remove entities before updating in order to prevent updating removed entities
-
+		
 		if (!ENTITIES_TO_REMOVE_LIST.isEmpty()) {
 			ENTITIES_TO_REMOVE_LIST.forEach((entity) -> { ENTITIES_LIST.remove(entity); });
 			ENTITIES_TO_REMOVE_LIST.clear();
@@ -122,7 +123,6 @@ public class EntityManager {
 
 		if (!ENTITIES_LIST.isEmpty())
 			ENTITIES_LIST.forEach((entity) -> { entity.tick(); });
-
 	}
 
 	/**
