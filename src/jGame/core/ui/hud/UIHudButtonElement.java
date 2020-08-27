@@ -88,7 +88,7 @@ public class UIHudButtonElement extends UIHudElement {
 	 * @param e the mouse event to be processed
 	 * @since 1.0.0
 	 */
-	private void processClick(MouseEvent e) {
+	protected void processClick(MouseEvent e) {
 
 		// default implementation does nothing
 

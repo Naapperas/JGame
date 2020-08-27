@@ -135,6 +135,11 @@ class SoundWorker extends SwingWorker<String, Object> {
 		return "Finnished playing audio data!";
 	}
 
+	@Override
+	protected void done() {
+		this.cancel(false);
+	}
+
 	/**
 	 * Constructs a new <code>SoundWorker</code> to play the audio data represented
 	 * by <code>clipName</code>.
