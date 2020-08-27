@@ -15,6 +15,13 @@ public final class MathUtils {
 	
 	public static double PI = Math.PI, HALF_PI = PI / 2, TWO_PI = 2 * PI;
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(int number) {
 
 		if (number < 0)
@@ -25,6 +32,13 @@ public final class MathUtils {
 			return 0;
 	}
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(float number) {
 
 		if (number < 0)
@@ -35,6 +49,13 @@ public final class MathUtils {
 			return 0;
 	}
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(double number) {
 
 		if (number < 0)
@@ -45,6 +66,13 @@ public final class MathUtils {
 			return 0;
 	}
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(long number) {
 
 		if (number < 0)
@@ -55,6 +83,13 @@ public final class MathUtils {
 			return 0;
 	}
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(short number) {
 
 		if (number < 0)
@@ -65,6 +100,13 @@ public final class MathUtils {
 			return 0;
 	}
 
+	/**
+	 * Returns the sign of {@code number}.
+	 * 
+	 * @param number the number to check the sign of
+	 * @return the sign of {@code number}
+	 * @since 1.0.0
+	 */
 	public static int sign(byte number) {
 
 		if (number < 0)

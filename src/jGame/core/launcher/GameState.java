@@ -9,6 +9,12 @@ import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudElement;
 import jGame.logging.ProgramLogger;
 
+/**
+ * This class represents a game state to be played.
+ * 
+ * @author Nuno Pereira
+ * @since 1.0.0
+ */
 public class GameState {
 
 	private LinkedList<Entity> stateEntities = new LinkedList<Entity>();
@@ -16,12 +22,27 @@ public class GameState {
 
 	private String stateName;
 
+	/**
+	 * Create a new {@link GameState} object with the given entities and HUD
+	 * elements.
+	 * 
+	 * @param entities      the entities to be rendered in this game state
+	 * @param hudElements   the HUD elements to appear on screen
+	 * @param gameStateName the name of this game state
+	 * @since 1.0.0
+	 */
 	public GameState(List<Entity> entities, List<UIHudElement> hudElements, String gameStateName) {
 		stateEntities.addAll(entities);
 		stateHUDElements.addAll(hudElements);
 		stateName = gameStateName;
 	}
 
+	/**
+	 * Initializes the current state, adding all entities and registering their
+	 * respective listeners.
+	 * 
+	 * @since 1.0.0
+	 */
 	public void initState() {
 
 		stateEntities.forEach((entity) -> {
@@ -36,6 +57,12 @@ public class GameState {
 		});
 	}
 
+	/**
+	 * Terminates the current state, removing all entities and unregistering their
+	 * listeners.
+	 * 
+	 * @since 1.0.0
+	 */
 	public void terminateState() {
 
 		stateEntities.forEach((entity) -> {
