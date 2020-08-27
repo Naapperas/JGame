@@ -2,6 +2,8 @@ package jGame.core.utils.properties;
 
 import java.util.Properties;
 
+import jGame.logging.ProgramLogger;
+
 /**
  * 
  * Class responsible for collecting important properties from a file in the file
@@ -24,8 +26,12 @@ public class PropertiesManager {
 	public static void fetchProperties() {
 		if(propertiesFetched)return;
 		
+		ProgramLogger.writeLog("Fetching main properties!");
+
 		//INSERT CODE HERE
 		
+		ProgramLogger.writeLog("Properties fetched!");
+
 		propertiesFetched = true;
 	}
 	

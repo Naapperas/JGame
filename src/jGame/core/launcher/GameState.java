@@ -73,7 +73,7 @@ public class GameState {
 			EntityManager.removeEntity(entity);
 			ProgramLogger.writeLog("Removed " + entity);
 			entity.removeInputListener();
-			ProgramLogger.writeLog("unregistered input listeners for " + entity);
+			ProgramLogger.writeLog("Unregistered input listeners for " + entity);
 		});
 
 		stateHUDElements.forEach((element) -> {
