@@ -246,7 +246,7 @@ public class ProgramLogger {
 	 * @since 1.0.0
 	 */
 	public static void writeErrorLog(Exception e, String comment) {
-		writeLog(comment);
+		writeLog(java.util.logging.Level.SEVERE, comment);
 
 		writeErrorLog(e);
 	}

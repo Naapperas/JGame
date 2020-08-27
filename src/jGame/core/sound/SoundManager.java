@@ -39,7 +39,7 @@ public class SoundManager {
 	/**
 	 * Plays the audio file referenced by {@code soundFileToPlay}.
 	 * 
-	 * @param soundFileToPlay
+	 * @param soundFileToPlay the {@link URL} to the audio file
 	 * @since 1.0.0
 	 */
 	public static void playSound(URL soundFileToPlay) {
@@ -147,7 +147,7 @@ class SoundWorker extends SwingWorker<String, Object> {
 		this.clipName = clipPath.getName();
 
 		try {
-			soundFileURL = new URL(clipPath.getCanonicalPath());// SoundWorker.class.getResource("/sounds/" + clipName);
+			soundFileURL = clipPath.toURI().toURL();// SoundWorker.class.getResource("/sounds/" + clipName);
 		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e, "Couldn't create Sound Worker!!!!!!");
 			return;
