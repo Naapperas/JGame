@@ -229,6 +229,14 @@ public abstract class Entity {
 	protected abstract void setUpInputListener();
 
 	/**
+	 * Restarts the player inside the game. Implementation isdependant on the
+	 * client.
+	 * 
+	 * @since 1.0.0
+	 */
+	protected abstract void restart();
+
+	/**
 	 * Returns the bounds of this entity in the game.
 	 * 
 	 * @return the bounds of this entity

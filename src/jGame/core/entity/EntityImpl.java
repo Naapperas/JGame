@@ -284,4 +284,10 @@ public final class EntityImpl extends Entity {
 	public boolean isRenderable() {
 		return true;
 	}
+
+	@Override
+	public void restart() {
+		x = startingX;
+		y = startingY;
+	}
 }
