@@ -86,10 +86,8 @@ public class GameLauncher {
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				
-				if (!drawFPS) {
+				if (!drawFPS)
 					System.out.println("FPS: " + frames);
-					ProgramLogger.writeLog("FPS: " + frames);
-				}
 				
 				// copy value of frames to field and reset frames. This allows to correctly draw
 				// fps value every second
@@ -125,10 +123,8 @@ public class GameLauncher {
 		EntityManager.renderEntities(g);
 
 		//draw FPS on screen
-		if (drawFPS) {
+		if (drawFPS)
 			((UIHudTextElement) FPSCounter).setTextToDisplay("FPS: " + fps);
-			ProgramLogger.writeLog("FPS: " + fps);
-		}
 		
 		UIHud.render(g);
 

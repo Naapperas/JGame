@@ -2,6 +2,7 @@ module:jGame
 jGame
 jGame.core
 jGame.core.entity
+jGame.core.entity.event
 jGame.core.launcher
 jGame.core.sound
 jGame.core.ui
