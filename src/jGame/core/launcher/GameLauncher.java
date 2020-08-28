@@ -12,6 +12,7 @@ import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudElement;
 import jGame.core.ui.hud.UIHudTextElement;
 import jGame.core.utils.properties.PropertiesManager;
+import jGame.logging.ProgramLogger;
 
 /**
  * This class is designed to be the entry-point for any game based on the JGame
@@ -26,7 +27,11 @@ public class GameLauncher {
 	static {	
 		// initializes all the relevant/required properties on class loading to be used
 		// at execution
-		PropertiesManager.fetchProperties();	
+		try {
+			PropertiesManager.fetchProperties("");
+		} catch (Exception e) {
+			ProgramLogger.writeErrorLog(e, "");
+		}
 	}
 	
 	// a thread pool to make code execution non-blocking
