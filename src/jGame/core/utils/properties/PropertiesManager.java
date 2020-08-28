@@ -12,7 +12,7 @@ import jGame.logging.ProgramLogger;
 /**
  * 
  * Class responsible for collecting important properties from a file in the file
- * system to be used
+ * system to be used.
  * 
  * @author Nuno Pereira
  * @since 1.0.0

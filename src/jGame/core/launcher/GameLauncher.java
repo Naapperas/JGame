@@ -30,7 +30,7 @@ public class GameLauncher {
 		try {
 			PropertiesManager.fetchProperties("");
 		} catch (Exception e) {
-			ProgramLogger.writeErrorLog(e, "");
+			ProgramLogger.writeErrorLog(e, "Error fetching properties.");
 		}
 	}
 	
