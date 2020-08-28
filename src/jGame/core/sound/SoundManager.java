@@ -32,6 +32,7 @@ public class SoundManager {
 	 */
 	public static void playSound(File soundFileToPlay) {
 
+		ProgramLogger.writeLog("Playing sound!");
 		new SoundWorker(soundFileToPlay).execute();
 
 	}
@@ -44,6 +45,7 @@ public class SoundManager {
 	 */
 	public static void playSound(URL soundFileToPlay) {
 
+		ProgramLogger.writeLog("Playing sound!");
 		new SoundWorker(new File(soundFileToPlay.toString())).execute();
 
 	}
@@ -56,6 +58,7 @@ public class SoundManager {
 	 */
 	public static void playSound(String soundFileToPlay) {
 
+		ProgramLogger.writeLog("Playing sound!");
 		new SoundWorker(new File(soundFileToPlay)).execute();
 
 	}

@@ -254,11 +254,11 @@ public abstract class Entity {
 	public void registerInputListener() {
 		if (this.inputListener == null)
 			setUpInputListener();
-		GameLauncher.getMainWindow().addInputListener(inputListener);
+		GameLauncher.getMainWindow().addInputListener(inputListener, this);
 	}
 
 	public void removeInputListener() {
-		GameLauncher.getMainWindow().removeInputListener(inputListener);
+		GameLauncher.getMainWindow().removeInputListener(inputListener, this);
 	}
 
 	/**

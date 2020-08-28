@@ -74,6 +74,7 @@ public class GameStateManager {
 	 */
 	public static synchronized void changeGameState(String gameStateDescr) {
 		if (gameStates.containsKey(gameStateDescr)) {
+			ProgramLogger.writeLog("Changing game state.");
 			terminateState();
 			currentState = gameStates.get(gameStateDescr);
 			initState();

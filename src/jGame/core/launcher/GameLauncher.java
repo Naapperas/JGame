@@ -52,7 +52,8 @@ public class GameLauncher {
 	private static boolean isGameRunning = false, drawFPS = true;
 	
 	// the frameworks main loop
-	private static Runnable gameLoop = () -> {	
+	private static Runnable gameLoop = () -> {
+		ProgramLogger.writeLog("Starting game loop.");
 		long lastTime = System.nanoTime();
 		double desiredFPS = 120;
 		double nanoSecondsPerFrame = 1000000000/desiredFPS;
@@ -85,8 +86,10 @@ public class GameLauncher {
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				
-				if(!drawFPS)
+				if (!drawFPS) {
 					System.out.println("FPS: " + frames);
+					ProgramLogger.writeLog("FPS: " + frames);
+				}
 				
 				// copy value of frames to field and reset frames. This allows to correctly draw
 				// fps value every second
@@ -122,8 +125,10 @@ public class GameLauncher {
 		EntityManager.renderEntities(g);
 
 		//draw FPS on screen
-		if (drawFPS)
+		if (drawFPS) {
 			((UIHudTextElement) FPSCounter).setTextToDisplay("FPS: " + fps);
+			ProgramLogger.writeLog("FPS: " + fps);
+		}
 		
 		UIHud.render(g);
 
@@ -152,6 +157,8 @@ public class GameLauncher {
 	 */
 	public static void launchGame() {
 		
+		ProgramLogger.writeLog("Launching game!");
+
 		isGameRunning = true;
 		
 		EntityManager.registerInputListeners();

@@ -2,6 +2,8 @@ package jGame.core.entity;
 
 import java.util.ArrayList;
 
+import jGame.logging.ProgramLogger;
+
 /**
  * This class serves as a register for all Entities present in the game,
  * renderable or not. In addition, a list for all entities queued for removal is
@@ -27,6 +29,7 @@ public class EntityManager {
 		if(ENTITIES_LIST.contains(entityToAdd))
 			return;
 		
+		ProgramLogger.writeLog("Adding entity: " + entityToAdd);
 		ENTITIES_LIST.add(entityToAdd);
 	}
 	
@@ -37,6 +40,9 @@ public class EntityManager {
 	 * @since 1.0.0
 	 */
 	public synchronized static void registerInputListeners() {
+
+		ProgramLogger.writeLog("Registering input listeners for added entities!");
+
 		ENTITIES_LIST.forEach((entity) -> {
 			entity.setUpInputListener();
 			entity.registerInputListener();
@@ -51,6 +57,7 @@ public class EntityManager {
 	 * @since 1.0.0
 	 */
 	public synchronized static void removeEntity(int entityIndex) {
+		ProgramLogger.writeLog("Removing entity at index " + entityIndex);
 		ENTITIES_TO_REMOVE_LIST.add(ENTITIES_LIST.get(entityIndex));
 	}
 	
@@ -58,13 +65,14 @@ public class EntityManager {
 	 * Queues the given <code>entity</code> for removal (adds it to the entity
 	 * removal list).
 	 * 
-	 * @param entity the entity to remove
+	 * @param entityToRemove the entity to remove
 	 * @since 1.0.0
 	 */
-	public synchronized static void removeEntity(Entity entity) {
-		if (ENTITIES_LIST.contains(entity))
-			ENTITIES_TO_REMOVE_LIST.add(entity);
-
+	public synchronized static void removeEntity(Entity entityToRemove) {
+		if (ENTITIES_LIST.contains(entityToRemove)) {
+			ProgramLogger.writeLog("Removing entity: " + entityToRemove);
+			ENTITIES_TO_REMOVE_LIST.add(entityToRemove);
+		}
 	}
 	
 	/**

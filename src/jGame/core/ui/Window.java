@@ -11,8 +11,11 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import jGame.core.entity.Entity;
 import jGame.core.launcher.GameLauncher;
+import jGame.core.ui.hud.UIHudElement;
 import jGame.core.utils.MathUtils;
+import jGame.logging.ProgramLogger;
 
 /**
  * The default class for presenting displays on the screen. The default
@@ -82,6 +85,8 @@ public class Window {
 	 * @since 1.0.0
 	 */
 	private void init(int width, int height, CharSequence title) {
+
+		ProgramLogger.writeLog("Initializing window.");
 
 		//if window size is greater than the screen size, collision is all goofy, enforce window size to a maximum of screen size
 		this.width = (int) MathUtils.clamp(width, 0, WindowUtils.WindowParams.getScreenResolution().getWidth());
@@ -225,21 +230,25 @@ public class Window {
 	 * Adds a keyboard listener to this windows {@link #windowCanvas}
 	 * 
 	 * @param inputListener the {@link KeyAdapter} object to add
+	 * @param entity        the entity whose listener is being added
 	 * @see KeyAdapter
 	 * @since 1.0.0
 	 */
-	public void addInputListener(KeyAdapter inputListener) {
+	public void addInputListener(KeyAdapter inputListener, Entity entity) {
+		ProgramLogger.writeLog("Adding key input listener for " + entity);
 		windowCanvas.addKeyListener(inputListener);
 	}
 
 	/**
 	 * Adds a mouse listener to this windows {@link #windowCanvas}
 	 * 
-	 * @param mouseInputListener the {@link MouseAdapter} object to add7
+	 * @param mouseInputListener the {@link MouseAdapter} object to add
+	 * @param hudElement         the HUD element whose listener is being added
 	 * @see MouseAdapter
 	 * @since 1.0.0
 	 */
-	public void addMouseInputListener(MouseAdapter mouseInputListener) {
+	public void addMouseInputListener(MouseAdapter mouseInputListener, UIHudElement hudElement) {
+		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
 		windowCanvas.addMouseListener(mouseInputListener);
 	}
 
@@ -247,9 +256,11 @@ public class Window {
 	 * Removes the given input listener in order to stop receiving events.
 	 * 
 	 * @param inputListener the input listener to remove
+	 * @param entity        the entity whose listener is being removed
 	 * @since 1.0.0
 	 */
-	public void removeInputListener(KeyAdapter inputListener) {
+	public void removeInputListener(KeyAdapter inputListener, Entity entity) {
+		ProgramLogger.writeLog("Removing key input listener for " + entity);
 		windowCanvas.removeKeyListener(inputListener);
 	}
 
@@ -257,9 +268,11 @@ public class Window {
 	 * Removes the given mouse input listener in order to stop receiving events.
 	 * 
 	 * @param inputListener the input listener to remove
+	 * @param hudElement    the HUD element whose listener is being removed
 	 * @since 1.0.0
 	 */
-	public void removeMouseInputListener(MouseAdapter inputListener) {
+	public void removeMouseInputListener(MouseAdapter inputListener, UIHudElement hudElement) {
+		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
 		windowCanvas.removeMouseListener(inputListener);
 	}
 }

@@ -3,6 +3,8 @@ package jGame.core.ui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import jGame.logging.ProgramLogger;
+
 /**
  * This class provides a set of utility methods for UI/Window related logic, such as figuring the correct display size for visual components.
  * This is intended for single screen systems, multiple screen systems should be handled by the client.
@@ -35,6 +37,9 @@ public final class WindowUtils {
 	 * @since 1.0.0
 	 */
 	private static void setScreenDisplayScale() {
+
+		ProgramLogger.writeLog("Setting screen display scale!");
+
 		Dimension screenResolution = WindowParams.getScreenResolution();
 		
 		FULLSCREEN_X = screenResolution.getWidth();

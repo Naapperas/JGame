@@ -11,9 +11,10 @@ package jGame.core.utils;
  */
 public final class MathUtils {
 
-	// clamp method (and overloads)
-	
-	public static double PI = Math.PI, HALF_PI = PI / 2, TWO_PI = 2 * PI;
+	// mathematical constants
+	public static final double PI = Math.PI, HALF_PI = PI / 2, TWO_PI = 2 * PI, E = Math.E;
+
+	// sign (and overloads)
 
 	/**
 	 * Returns the sign of {@code number}.
@@ -116,6 +117,9 @@ public final class MathUtils {
 		else
 			return 0;
 	}
+
+	// clamp (and overloads)
+
 	/**
 	 * Clamps a number to the fit between a certain range of numbers
 	 * 

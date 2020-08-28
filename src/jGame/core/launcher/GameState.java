@@ -48,17 +48,16 @@ public class GameState {
 		if (!stateEntities.isEmpty())
 			stateEntities.forEach((entity) -> {
 				EntityManager.addEntity(entity);
-				ProgramLogger.writeLog("Added " + entity);
 				entity.registerInputListener();
-				ProgramLogger.writeLog("Registered input listeners for " + entity);
 			});
 
 		if (!stateHUDElements.isEmpty())
 			stateHUDElements.forEach((element) -> {
 				UIHud.addHUDUIElement(element);
-				ProgramLogger.writeLog("Added " + element);
 				element.registerInputListener();
 			});
+
+		ProgramLogger.writeLog(this + " initiated.");
 	}
 
 	/**
@@ -71,17 +70,15 @@ public class GameState {
 
 		stateEntities.forEach((entity) -> {
 			EntityManager.removeEntity(entity);
-			ProgramLogger.writeLog("Removed " + entity);
 			entity.removeInputListener();
-			ProgramLogger.writeLog("Unregistered input listeners for " + entity);
 		});
 
 		stateHUDElements.forEach((element) -> {
 			UIHud.removeHUDUIElement(element);
-			ProgramLogger.writeLog("Removed " + element);
 			element.removeInputListener();
 		});
 
+		ProgramLogger.writeLog(this + " terminated.");
 	}
 
 	@Override

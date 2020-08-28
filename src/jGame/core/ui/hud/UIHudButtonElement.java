@@ -78,7 +78,7 @@ public class UIHudButtonElement extends UIHudElement {
 
 	@Override
 	public void registerInputListener() {
-		GameLauncher.getMainWindow().addMouseInputListener(mouseListener);
+		GameLauncher.getMainWindow().addMouseInputListener(mouseListener, this);
 	}
 
 	/**
@@ -107,6 +107,6 @@ public class UIHudButtonElement extends UIHudElement {
 
 	@Override
 	public void removeInputListener() {
-		GameLauncher.getMainWindow().removeMouseInputListener(mouseListener);
+		GameLauncher.getMainWindow().removeMouseInputListener(mouseListener, this);
 	}
 }

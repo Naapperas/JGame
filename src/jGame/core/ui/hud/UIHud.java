@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import jGame.logging.ProgramLogger;
+
 /**
  * This class represents a Heads Up Display (HUD) to be rendered on the screen
  * on top of the game after every entity has been updated and rendered.
@@ -50,6 +52,7 @@ public class UIHud {
 		if (HUD.contains(hudElement))
 			return;
 
+		ProgramLogger.writeLog("Adding " + hudElement);
 		HUD.add(hudElement);
 	}
 
@@ -60,6 +63,7 @@ public class UIHud {
 	 * @since 1.0.0
 	 */
 	public synchronized static void removeHUDUIElement(UIHudElement hudElement) {
+		ProgramLogger.writeLog("Removing " + hudElement);
 		HUD_ELEMENTS_TO_REMOVE.add(hudElement);
 	}
 
@@ -69,6 +73,7 @@ public class UIHud {
 	 * @since 1.0.0
 	 */
 	public synchronized static void registerInputListeners() {
+		ProgramLogger.writeLog("Registering input listeners for HUD elements");
 		HUD.forEach((element) -> { element.registerInputListener(); });
 	}
 }
