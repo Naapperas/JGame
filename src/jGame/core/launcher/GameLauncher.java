@@ -51,6 +51,9 @@ public class GameLauncher {
 	
 	private static boolean isGameRunning = false, drawFPS = true;
 	
+	// condition to make game pause (aka, not tick), to be implemented
+	// private static int pause = 0;
+
 	// the frameworks main loop
 	private static Runnable gameLoop = () -> {
 		ProgramLogger.writeLog("Starting game loop.");
@@ -71,7 +74,7 @@ public class GameLauncher {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nanoSecondsPerFrame;
 			lastTime = now;
-			while(delta >= 1){
+			while (delta >= 1) {
 				tick();
 				delta--;
 			}
