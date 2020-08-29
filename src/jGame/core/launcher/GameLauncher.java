@@ -107,7 +107,7 @@ public class GameLauncher {
 			delta += (now - lastTime) / nanoSecondsPerFrame;
 			lastTime = now;
 			while (delta >= 1) {
-				if (pause)
+				if (!pause)
 					tick();
 				delta--;
 			}
