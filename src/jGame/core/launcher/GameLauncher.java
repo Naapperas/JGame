@@ -2,6 +2,7 @@ package jGame.core.launcher;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -9,6 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import jGame.core.entity.EntityManager;
 import jGame.core.ui.Window;
 import jGame.core.ui.hud.UIHud;
+import jGame.core.ui.hud.UIHudButtonElement;
 import jGame.core.ui.hud.UIHudElement;
 import jGame.core.ui.hud.UIHudTextElement;
 import jGame.core.utils.properties.PropertiesManager;
@@ -49,6 +51,21 @@ public class GameLauncher {
 	private static UIHudElement FPSCounter = new UIHudTextElement(7, 17, "FPS: ", Color.GREEN);
 	private static int fps = 0;
 	
+	private static UIHudElement pauseMenu = new UIHudButtonElement(
+			(int) getMainWindow().getWindowCanvas().getBounds().getWidth() - 60, 10, 50, 20, "Pause") {
+
+		@Override
+		protected void processClick(MouseEvent e) {
+			// TODO Auto-generated method stub
+			super.processClick(e);
+
+			pause = !pause;
+
+		}
+		
+	};
+	private static boolean pause = false;
+
 	private static boolean isGameRunning = false, drawFPS = true;
 	
 	// condition to make game pause (aka, not tick), to be implemented
@@ -65,6 +82,7 @@ public class GameLauncher {
 		int frames = 0;
 
 		UIHud.addHUDUIElement(FPSCounter);
+		UIHud.addHUDUIElement(pauseMenu);
 
 		while(isGameRunning) {
 
@@ -74,7 +92,7 @@ public class GameLauncher {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nanoSecondsPerFrame;
 			lastTime = now;
-			while (delta >= 1) {
+			while (delta >= 1 && !pause) {
 				tick();
 				delta--;
 			}
