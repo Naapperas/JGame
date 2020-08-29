@@ -100,9 +100,6 @@ public class GameLauncher {
 
 		while(isGameRunning) {
 
-			if (pause)
-				continue;
-
 			// ensure that all listeners can handle user events
 			mainWindow.getWindowCanvas().requestFocus();
 
@@ -110,7 +107,8 @@ public class GameLauncher {
 			delta += (now - lastTime) / nanoSecondsPerFrame;
 			lastTime = now;
 			while (delta >= 1) {
-				tick();
+				if (pause)
+					tick();
 				delta--;
 			}
 			
