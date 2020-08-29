@@ -165,9 +165,7 @@ public class GameLauncher {
 		if(!mainWindow.isShowable())
 			mainWindow.showWindow();
 		
-		gameLoop.run();
-
-		// gameThreadPool.execute(gameLoop);
+		gameThreadPool.execute(gameLoop);
 	}
 	
 	/**
