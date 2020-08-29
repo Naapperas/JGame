@@ -2,10 +2,15 @@ package jGame.core.launcher;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
 import jGame.core.ui.Window;
@@ -52,19 +57,24 @@ public class GameLauncher {
 	private static int fps = 0;
 	
 	private static UIHudElement pauseMenu = new UIHudButtonElement(
-			(int) getMainWindow().getWindowCanvas().getBounds().getWidth() - 60, 10, 50, 20, "Pause") {
+			(int) getMainWindow().getWindowCanvas().getBounds().getWidth() + 50, 10, 50, 20, "Pause") {
 
 		@Override
 		protected void processClick(MouseEvent e) {
-			// TODO Auto-generated method stub
-			super.processClick(e);
-
 			pause = !pause;
-
 		}
 		
 	};
 	private static boolean pause = false;
+	private static Action pauseAction = new AbstractAction() {
+
+		private static final long serialVersionUID = -8628054626023408846L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pause = !pause;
+		}
+	};
 
 	private static boolean isGameRunning = false, drawFPS = true;
 	
@@ -82,9 +92,16 @@ public class GameLauncher {
 		int frames = 0;
 
 		UIHud.addHUDUIElement(FPSCounter);
+
+		getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
+		
+		pauseMenu.registerInputListener();
 		UIHud.addHUDUIElement(pauseMenu);
 
 		while(isGameRunning) {
+
+			if (pause)
+				continue;
 
 			// ensure that all listeners can handle user events
 			mainWindow.getWindowCanvas().requestFocus();
@@ -92,7 +109,7 @@ public class GameLauncher {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nanoSecondsPerFrame;
 			lastTime = now;
-			while (delta >= 1 && !pause) {
+			while (delta >= 1) {
 				tick();
 				delta--;
 			}

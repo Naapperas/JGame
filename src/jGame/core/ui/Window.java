@@ -8,7 +8,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import jGame.core.entity.Entity;
@@ -274,5 +277,18 @@ public class Window {
 	public void removeMouseInputListener(MouseAdapter inputListener, UIHudElement hudElement) {
 		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
 		windowCanvas.removeMouseListener(inputListener);
+	}
+
+	/**
+	 * Adds a key binding to the given {@link Action}.
+	 * 
+	 * @param action    the action to perform when a key is pressed
+	 * @param keyStroke the key to trigger the action when pressed
+	 * @param key       the string denoting the action
+	 * @since 1.1.0
+	 */
+	public void addAction(Action action, KeyStroke keyStroke, String key) {
+		((JComponent) windowFrame.getContentPane()).getInputMap().put(keyStroke, key);
+		((JComponent) windowFrame.getContentPane()).getActionMap().put(key, action);
 	}
 }
