@@ -13,10 +13,18 @@ import java.awt.Graphics;
  */
 public class UIHudTextElement extends UIHudElement {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5009618223466781942L;
+
 	// the text to be rendered, self-explanatory
 	private String textToDisplay = "";
 	private Font textFont = null;
 	private Color textColor = Color.WHITE;
+
+	protected UIHudTextElement() {
+	}
 
 	/**
 	 * Initializes this text element in the specified location.

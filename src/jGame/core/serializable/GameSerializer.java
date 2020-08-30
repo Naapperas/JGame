@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import jGame.core.launcher.GameLauncher;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -19,14 +18,41 @@ public class GameSerializer {
 
 	private static String pathToGameSaveFile;
 
+	/**
+	 * Serializes the game and its relevant aspects, like game states, entities and
+	 * elements.
+	 * 
+	 * @since 1.1.0
+	 */
 	public static void serializeGame() {
 		
-		try (BufferedWriter serializer = new BufferedWriter(new FileWriter(new File(pathToGameSaveFile)));) {
+		File saveFile = new File(pathToGameSaveFile);
 
-			serializer.write(GameLauncher.gameName);
+		try (BufferedWriter serializer = new BufferedWriter(new FileWriter(saveFile));) {
+
+			ProgramLogger.writeLog("Serializing game!");
+			/*
+			 * serializer.write(GameLauncher.gameName);
+			 * serializer.write(System.lineSeparator());
+			 */
+
+			EntitySerializer.serializeEntities(saveFile);
+
+			ProgramLogger.writeLog("Done serializing!");
+
 
 		} catch (IOException e) {
 			ProgramLogger.writeErrorLog(e, "Error while trying to serialize game!");
 		}
+	}
+
+	/**
+	 * Sets the path of the save game file.
+	 * 
+	 * @param pathToGameSaveFile the path of the game save file
+	 * @since 1.1.0
+	 */
+	public static void setPathToGameSaveFile(String pathToGameSaveFile) {
+		GameSerializer.pathToGameSaveFile = pathToGameSaveFile;
 	}
 }

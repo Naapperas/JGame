@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
@@ -38,6 +40,10 @@ public class Window {
 	// the canvas object in which the game is going to be rendered
 	private volatile Canvas windowCanvas = new Canvas();
 	
+	// static boolean to check if main window has been set, so we don't add
+	// incorrect behavior on future window objects
+	private static boolean mainWindowSet = false;
+
 	/**
 	 * Returns the window's canvas.
 	 * 
@@ -119,7 +125,7 @@ public class Window {
 		
 		windowCanvas.setBackground(Color.BLACK);
 		windowCanvas.setBounds(0, 0, getWidth(), getWidth());
-		
+
 		addComponent(windowCanvas);
 
 		// wrapping up
@@ -223,7 +229,22 @@ public class Window {
 	 * @since 1.0.0
 	 */
 	public void setMainWindow() {
-		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		if (mainWindowSet)
+			return;
+
+		windowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+		windowFrame.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				GameLauncher.setGameRunning(false);
+			}
+
+		});
+
+		mainWindowSet = true;
 	}
 
 	/**

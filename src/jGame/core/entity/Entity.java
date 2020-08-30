@@ -3,11 +3,11 @@ package jGame.core.entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.launcher.GameLauncher;
-import jGame.core.serializable.SerializableObject;
 
 /**
  * 
@@ -19,7 +19,12 @@ import jGame.core.serializable.SerializableObject;
  * @since 1.0.0
  *
  */
-public abstract class Entity implements SerializableObject {
+public abstract class Entity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8613907952876835836L;
 
 	// name of this entity
 	protected String name;
@@ -43,6 +48,9 @@ public abstract class Entity implements SerializableObject {
 	
 	// list of collision listeners
 	protected LinkedList<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
+
+	protected Entity() {
+	}
 
 	/**
 	 * Creates an entity with the given <code>width</code> and <code>height</code>.

@@ -19,6 +19,11 @@ import jGame.core.launcher.GameLauncher;
  */
 public class UIHudButtonElement extends UIHudElement {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2004026804332689505L;
+
 	// element coords and displayable text
 	private int width = 0, height = 0;
 	private String buttonText;
@@ -31,6 +36,9 @@ public class UIHudButtonElement extends UIHudElement {
 			processClick(e);
 		}
 	};
+
+	protected UIHudButtonElement() {
+	}
 
 	/**
 	 * Initializes this button element in the given <code>x</code> and

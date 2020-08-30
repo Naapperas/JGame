@@ -7,9 +7,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import jGame.core.entity.EntityManager;
+import jGame.core.serializable.GameSerializer;
 import jGame.core.ui.Window;
 import jGame.core.ui.hud.UIHud;
-import jGame.core.ui.hud.UIHudElement;
 import jGame.core.ui.hud.UIHudTextElement;
 import jGame.core.utils.properties.PropertiesManager;
 import jGame.logging.ProgramLogger;
@@ -32,6 +32,7 @@ public class GameLauncher {
 		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e, "Error fetching properties.");
 		}
+
 	}
 	
 	// a thread pool to make code execution non-blocking
@@ -46,7 +47,7 @@ public class GameLauncher {
 	//number of buffers to use in the canvas
 	private static final int BUFFER_AMOUNT = 3;
 	
-	private static UIHudElement FPSCounter = new UIHudTextElement(7, 17, "FPS: ", Color.GREEN);
+	private static UIHudTextElement FPSCounter = new UIHudTextElement(7, 17, "FPS: ", Color.GREEN);
 	private static int fps = 0;
 	
 	private static boolean isGameRunning = false, drawFPS = true;
@@ -95,7 +96,7 @@ public class GameLauncher {
 				frames = 0;
 			}
 		}
-		//processGameTermination();
+		processGameTermination();
 		return;
 	};
 
@@ -126,8 +127,9 @@ public class GameLauncher {
 
 		//draw FPS on screen
 		if (drawFPS)
-			((UIHudTextElement) FPSCounter).setTextToDisplay("FPS: " + fps);
+			FPSCounter.setTextToDisplay("FPS: " + fps);
 		
+		// render all HUD elements on top of every game object
 		UIHud.render(g);
 
 		g.dispose();
@@ -137,15 +139,26 @@ public class GameLauncher {
 	}
 
 	/**
+	 * Processes game termination. This method is called when the game is about to
+	 * close and we need to perform some vital last minute operations.
+	 * 
+	 * @since 1.1.0
+	 */
+	private static void processGameTermination() {
+
+		ProgramLogger.writeLog("Terminating game!");
+		GameSerializer.serializeGame();
+		System.exit(0);
+
+	}
+
+	/**
 	 * Updates all the entities in the game before rendering them.
 	 * 
 	 * @since 1.0.0
 	 */
 	private static void tick() {
-
-		//TODO: update ticking system
 		EntityManager.tickEntities();
-		
 	}
 
 	/**
@@ -193,7 +206,7 @@ public class GameLauncher {
 	 * @param r the {@link Runnable} object to run.
 	 * @since 1.0.0
 	 */
-	public static void queueTask(Runnable r) {
+	public synchronized static void queueTask(Runnable r) {
 		gameThreadPool.execute(r);
 	}
 
@@ -213,7 +226,7 @@ public class GameLauncher {
 	 * @return the game's main window
 	 * @since 1.0.0
 	 */
-	public static Window getMainWindow() {
+	public synchronized static Window getMainWindow() {
 		return mainWindow;
 	}
 
@@ -223,7 +236,17 @@ public class GameLauncher {
 	 * @param drawFPS weather to draw or not the FPS
 	 * @since 1.0.0
 	 */
-	public static void setDrawFPS(boolean drawFPS) {
+	public synchronized static void setDrawFPS(boolean drawFPS) {
 		GameLauncher.drawFPS = drawFPS;
+	}
+
+	/**
+	 * Sets the running state of the game.
+	 * 
+	 * @param isGameRunning the new running state of the game.
+	 * @since 1.1.0
+	 */
+	public synchronized static void setGameRunning(boolean isGameRunning) {
+		GameLauncher.isGameRunning = isGameRunning;
 	}
 }
