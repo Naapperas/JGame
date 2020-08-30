@@ -53,9 +53,11 @@ public class GameLauncher {
 	//number of buffers to use in the canvas
 	private static final int BUFFER_AMOUNT = 3;
 	
+	// since 1.0.0
 	private static UIHudElement FPSCounter = new UIHudTextElement(7, 17, "FPS: ", Color.GREEN);
 	private static int fps = 0;
 	
+	// since 1.1.0
 	private static UIHudElement pauseMenu = new UIHudButtonElement(
 			(int) getMainWindow().getWindowCanvas().getBounds().getWidth() + 50, 10, 50, 20, "Pause") {
 
@@ -75,6 +77,15 @@ public class GameLauncher {
 			pause = !pause;
 		}
 	};
+
+	/**
+	 * Unpauses the game.
+	 * 
+	 * @since 1.1.0
+	 */
+	public static void unpause() {
+		pause = false;
+	}
 
 	private static boolean isGameRunning = false, drawFPS = true;
 	

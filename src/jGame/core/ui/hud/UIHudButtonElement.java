@@ -26,9 +26,14 @@ public class UIHudButtonElement extends UIHudElement {
 	// the actual listener responsible for handling user input
 	private MouseAdapter mouseListener = new MouseAdapter() {
 
+		UIHudButtonElement theElement = UIHudButtonElement.this;
+		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			UIHudButtonElement.this.processClick(e);
+
+			if ((e.getX() > this.theElement.x && e.getX() < this.theElement.x + this.theElement.width)
+					&& (e.getY() > this.theElement.y && e.getY() < this.theElement.y + this.theElement.height))
+				UIHudButtonElement.this.processClick(e);
 		}
 	};
 
