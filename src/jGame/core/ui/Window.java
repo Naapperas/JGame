@@ -275,4 +275,14 @@ public class Window {
 		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
 		windowCanvas.removeMouseListener(inputListener);
 	}
+
+	/**
+	 * Returns the title of the window.
+	 * 
+	 * @return the title of the window
+	 * @since 1.1.0
+	 */
+	public String getTitle() {
+		return windowFrame.getTitle();
+	}
 }

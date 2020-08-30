@@ -2,6 +2,8 @@ package jGame.core.ui.hud;
 
 import java.awt.Graphics;
 
+import jGame.core.serializable.SerializableObject;
+
 /**
  * This class represents a base element to be rendered in the HUD.
  * 
@@ -9,7 +11,7 @@ import java.awt.Graphics;
  * @since 1.0.0
  *
  */
-public abstract class UIHudElement {
+public abstract class UIHudElement implements SerializableObject {
 
 	// the coordinates of the element
 	protected int x, y;

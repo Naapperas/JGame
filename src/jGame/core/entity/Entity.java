@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.launcher.GameLauncher;
+import jGame.core.serializable.SerializableObject;
 
 /**
  * 
@@ -18,7 +19,7 @@ import jGame.core.launcher.GameLauncher;
  * @since 1.0.0
  *
  */
-public abstract class Entity {
+public abstract class Entity implements SerializableObject {
 
 	// name of this entity
 	protected String name;

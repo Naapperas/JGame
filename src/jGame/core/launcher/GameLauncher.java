@@ -98,6 +98,8 @@ public class GameLauncher {
 		//processGameTermination();
 		return;
 	};
+
+	public static String gameName;
 	
 	/**
 	 * Renders the game on the screen, by clearing the game window, rendering all
@@ -157,6 +159,8 @@ public class GameLauncher {
 
 		isGameRunning = true;
 		
+		gameName = mainWindow.getTitle();
+		
 		EntityManager.registerInputListeners();
 		UIHud.registerInputListeners();
 
@@ -203,7 +207,6 @@ public class GameLauncher {
 		GameLauncher.mainWindow = mainWindow;
 	}
 	
-
 	/**
 	 * Returns the main window.
 	 * 

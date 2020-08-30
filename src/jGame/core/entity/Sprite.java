@@ -7,13 +7,15 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import jGame.core.serializable.SerializableObject;
+
 /**
  * This class acts as a way of displaying custom entity visuals, supporting animations for said entities.
  * 
  * @author Nuno Pereira
  * @since 1.0.0
  */
-public class Sprite {
+public class Sprite implements SerializableObject {
 	
 	//fields for animated sprite
 	private Animation animation = null;
