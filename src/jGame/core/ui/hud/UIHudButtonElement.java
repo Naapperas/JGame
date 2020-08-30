@@ -27,13 +27,14 @@ public class UIHudButtonElement extends UIHudElement {
 	private MouseAdapter mouseListener = new MouseAdapter() {
 
 		UIHudButtonElement theElement = UIHudButtonElement.this;
-		
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
 			if ((e.getX() > this.theElement.x && e.getX() < this.theElement.x + this.theElement.width)
 					&& (e.getY() > this.theElement.y && e.getY() < this.theElement.y + this.theElement.height))
 				theElement.processClick(e);
+			UIHudButtonElement.this.processClick(e);
 		}
 	};
 
