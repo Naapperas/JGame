@@ -81,9 +81,6 @@ public class GameLauncher {
 	}
 
 	private static boolean isGameRunning = false, drawFPS = true;
-	
-	// condition to make game pause (aka, not tick), to be implemented
-	// private static int pause = 0;
 
 	// the frameworks main loop
 	private static Runnable gameLoop = () -> {
