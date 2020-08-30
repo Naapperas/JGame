@@ -234,7 +234,7 @@ public abstract class Entity {
 	 * 
 	 * @since 1.0.0
 	 */
-	protected abstract void restart();
+	public abstract void restart();
 
 	/**
 	 * Returns the bounds of this entity in the game.

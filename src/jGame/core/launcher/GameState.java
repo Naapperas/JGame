@@ -49,6 +49,7 @@ public class GameState {
 			stateEntities.forEach((entity) -> {
 				EntityManager.addEntity(entity);
 				entity.registerInputListener();
+				entity.restart();
 			});
 
 		if (!stateHUDElements.isEmpty())
