@@ -13,7 +13,6 @@ import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
-import jGame.core.serializable.GameSerializer;
 import jGame.core.ui.Window;
 import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
@@ -184,7 +183,6 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		ProgramLogger.writeLog("Terminating game!");
-		GameSerializer.serializeGame();
 		System.exit(0);
 
 	}
@@ -210,6 +208,11 @@ public class GameLauncher {
 		pauseMenu = new UIHudButtonElement((int) getMainWindow().getWindowCanvas().getBounds().getWidth() - 60, 10, 50,
 				20, "Pause") {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4372277764333169074L;
+
 			@Override
 			protected void processClick(MouseEvent e) {
 				pause = !pause;
@@ -218,8 +221,6 @@ public class GameLauncher {
 		};
 
 		isGameRunning = true;
-
-		gameName = mainWindow.getTitle();
 
 		EntityManager.registerInputListeners();
 		UIHud.registerInputListeners();
