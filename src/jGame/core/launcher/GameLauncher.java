@@ -58,15 +58,8 @@ public class GameLauncher {
 	private static int fps = 0;
 	
 	// since 1.1.0
-	private static UIHudElement pauseMenu = new UIHudButtonElement(
-			(int) getMainWindow().getWindowCanvas().getBounds().getWidth() + 50, 10, 50, 20, "Pause") {
-
-		@Override
-		protected void processClick(MouseEvent e) {
-			pause = !pause;
-		}
-		
-	};
+	private static UIHudElement pauseMenu = null; // we are going to be set in the launch method, when the window is
+													// already set
 	private static boolean pause = false;
 	private static Action pauseAction = new AbstractAction() {
 
@@ -201,6 +194,16 @@ public class GameLauncher {
 	public static void launchGame() {
 		
 		ProgramLogger.writeLog("Launching game!");
+
+		pauseMenu = new UIHudButtonElement((int) getMainWindow().getWindowCanvas().getBounds().getWidth() - 60, 10, 50,
+				20, "Pause") {
+
+			@Override
+			protected void processClick(MouseEvent e) {
+				pause = !pause;
+			}
+
+		};
 
 		isGameRunning = true;
 		
