@@ -39,7 +39,6 @@ public class UIHudButtonElement extends UIHudElement {
 			if ((e.getX() > this.theElement.x && e.getX() < this.theElement.x + this.theElement.width)
 					&& (e.getY() > this.theElement.y && e.getY() < this.theElement.y + this.theElement.height))
 				theElement.processClick(e);
-			UIHudButtonElement.this.processClick(e);
 		}
 	};
 
