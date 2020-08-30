@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
@@ -13,8 +14,13 @@ import javax.imageio.ImageIO;
  * @author Nuno Pereira
  * @since 1.0.0
  */
-public class Sprite {
+public class Sprite implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1804262889086392040L;
+
 	//fields for animated sprite
 	private Animation animation = null;
 	
@@ -23,6 +29,9 @@ public class Sprite {
 
 	private boolean isAnimatedSprite = false;
 	
+	protected Sprite() {
+	}
+
 	// TODO: make overloads for all overloads of ImageIO.read
 
 	/**

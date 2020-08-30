@@ -1,6 +1,7 @@
 package jGame.core.ui.hud;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
 /**
  * This class represents a base element to be rendered in the HUD.
@@ -9,10 +10,18 @@ import java.awt.Graphics;
  * @since 1.0.0
  *
  */
-public abstract class UIHudElement {
+public abstract class UIHudElement implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6496514301669618772L;
 
 	// the coordinates of the element
 	protected int x, y;
+
+	protected UIHudElement() {
+	}
 
 	/**
 	 * Initializes this element at the specified <code>x</code> and <code>y</code>

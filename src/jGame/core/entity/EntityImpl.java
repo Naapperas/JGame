@@ -20,6 +20,14 @@ import jGame.core.utils.MathUtils;
 public final class EntityImpl extends Entity {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7533119592298769774L;
+
+	protected EntityImpl() {
+	}
+
+	/**
 	 * Creates an <code>EntityImpl</code> object in the given <code>x</code> and
 	 * <code>y</code> coordinates and with the given <code>width</code> and
 	 * <code>height</code> dimensions.
