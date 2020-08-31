@@ -25,7 +25,7 @@ public class UIHudButtonElement extends UIHudElement {
 	private static final long serialVersionUID = -2004026804332689505L;
 
 	// element coords and displayable text
-	private int width = 0, height = 0;
+	protected int width = 0, height = 0;
 	private String buttonText;
 
 	// the actual listener responsible for handling user input
