@@ -4,6 +4,7 @@ jGame.core
 jGame.core.entity
 jGame.core.entity.event
 jGame.core.launcher
+jGame.core.serializable
 jGame.core.sound
 jGame.core.ui
 jGame.core.ui.hud
