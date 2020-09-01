@@ -157,7 +157,8 @@ public class GameLauncher {
 
 		//insert rendering code here
 
-		g.clearRect(0, 0, mainWindow.getWidth(), mainWindow.getHeight());
+		g.clearRect(0, 0, (int) mainWindow.getWindowCanvas().getBounds().getWidth(),
+				(int) mainWindow.getWindowCanvas().getBounds().getHeight());
 		g.setColor(mainWindow.getWindowCanvas().getBackground());
 
 		//TODO: update rendering system
