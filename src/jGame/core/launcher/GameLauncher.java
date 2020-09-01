@@ -96,7 +96,6 @@ public class GameLauncher {
 
 		getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
 
-		pauseMenu.registerInputListener();
 		GameStateManager.addUIHudElementToBoard(pauseMenu);
 
 		GameStateManager.initializeBoard();
