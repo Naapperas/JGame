@@ -1,7 +1,11 @@
 package jGame.core.launcher;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import jGame.core.entity.Entity;
+import jGame.core.ui.hud.UIHudElement;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -12,6 +16,15 @@ import jGame.logging.ProgramLogger;
  * @since 1.0.0
  */
 public class GameStateManager {
+
+	/**
+	 * The board game state every game must have.
+	 * 
+	 * @since 1.1.0
+	 */
+	public static GameState board;
+	private static ArrayList<Entity> boardEntities = new ArrayList<Entity>();
+	private static ArrayList<UIHudElement> boardElements = new ArrayList<UIHudElement>();
 
 	// static class, can't instantiate
 	private GameStateManager() {
@@ -81,6 +94,52 @@ public class GameStateManager {
 		}
 		else
 			ProgramLogger.writeLog("Can't change state; Maintaining same game state");
+	}
+
+	/**
+	 * 
+	 * @param entityToAdd
+	 */
+	public static void addEntityToBoard(Entity entityToAdd) {
+		boardEntities.add(entityToAdd);
+	}
+
+	/**
+	 * 
+	 * @param elementToAdd
+	 */
+	public static void addUIHudElementToBoard(UIHudElement elementToAdd) {
+		boardElements.add(elementToAdd);
+	}
+
+	/**
+	 * 
+	 * @param entitiesToAdd
+	 */
+	public static void addEntitiesToBoard(List<Entity> entitiesToAdd) {
+		boardEntities.addAll(entitiesToAdd);
+	}
+
+	/**
+	 * 
+	 * @param elementsToAdd
+	 */
+	public static void addUIHudElementsToBoard(List<UIHudElement> elementsToAdd) {
+		boardElements.addAll(elementsToAdd);
+	}
+
+	/**
+	 * 
+	 */
+	public static void initializeBoard() {
+		board = new GameState(boardEntities, boardElements, "Board");
+	}
+
+	/**
+	 * 
+	 */
+	public static void addBoard() {
+		addGameState("Board", board);
 	}
 
 }
