@@ -52,6 +52,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 */
 	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text) {
 		super(x, y, sizeLength, sizeLength, null);
+		this.textToDisplay = text;
 	}
 
 	@Override
