@@ -20,21 +20,38 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	// the state of the checkbox
 	protected boolean checkBoxTriggered = false;
 
+	private String textToDisplay = null;
+
 	public UIHudCheckBoxElement() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Creates a new check box element in the given position and with the given side
-	 * length (meant to be a square),
+	 * length (meant to be a square).
 	 * 
 	 * @param x          the horizontal position of this element
 	 * @param y          the vertical position of this element
-	 * @param sizeLenght the size of the element's sides
+	 * @param sizeLength the size of the element's sides
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLenght) {
-		super(x, y, sizeLenght, sizeLenght, null);
+	public UIHudCheckBoxElement(int x, int y, int sizeLength) {
+		super(x, y, sizeLength, sizeLength, null);
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square). Also sets the text to be displayed on the side
+	 * of this checkbox.
+	 * 
+	 * @param x          the horizontal position of this element
+	 * @param y          the vertical position of this element
+	 * @param sizeLength the size of the element's sides
+	 * @param text       the text to be displayed
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text) {
+		super(x, y, sizeLength, sizeLength, null);
 	}
 
 	@Override
@@ -58,6 +75,15 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 
 			g.setColor(Color.WHITE);
 			g.drawRect(x, y, width, height);
+			g.setColor(startingColor);
+		}
+
+		if (textToDisplay != null) {
+
+			Color startingColor = g.getColor();
+
+			g.setColor(Color.WHITE);
+			g.drawString(textToDisplay, (int) (x + width * 1.5), y);
 			g.setColor(startingColor);
 		}
 	}
