@@ -167,6 +167,8 @@ public class GameLauncher {
 		//draw FPS on screen
 		if (drawFPS)
 			FPSCounter.setTextToDisplay("FPS: " + fps);
+		else
+			FPSCounter.setTextToDisplay("");
 
 		// render all HUD elements on top of every game object
 		UIHud.render(g);

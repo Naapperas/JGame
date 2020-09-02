@@ -20,7 +20,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	private static final long serialVersionUID = -4408367719217626720L;
 
 	// the state of the checkbox
-	protected boolean checkBoxTriggered = false;
+	private boolean checkBoxTriggered = false;
 
 	private String textToDisplay = null;
 
@@ -57,6 +57,39 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 		this.textToDisplay = text;
 	}
 
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square).
+	 * 
+	 * @param x          the horizontal position of this element
+	 * @param y          the vertical position of this element
+	 * @param sizeLength the size of the element's sides
+	 * @param checked    weather this check box is already on or not
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, boolean checked) {
+		super(x, y, sizeLength, sizeLength, null);
+		checkBoxTriggered = checked;
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square). Also sets the text to be displayed on the side
+	 * of this checkbox.
+	 * 
+	 * @param x          the horizontal position of this element
+	 * @param y          the vertical position of this element
+	 * @param sizeLength the size of the element's sides
+	 * @param text       the text to be displayed
+	 * @param checked    weather this check box is on or not
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, boolean checked) {
+		super(x, y, sizeLength, sizeLength, null);
+		this.textToDisplay = text;
+		checkBoxTriggered = checked;
+	}
+
 	@Override
 	protected void processClick(MouseEvent e) {
 		checkBoxTriggered = !checkBoxTriggered;
@@ -91,10 +124,20 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 
 			g.setFont(g.getFont().deriveFont(startingFont.getSize() * scale));
 			g.setColor(Color.WHITE);
-			g.drawString(textToDisplay, (int) (x + width * 1.5), (int) (y + height * 0.75));
+			g.drawString(textToDisplay, (int) (x + width * 1.35), (int) (y + height * 0.75));
 			g.setColor(startingColor);
 			g.setFont(startingFont);
 		}
+	}
+
+	/**
+	 * Returns if this check box is on or not.
+	 * 
+	 * @return the state of this check box
+	 * @since 1.1.0
+	 */
+	public boolean getCheckBoxTriggered() {
+		return checkBoxTriggered;
 	}
 
 }
