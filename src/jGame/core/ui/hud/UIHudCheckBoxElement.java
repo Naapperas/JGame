@@ -1,8 +1,10 @@
 package jGame.core.ui.hud;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Class representing a toggable checkbox.
@@ -82,10 +84,16 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 		if (textToDisplay != null) {
 
 			Color startingColor = g.getColor();
+			Font startingFont = g.getFont();
+			Rectangle2D textBounds = g.getFontMetrics().getStringBounds(textToDisplay, g);
 
+			float scale = (float) (height / textBounds.getHeight());
+
+			g.setFont(g.getFont().deriveFont(startingFont.getSize() * scale));
 			g.setColor(Color.WHITE);
-			g.drawString(textToDisplay, (int) (x + width * 1.5), y);
+			g.drawString(textToDisplay, (int) (x + width * 1.5), (int) (y + height * 0.75));
 			g.setColor(startingColor);
+			g.setFont(startingFont);
 		}
 	}
 
