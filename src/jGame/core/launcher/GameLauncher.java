@@ -188,7 +188,7 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		ProgramLogger.writeLog("Terminating game!");
-		System.exit(0);
+		// System.exit(0);
 
 	}
 
