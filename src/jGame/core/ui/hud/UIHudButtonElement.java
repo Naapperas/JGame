@@ -2,10 +2,14 @@ package jGame.core.ui.hud;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.SwingUtilities;
 
 import jGame.core.launcher.GameLauncher;
 
@@ -26,6 +30,7 @@ public class UIHudButtonElement extends UIHudElement {
 
 	// element coords and displayable text
 	protected int width = 0, height = 0;
+	protected Rectangle bounds;
 	private String buttonText;
 
 	// the actual listener responsible for handling user input
@@ -36,6 +41,8 @@ public class UIHudButtonElement extends UIHudElement {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
+			// mouse event coordinates are already in the desired coordinate system, don't
+			// need to call isMouseOver()
 			if ((e.getX() > this.theElement.x && e.getX() < this.theElement.x + this.theElement.width)
 					&& (e.getY() > this.theElement.y && e.getY() < this.theElement.y + this.theElement.height))
 				theElement.processClick(e);
@@ -63,30 +70,51 @@ public class UIHudButtonElement extends UIHudElement {
 		this.width = width;
 		this.height = height;
 		this.buttonText = textToDisplay;
+		bounds = new Rectangle(width, height);
+		bounds.setLocation(x, y);
 	}
 
 	@Override
 	protected void render(Graphics g) {
 
-		// draw the frame of the button
-		g.setColor(Color.WHITE);
-		g.drawRect(x, y, width, height);
+		Color startingColor = g.getColor();
 
-		// this code is used to center the text on the button in order to give it a
-		// nicer look
-		Rectangle2D textBounds = g.getFontMetrics().getStringBounds(buttonText, g);
+		if (isMouseOver()) { // draw alternate look for hovered buttons
 
-		int textWidth = (int) textBounds.getWidth();
-		int textHeight = (int) textBounds.getHeight();
+			// draw the frame of the button
+			g.setColor(Color.WHITE);
+			g.fillRect(x, y, width, height);
 
-		g.drawString(buttonText, ((this.x + (this.width / 2)) - (textWidth / 2)),
-				((this.y + (this.height / 2)) + (textHeight / 4)));
+			// this code is used to center the text on the button in order to give it a
+			// nicer look
+			Rectangle2D textBounds = g.getFontMetrics().getStringBounds(buttonText, g);
 
-		g.setColor(Color.BLACK);
+			int textWidth = (int) textBounds.getWidth();
+			int textHeight = (int) textBounds.getHeight();
 
-		Rectangle bounds = new Rectangle(width, height);
-		bounds.setLocation(x, y);
+			g.setColor(Color.BLACK);
 
+			g.drawString(buttonText, ((this.x + (this.width / 2)) - (textWidth / 2)),
+					((this.y + (this.height / 2)) + (textHeight / 4)));
+
+		} else {
+
+			// draw the frame of the button
+			g.setColor(Color.WHITE);
+			g.drawRect(x, y, width, height);
+	
+			// this code is used to center the text on the button in order to give it a
+			// nicer look
+			Rectangle2D textBounds = g.getFontMetrics().getStringBounds(buttonText, g);
+	
+			int textWidth = (int) textBounds.getWidth();
+			int textHeight = (int) textBounds.getHeight();
+	
+			g.drawString(buttonText, ((this.x + (this.width / 2)) - (textWidth / 2)),
+					((this.y + (this.height / 2)) + (textHeight / 4)));
+		}
+
+		g.setColor(startingColor);
 	}
 
 	@Override
@@ -121,5 +149,14 @@ public class UIHudButtonElement extends UIHudElement {
 	@Override
 	public void removeInputListener() {
 		GameLauncher.getMainWindow().removeMouseInputListener(this.mouseListener, this);
+	}
+
+	private boolean isMouseOver() {
+
+		Point mousePos = MouseInfo.getPointerInfo().getLocation();
+
+		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
+
+		return bounds.contains(mousePos);
 	}
 }

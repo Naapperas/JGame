@@ -135,6 +135,8 @@ public class Window {
 		windowFrame.pack();
 		windowFrame.revalidate();
 
+		windowFrame.paint(null);
+
 	}
 
 	/**
@@ -296,7 +298,7 @@ public class Window {
 	 * @since 1.0.0
 	 */
 	public void removeMouseInputListener(MouseAdapter inputListener, UIHudElement hudElement) {
-		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
+		ProgramLogger.writeLog("Removing mouse input listener for " + hudElement);
 		windowCanvas.removeMouseListener(inputListener);
 	}
 
@@ -311,5 +313,17 @@ public class Window {
 	public void addAction(Action action, KeyStroke keyStroke, String key) {
 		((JComponent) windowFrame.getContentPane()).getInputMap().put(keyStroke, key);
 		((JComponent) windowFrame.getContentPane()).getActionMap().put(key, action);
+	}
+
+	/**
+	 * Removes a key binding from the given {@link Action}.
+	 *
+	 * @param keyStroke the key to trigger the action when pressed
+	 * @param key       the string denoting the action
+	 * @since 1.1.0
+	 */
+	public void removeAction(KeyStroke keyStroke, String key) {
+		((JComponent) windowFrame.getContentPane()).getInputMap().remove(keyStroke);
+		((JComponent) windowFrame.getContentPane()).getActionMap().remove(key);
 	}
 }

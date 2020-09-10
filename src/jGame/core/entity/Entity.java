@@ -266,6 +266,11 @@ public abstract class Entity implements Serializable {
 		GameLauncher.getMainWindow().addInputListener(inputListener, this);
 	}
 
+	/**
+	 * Removes this Enytity's key input listener in the GameLauncher's main window.
+	 * 
+	 * @since 1.0.0
+	 */
 	public void removeInputListener() {
 		GameLauncher.getMainWindow().removeInputListener(inputListener, this);
 	}

@@ -59,7 +59,8 @@ public class GameLauncher {
 
 	// since 1.1.0
 	private static UIHudElement pauseMenu = null; // we are going to be set in the launch method, when the window is
-													// already set
+													// already set, so we get correctly placed inside the desired
+													// dimensions of the window
 	private static boolean pause = false;
 	private static Action pauseAction = new AbstractAction() {
 
@@ -67,6 +68,7 @@ public class GameLauncher {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			ProgramLogger.writeLog("Pausing game");
 			pause = !pause;
 		}
 	};
@@ -82,7 +84,7 @@ public class GameLauncher {
 
 	private static boolean isGameRunning = false, drawFPS = true;
 
-	// the frameworks main loop
+	// the framework's main loop
 	private static Runnable gameLoop = () -> {
 		ProgramLogger.writeLog("Starting game loop.");
 		long lastTime = System.nanoTime();
@@ -93,8 +95,6 @@ public class GameLauncher {
 		int frames = 0;
 
 		UIHud.addHUDUIElement(FPSCounter);
-
-		getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
 
 		GameStateManager.addUIHudElementToBoard(pauseMenu);
 
@@ -188,7 +188,7 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		ProgramLogger.writeLog("Terminating game!");
-		// System.exit(0);
+		System.exit(0);
 
 	}
 
@@ -221,6 +221,18 @@ public class GameLauncher {
 			@Override
 			protected void processClick(MouseEvent e) {
 				pause = !pause;
+			}
+
+			@Override
+			public void registerInputListener() {
+				super.registerInputListener();
+				GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
+			}
+
+			@Override
+			public void removeInputListener() {
+				super.removeInputListener();
+				GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
 			}
 
 		};
