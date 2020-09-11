@@ -18,7 +18,8 @@ public abstract class UIHudElement implements Serializable {
 	private static final long serialVersionUID = 6496514301669618772L;
 
 	// the coordinates of the element
-	protected int x, y;
+	protected int x, y, width, height;
+	protected Constraints drawConstraints;
 
 	protected UIHudElement() {
 	}
@@ -34,6 +35,53 @@ public abstract class UIHudElement implements Serializable {
 	public UIHudElement(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * Initializes this element at the specified <code>x</code> and <code>y</code>
+	 * coordinates.
+	 * 
+	 * @param x      the horizontal position of this element
+	 * @param y      the vertical position of this element
+	 * @param width  the width of this element
+	 * @param height the height of this element
+	 * @since 1.0.0
+	 */
+	public UIHudElement(int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+
+	/**
+	 * Initializes this element at the specified <code>x</code> and <code>y</code>
+	 * coordinates, using the given location constraints.
+	 * 
+	 * @param x           the horizontal position of this element
+	 * @param y           the vertical position of this element
+	 * @param constraints the constraints with which to place this element
+	 * @since 1.1.0
+	 */
+	public UIHudElement(int x, int y, Constraints constraints) {
+		this(x, y);
+		this.drawConstraints = constraints;
+	}
+
+	/**
+	 * Initializes this element at the specified <code>x</code> and <code>y</code>
+	 * coordinates, using the given location constraints.
+	 * 
+	 * @param x           the horizontal position of this element
+	 * @param y           the vertical position of this element
+	 * @param width       the width of the element
+	 * @param height      the height of the element
+	 * @param constraints the constraints with which to place this element
+	 * @since 1.1.0
+	 */
+	public UIHudElement(int x, int y, int width, int height, Constraints constraints) {
+		this(x, y, width, height);
+		this.drawConstraints = constraints;
 	}
 
 	/**
