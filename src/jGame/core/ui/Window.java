@@ -43,6 +43,8 @@ public class Window {
 	// the canvas object in which the game is going to be rendered
 	private volatile Canvas windowCanvas = new Canvas();
 
+	private boolean fullScreen = false;
+
 	// static boolean to check if main window has been set, so we don't add
 	// incorrect behavior on future window objects
 	private static boolean mainWindowSet = false;
@@ -325,5 +327,27 @@ public class Window {
 	public void removeAction(KeyStroke keyStroke, String key) {
 		((JComponent) windowFrame.getContentPane()).getInputMap().remove(keyStroke);
 		((JComponent) windowFrame.getContentPane()).getActionMap().remove(key);
+	}
+
+	/**
+	 * Toggles the window to be fullscreen or not.
+	 * 
+	 * @since 1.1.0
+	 */
+	public void toggleFullscreen() {
+
+		if (!fullScreen) {
+			windowFrame.setVisible(false);
+			windowFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			windowFrame.setUndecorated(true);
+			windowFrame.setVisible(true);
+			fullScreen = true;
+		} else {
+			windowFrame.setVisible(false);
+			windowFrame.setExtendedState(JFrame.NORMAL);
+			windowFrame.setUndecorated(false);
+			windowFrame.setVisible(true);
+			fullScreen = false;
+		}
 	}
 }
