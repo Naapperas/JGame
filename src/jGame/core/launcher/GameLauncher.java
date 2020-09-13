@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
 import jGame.core.ui.Window;
+import jGame.core.ui.hud.Constraints;
 import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
 import jGame.core.ui.hud.UIHudElement;
@@ -55,6 +56,8 @@ public class GameLauncher {
 	private static final int BUFFER_AMOUNT = 3;
 
 	private static UIHudTextElement FPSCounter = new UIHudTextElement(7, 17, "FPS: ", Color.GREEN);
+	// ,Constraints.FROM_TOP_CONSTRAINT | Constraints.FROM_TOP_CONSTRAINT, new int[]
+	// { 17, 0, 0, 7 }
 	private static int fps = 0;
 
 	// since 1.1.0
@@ -210,8 +213,9 @@ public class GameLauncher {
 
 		ProgramLogger.writeLog("Launching game!");
 
-		pauseMenu = new UIHudButtonElement((int) getMainWindow().getWindowCanvas().getBounds().getWidth() - 60, 10, 50,
-				20, "Pause") {
+		pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+				Constraints.concatConstraints(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
+				new int[] { 10, 60, 0, 0 }) {
 
 			/**
 			 * 
