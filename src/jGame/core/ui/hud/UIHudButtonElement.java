@@ -41,10 +41,7 @@ public class UIHudButtonElement extends UIHudElement {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
-			// mouse event coordinates are already in the desired coordinate system, don't
-			// need to call isMouseOver()
-			if ((e.getX() > this.theElement.x && e.getX() < this.theElement.x + this.theElement.width)
-					&& (e.getY() > this.theElement.y && e.getY() < this.theElement.y + this.theElement.height))
+			if (bounds.contains(e.getPoint()))
 				theElement.processClick(e);
 		}
 	};
@@ -71,6 +68,7 @@ public class UIHudButtonElement extends UIHudElement {
 		bounds = new Rectangle(width, height);
 		bounds.setLocation(x, y);
 		this.drawConstraints = new Constraints(this, Constraints.NONE);
+		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
 	}
 
 	/**
@@ -93,6 +91,7 @@ public class UIHudButtonElement extends UIHudElement {
 		bounds = new Rectangle(width, height);
 		bounds.setLocation(x, y);
 		this.drawConstraints = new Constraints(this, constraintSpecs);
+		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
 	}
 
 	@Override
@@ -133,6 +132,8 @@ public class UIHudButtonElement extends UIHudElement {
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);
+
+		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
 	}
 
 	@Override
@@ -172,6 +173,7 @@ public class UIHudButtonElement extends UIHudElement {
 	private boolean isMouseOver() {
 
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
+
 
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
