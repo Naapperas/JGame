@@ -77,29 +77,6 @@ public class UIHudButtonElement extends UIHudElement {
 	 * <code>height</code> dimensions. Also sets the string to be displayed in the
 	 * center of the button.
 	 * 
-	 * @param x               the horizontal position of this element
-	 * @param y               the vertical position of this element
-	 * @param width           the with of this element
-	 * @param height          the height of this element
-	 * @param textToDisplay   the text to be displayed by this element
-	 * @param constraintSpecs the constraints to apply
-	 * @since 1.0.0
-	 */
-	public UIHudButtonElement(int x, int y, int width, int height, String textToDisplay, int constraintSpecs) {
-		super(x, y, width, height);
-		this.buttonText = textToDisplay;
-		bounds = new Rectangle(width, height);
-		bounds.setLocation(x, y);
-		this.drawConstraints = new Constraints(this, constraintSpecs, null);
-		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
-	}
-
-	/**
-	 * Initializes this button element in the given <code>x</code> and
-	 * <code>y</code> coordinates and with the given <code>width</code> and
-	 * <code>height</code> dimensions. Also sets the string to be displayed in the
-	 * center of the button.
-	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
 	 * @param width            the with of this element
