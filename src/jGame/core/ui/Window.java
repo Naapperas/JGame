@@ -120,7 +120,7 @@ public class Window {
 		windowFrame.setMinimumSize(minSize);
 		windowFrame.setMaximumSize(maxSize);
 
-		windowFrame.setResizable(false);
+		windowFrame.setResizable(true);
 
 		//force close operation. Default to dispose for any window and make exit on main window
 		windowFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

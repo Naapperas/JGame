@@ -2,8 +2,8 @@ package jGame.core.ui.hud;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.geom.Rectangle2D;
 
 /**
  * This class represents a textual visual element whose only purpose is to
@@ -315,7 +315,12 @@ public class UIHudTextElement extends UIHudElement {
 		if (textColor != null)
 			g.setColor(textColor);
 
-		Rectangle2D textBounds = g.getFontMetrics().getStringBounds(textToDisplay, g);
+		FontMetrics fontDimensions = g.getFontMetrics();
+		this.height = fontDimensions.getAscent() - fontDimensions.getLeading() - fontDimensions.getDescent();
+		this.width = (int) fontDimensions.getStringBounds(textToDisplay, g).getWidth();
+
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
 
 		g.drawString(textToDisplay, this.x, this.y);
 

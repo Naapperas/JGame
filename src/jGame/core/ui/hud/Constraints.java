@@ -32,7 +32,7 @@ public class Constraints {
 	 * @return the code of the given constrain type
 	 * @since 1.1.0
 	 */
-	public static int concatConstraints(int... constraintTypes) {
+	public static int concat(int... constraintTypes) {
 		int constraints = 0;
 		for (int i : constraintTypes) { constraints |= i; }
 		return constraints;
@@ -100,7 +100,7 @@ public class Constraints {
 			return this.contraintValues[Constraints.LEFT];
 		} else if ((this.constraintType & Constraints.FROM_RIGHT_CONSTRAINT) != 0) {
 			return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
-					- this.contraintValues[Constraints.RIGHT];
+					- this.contraintValues[Constraints.RIGHT] - this.constrainedElement.width;
 		} else
 			return constrainedElement.x;
 	}
@@ -114,14 +114,31 @@ public class Constraints {
 	 * @since 1.1.0
 	 */
 	public int getYLocation() {
+
+		/*
+		 * Strings get drawn from the left bottom corner, as opposed to other elements,
+		 * check special cases
+		 */
+
 		if ((this.constraintType & Constraints.CENTER_VERTICAL_CONSTRAINT) != 0) {
-			return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
-					- (constrainedElement.height / 2);
+			if (this.constrainedElement instanceof UIHudTextElement)
+				return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
+						+ (constrainedElement.height / 4);
+			else
+				return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
+						- (constrainedElement.height / 2);
 		} else if ((this.constraintType & Constraints.FROM_TOP_CONSTRAINT) != 0) {
-			return this.contraintValues[Constraints.TOP];
+			if (this.constrainedElement instanceof UIHudTextElement)
+				return this.contraintValues[Constraints.TOP] + this.constrainedElement.height;
+			else
+				return this.contraintValues[Constraints.TOP];
 		} else if ((this.constraintType & Constraints.FROM_BOTTOM_CONSTRAINT) != 0) {
-			return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-					- this.contraintValues[Constraints.BOTTOM];
+			if (this.constrainedElement instanceof UIHudTextElement)
+				return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+						- this.contraintValues[Constraints.BOTTOM];
+			else
+				return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+					- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
 		} else
 			return constrainedElement.y;
 	}
