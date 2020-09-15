@@ -58,7 +58,10 @@ public class UIHudBoxElement extends UIHudElement {
 		if (drawColor != null)
 			g.setColor(drawColor);
 
-		g.fillRect(x, y, width, height);
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
+
+		g.fillRect(this.x, this.y, width, height);
 
 		g.setColor(startingColor);
 	}

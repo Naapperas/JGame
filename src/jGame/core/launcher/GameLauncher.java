@@ -58,8 +58,6 @@ public class GameLauncher {
 	private static UIHudTextElement FPSCounter = new UIHudTextElement(0, 0, "FPS: ", Color.GREEN,
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_LEFT_CONSTRAINT),
 			new int[] { 7, 0, 0, 7 });
-	// ,Constraints.FROM_TOP_CONSTRAINT | Constraints.FROM_TOP_CONSTRAINT, new int[]
-	// { 17, 0, 0, 7 }
 	private static int fps = 0;
 
 	// since 1.1.0
@@ -217,7 +215,7 @@ public class GameLauncher {
 
 		pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
 				Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
-				new int[] { 10, 60, 0, 0 }) {
+				new int[] { 10, 10, 0, 0 }) {
 
 			/**
 			 * 

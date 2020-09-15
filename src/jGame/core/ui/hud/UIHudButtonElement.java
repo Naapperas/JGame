@@ -108,9 +108,12 @@ public class UIHudButtonElement extends UIHudElement {
 
 		g.setColor(Color.WHITE);
 
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
+
 		if (isMouseOver()) { // draw alternate look for hovered buttons
 			// fill the frame of the button
-			g.fillRect(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation(), width, height);
+			g.fillRect(this.x, this.y, width, height);
 			
 			// set text color
 			g.setColor(Color.BLACK);
@@ -119,7 +122,7 @@ public class UIHudButtonElement extends UIHudElement {
 			g.setFont(g.getFont().deriveFont(Font.BOLD));
 		} else {
 			// draw the frame of the button
-			g.drawRect(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation(), width, height);
+			g.drawRect(this.x, this.y, width, height);
 		}
 
 		// this code is used to center the text on the button in order to give it a
@@ -129,8 +132,8 @@ public class UIHudButtonElement extends UIHudElement {
 		int textWidth = (int) textBounds.getWidth();
 		int textHeight = (int) textBounds.getHeight();
 
-		g.drawString(buttonText, ((this.drawConstraints.getXLocation() + (this.width / 2)) - (textWidth / 2)),
-				((this.drawConstraints.getYLocation() + (this.height / 2)) + (textHeight / 4)));
+		g.drawString(buttonText, ((this.x + (this.width / 2)) - (textWidth / 2)),
+				((this.y + (this.height / 2)) + (textHeight / 4)));
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);

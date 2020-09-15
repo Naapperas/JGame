@@ -98,19 +98,22 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	@Override
 	protected void render(Graphics g) {
 
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
+
 		if (checkBoxTriggered) {
 			Color startingColor = g.getColor();
 
 			g.setColor(Color.WHITE);
-			g.drawRect(x, y, width, height);
-			g.fillRect(x + 3, y + 3, width - 6, height - 6);
+			g.drawRect(this.x, this.y, this.width, this.height);
+			g.fillRect(this.x + 3, this.y + 3, this.width - 6, this.height - 6);
 			g.setColor(startingColor);
 
 		} else {
 			Color startingColor = g.getColor();
 
 			g.setColor(Color.WHITE);
-			g.drawRect(x, y, width, height);
+			g.drawRect(this.x, this.y, this.width, this.height);
 			g.setColor(startingColor);
 		}
 
@@ -120,11 +123,11 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 			Font startingFont = g.getFont();
 			Rectangle2D textBounds = g.getFontMetrics().getStringBounds(textToDisplay, g);
 
-			float scale = (float) (height / textBounds.getHeight());
+			float scale = (float) (this.height / textBounds.getHeight());
 
 			g.setFont(g.getFont().deriveFont(startingFont.getSize() * scale));
 			g.setColor(Color.WHITE);
-			g.drawString(textToDisplay, (int) (x + width * 1.35), (int) (y + height * 0.75));
+			g.drawString(textToDisplay, (int) (this.x + this.width * 1.35), (int) (this.y + this.height * 0.75));
 			g.setColor(startingColor);
 			g.setFont(startingFont);
 		}
