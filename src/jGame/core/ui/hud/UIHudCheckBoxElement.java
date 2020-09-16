@@ -39,6 +39,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 */
 	public UIHudCheckBoxElement(int x, int y, int sizeLength) {
 		super(x, y, sizeLength, sizeLength, null);
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
 	/**
@@ -55,6 +56,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text) {
 		super(x, y, sizeLength, sizeLength, null);
 		this.textToDisplay = text;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
 	/**
@@ -70,6 +72,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	public UIHudCheckBoxElement(int x, int y, int sizeLength, boolean checked) {
 		super(x, y, sizeLength, sizeLength, null);
 		checkBoxTriggered = checked;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
 	/**
@@ -88,6 +91,87 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 		super(x, y, sizeLength, sizeLength, null);
 		this.textToDisplay = text;
 		checkBoxTriggered = checked;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square).
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param sizeLength       the size of the element's sides
+	 * @param constraintType   the constraints to apply to this element
+	 * @param constraintValues the specific values to apply when constraining the
+	 *                         element
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, int constraintType, int[] constraintValues) {
+		super(x, y, sizeLength, sizeLength, null);
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square). Also sets the text to be displayed on the side
+	 * of this checkbox.
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param sizeLength       the size of the element's sides
+	 * @param text             the text to be displayed
+	 * @param constraintType   the constraints to apply to this element
+	 * @param constraintValues the specific values to apply when constraining the
+	 *                         element
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, int constraintType, int[] constraintValues) {
+		super(x, y, sizeLength, sizeLength, null);
+		this.textToDisplay = text;
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square).
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param sizeLength       the size of the element's sides
+	 * @param checked          weather this check box is already on or not
+	 * @param constraintType   the constraints to apply to this element
+	 * @param constraintValues the specific values to apply when constraining the
+	 *                         element
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, boolean checked, int constraintType,
+			int[] constraintValues) {
+		super(x, y, sizeLength, sizeLength, null);
+		checkBoxTriggered = checked;
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);;
+	}
+
+	/**
+	 * Creates a new check box element in the given position and with the given side
+	 * length (meant to be a square). Also sets the text to be displayed on the side
+	 * of this checkbox.
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param sizeLength       the size of the element's sides
+	 * @param text             the text to be displayed
+	 * @param checked          weather this check box is on or not
+	 * @param constraintType   the constraints to apply to this element
+	 * @param constraintValues the specific values to apply when constraining the
+	 *                         element
+	 * @since 1.1.0
+	 */
+	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, boolean checked, int constraintType,
+			int[] constraintValues) {
+		super(x, y, sizeLength, sizeLength, null);
+		this.textToDisplay = text;
+		checkBoxTriggered = checked;
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
 	}
 
 	@Override

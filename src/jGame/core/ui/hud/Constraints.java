@@ -56,6 +56,11 @@ public class Constraints {
 	/**
 	 * 
 	 */
+	public static int CENTER_POINT_CONSTRAINT = concat(CENTER_HORIZONTAL_CONSTRAINT, CENTER_VERTICAL_CONSTRAINT);
+
+	/**
+	 * 
+	 */
 	public static int FROM_TOP_CONSTRAINT = BIT_MASK(3);
 
 	/**
