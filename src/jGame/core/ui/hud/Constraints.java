@@ -98,6 +98,10 @@ public class Constraints {
 	 * @since 1.1.0
 	 */
 	public int getXLocation() {
+
+		// UIHudCheckBoxElements have a box and some text, we ned tro account for the
+		// text
+
 		if ((this.constraintType & Constraints.CENTER_HORIZONTAL_CONSTRAINT) != 0) {
 			return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth() / 2)
 					- (constrainedElement.width / 2);
@@ -121,8 +125,8 @@ public class Constraints {
 	public int getYLocation() {
 
 		/*
-		 * Strings get drawn from the left bottom corner, as opposed to other elements,
-		 * check special cases
+		 * Strings get drawn from the left bottom corner (baseline), as opposed to other
+		 * elements, check special cases
 		 */
 
 		if ((this.constraintType & Constraints.CENTER_VERTICAL_CONSTRAINT) != 0) {

@@ -21,6 +21,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 
 	// the state of the checkbox
 	private boolean checkBoxTriggered = false;
+	private int boxSideLenght;
 
 	private String textToDisplay = null;
 
@@ -34,11 +35,12 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x          the horizontal position of this element
 	 * @param y          the vertical position of this element
-	 * @param sizeLength the size of the element's sides
+	 * @param sideLength the size of the element's sides
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -49,12 +51,13 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x          the horizontal position of this element
 	 * @param y          the vertical position of this element
-	 * @param sizeLength the size of the element's sides
+	 * @param sideLength the size of the element's sides
 	 * @param text       the text to be displayed
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength, String text) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.textToDisplay = text;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
@@ -65,12 +68,13 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x          the horizontal position of this element
 	 * @param y          the vertical position of this element
-	 * @param sizeLength the size of the element's sides
+	 * @param sideLength the size of the element's sides
 	 * @param checked    weather this check box is already on or not
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, boolean checked) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength, boolean checked) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		checkBoxTriggered = checked;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
@@ -82,13 +86,14 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x          the horizontal position of this element
 	 * @param y          the vertical position of this element
-	 * @param sizeLength the size of the element's sides
+	 * @param sideLength the size of the element's sides
 	 * @param text       the text to be displayed
 	 * @param checked    weather this check box is on or not
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, boolean checked) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength, String text, boolean checked) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.textToDisplay = text;
 		checkBoxTriggered = checked;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
@@ -100,14 +105,15 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
-	 * @param sizeLength       the size of the element's sides
+	 * @param sideLength       the size of the element's sides
 	 * @param constraintType   the constraints to apply to this element
 	 * @param constraintValues the specific values to apply when constraining the
 	 *                         element
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, int constraintType, int[] constraintValues) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength, int constraintType, int[] constraintValues) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
 	}
 
@@ -118,15 +124,16 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
-	 * @param sizeLength       the size of the element's sides
+	 * @param sideLength       the size of the element's sides
 	 * @param text             the text to be displayed
 	 * @param constraintType   the constraints to apply to this element
 	 * @param constraintValues the specific values to apply when constraining the
 	 *                         element
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, int constraintType, int[] constraintValues) {
-		super(x, y, sizeLength, sizeLength, null);
+	public UIHudCheckBoxElement(int x, int y, int sideLength, String text, int constraintType, int[] constraintValues) {
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.textToDisplay = text;
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
 	}
@@ -137,16 +144,17 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
-	 * @param sizeLength       the size of the element's sides
+	 * @param sideLength       the size of the element's sides
 	 * @param checked          weather this check box is already on or not
 	 * @param constraintType   the constraints to apply to this element
 	 * @param constraintValues the specific values to apply when constraining the
 	 *                         element
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, boolean checked, int constraintType,
+	public UIHudCheckBoxElement(int x, int y, int sideLength, boolean checked, int constraintType,
 			int[] constraintValues) {
-		super(x, y, sizeLength, sizeLength, null);
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		checkBoxTriggered = checked;
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);;
 	}
@@ -158,7 +166,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
-	 * @param sizeLength       the size of the element's sides
+	 * @param sideLength       the size of the element's sides
 	 * @param text             the text to be displayed
 	 * @param checked          weather this check box is on or not
 	 * @param constraintType   the constraints to apply to this element
@@ -166,9 +174,10 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	 *                         element
 	 * @since 1.1.0
 	 */
-	public UIHudCheckBoxElement(int x, int y, int sizeLength, String text, boolean checked, int constraintType,
+	public UIHudCheckBoxElement(int x, int y, int sideLength, String text, boolean checked, int constraintType,
 			int[] constraintValues) {
-		super(x, y, sizeLength, sizeLength, null);
+		super(x, y, sideLength, sideLength, null);
+		this.boxSideLenght = sideLength;
 		this.textToDisplay = text;
 		checkBoxTriggered = checked;
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
@@ -188,29 +197,30 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 		Rectangle2D textBounds = g.getFontMetrics().getStringBounds(textToDisplay, g);
 		float scale = (float) (this.height / textBounds.getHeight());
 
-		double elementWidth = (this.width * 1.35)
+		this.width = (int) ((this.boxSideLenght * 1.35)
 				+ g.getFontMetrics(g.getFont().deriveFont(startingFont.getSize() * scale))
-						.getStringBounds(textToDisplay, g).getWidth();
+						.getStringBounds(textToDisplay, g).getWidth());
 
-		this.x = (int) (this.drawConstraints.getXLocation() - elementWidth / 2.5);
+		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
 		if (checkBoxTriggered) {
 			g.setColor(Color.WHITE);
-			g.drawRect(this.x, this.y, this.width, this.height);
-			g.fillRect(this.x + 3, this.y + 3, this.width - 6, this.height - 6);
+			g.drawRect(this.x, this.y, this.boxSideLenght, this.boxSideLenght);
+			g.fillRect(this.x + 3, this.y + 3, this.boxSideLenght - 6, this.boxSideLenght - 6);
 			g.setColor(startingColor);
 
 		} else {
 			g.setColor(Color.WHITE);
-			g.drawRect(this.x, this.y, this.width, this.height);
+			g.drawRect(this.x, this.y, this.boxSideLenght, this.boxSideLenght);
 			g.setColor(startingColor);
 		}
 
 		if (textToDisplay != null) {
 			g.setFont(g.getFont().deriveFont(startingFont.getSize() * scale));
 			g.setColor(Color.WHITE);
-			g.drawString(textToDisplay, (int) (this.x + this.width * 1.35), (int) (this.y + this.height * 0.75));
+			g.drawString(textToDisplay, (int) (this.x + this.boxSideLenght * 1.35),
+					(int) (this.y + this.boxSideLenght * 0.75));
 			g.setColor(startingColor);
 			g.setFont(startingFont);
 		}
