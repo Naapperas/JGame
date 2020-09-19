@@ -57,7 +57,7 @@ public class UIHudButtonElement extends UIHudElement {
 	 * 
 	 * @param x             the horizontal position of this element
 	 * @param y             the vertical position of this element
-	 * @param width         the with of this element
+	 * @param width         the width of this element
 	 * @param height        the height of this element
 	 * @param textToDisplay the text to be displayed by this element
 	 * @since 1.0.0
@@ -66,9 +66,7 @@ public class UIHudButtonElement extends UIHudElement {
 		super(x, y, width, height);
 		this.buttonText = textToDisplay;
 		bounds = new Rectangle(width, height);
-		bounds.setLocation(x, y);
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
-		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
 	}
 
 	/**
@@ -79,7 +77,7 @@ public class UIHudButtonElement extends UIHudElement {
 	 * 
 	 * @param x                the horizontal position of this element
 	 * @param y                the vertical position of this element
-	 * @param width            the with of this element
+	 * @param width            the width of this element
 	 * @param height           the height of this element
 	 * @param textToDisplay    the text to be displayed by this element
 	 * @param constraintSpecs  the constraints to apply
@@ -91,9 +89,7 @@ public class UIHudButtonElement extends UIHudElement {
 		super(x, y, width, height);
 		this.buttonText = textToDisplay;
 		bounds = new Rectangle(width, height);
-		bounds.setLocation(x, y);
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
-		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
 	}
 
 	@Override
@@ -105,6 +101,20 @@ public class UIHudButtonElement extends UIHudElement {
 		// TODO: MAKE FONT DEPENDANT ON SIZE
 		// g.setFont(startingFont.deriveFont((float) startingFont.getSize() * (width *
 		// height) / 2500));
+
+		Rectangle2D textBounds = g.getFontMetrics(startingFont).getStringBounds(buttonText, g);
+
+		int textWidth = (int) textBounds.getWidth();
+		int textHeight = (int) textBounds.getHeight();
+
+		float scaleX = (float) (this.width / textBounds.getWidth());
+
+		g.setFont(startingFont.deriveFont(startingFont.getSize() * scaleX * 0.62f));
+
+		textBounds = g.getFontMetrics(g.getFont()).getStringBounds(buttonText, g);
+
+		textWidth = (int) textBounds.getWidth();
+		textHeight = (int) textBounds.getHeight();
 
 		g.setColor(Color.WHITE);
 
@@ -127,10 +137,6 @@ public class UIHudButtonElement extends UIHudElement {
 
 		// this code is used to center the text on the button in order to give it a
 		// nicer look
-		Rectangle2D textBounds = g.getFontMetrics().getStringBounds(buttonText, g);
-
-		int textWidth = (int) textBounds.getWidth();
-		int textHeight = (int) textBounds.getHeight();
 
 		g.drawString(buttonText, ((this.x + (this.width / 2)) - (textWidth / 2)),
 				((this.y + (this.height / 2)) + (textHeight / 4)));
@@ -138,7 +144,7 @@ public class UIHudButtonElement extends UIHudElement {
 		g.setColor(startingColor);
 		g.setFont(startingFont);
 
-		bounds.setLocation(this.drawConstraints.getXLocation(), this.drawConstraints.getYLocation());
+		bounds.setLocation(this.x, this.y);
 	}
 
 	@Override
@@ -184,4 +190,10 @@ public class UIHudButtonElement extends UIHudElement {
 
 		return bounds.contains(mousePos);
 	}
+
+	@Override
+	public String toString() {
+		return "UIHudButtonElement [buttonText=" + buttonText + ", width=" + width + ", height=" + height + "]";
+	}
+
 }
