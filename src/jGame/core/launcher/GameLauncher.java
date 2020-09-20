@@ -61,9 +61,34 @@ public class GameLauncher {
 	private static int fps = 0;
 
 	// since 1.1.0
-	private static UIHudElement pauseMenu = null; // we are going to be set in the launch method, when the window is
-													// already set, so we get correctly placed inside the desired
-													// dimensions of the window
+	private static UIHudElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
+			new int[] { 10, 10, 0, 0 }) {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4372277764333169074L;
+
+		@Override
+		protected void processClick(MouseEvent e) {
+			pause = !pause;
+		}
+
+		@Override
+		public void registerInputListener() {
+			super.registerInputListener();
+			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
+		}
+
+		@Override
+		public void removeInputListener() {
+			super.removeInputListener();
+			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
+		}
+
+	};
+
 	private static boolean pause = false;
 	private static Action pauseAction = new AbstractAction() {
 
@@ -214,34 +239,6 @@ public class GameLauncher {
 	public static void launchGame() {
 
 		ProgramLogger.writeLog("Launching game!");
-
-		pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
-				Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
-				new int[] { 10, 10, 0, 0 }) {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -4372277764333169074L;
-
-			@Override
-			protected void processClick(MouseEvent e) {
-				pause = !pause;
-			}
-
-			@Override
-			public void registerInputListener() {
-				super.registerInputListener();
-				GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
-			}
-
-			@Override
-			public void removeInputListener() {
-				super.removeInputListener();
-				GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
-			}
-
-		};
 
 		isGameRunning = true;
 
