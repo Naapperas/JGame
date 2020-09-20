@@ -257,19 +257,6 @@ public class GameLauncher {
 	}
 
 	/**
-	 * Launches the game, setting the main window to be <code>mainWindow</code>.
-	 *
-	 * @param mainWindow the window to be used for rendering the game.
-	 * @since 1.0.0
-	 */
-	public static void launchGame(Window mainWindow) {
-
-		setMainWindow(mainWindow);
-
-		launchGame();
-	}
-
-	/**
 	 * Queues a {@link Runnable} object to run asynchronously.
 	 *
 	 * @param r the {@link Runnable} object to run.
