@@ -130,6 +130,11 @@ public class UIHudButtonElement extends UIHudElement {
 
 			// set text font
 			g.setFont(g.getFont().deriveFont(Font.BOLD));
+
+			textBounds = g.getFontMetrics(g.getFont()).getStringBounds(buttonText, g);
+
+			textWidth = (int) textBounds.getWidth();
+			textHeight = (int) textBounds.getHeight();
 		} else {
 			// draw the frame of the button
 			g.drawRect(this.x, this.y, width, height);

@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -59,6 +61,8 @@ public class UIHudSliderElement extends UIHudElement {
 		}
 		
 	};
+
+	private List<SliderCallback> callbackList = new LinkedList<SliderCallback>();
 
 	public UIHudSliderElement() {
 	}
@@ -119,6 +123,8 @@ public class UIHudSliderElement extends UIHudElement {
 	@Override
 	protected void render(Graphics g) {
 
+		boolean valueChanged = false;
+
 		Color startingColor = g.getColor();
 		Font startingFont = g.getFont();
 
@@ -133,11 +139,19 @@ public class UIHudSliderElement extends UIHudElement {
 			Point p = MouseInfo.getPointerInfo().getLocation();
 			SwingUtilities.convertPointFromScreen(p, GameLauncher.getMainWindow().getWindowCanvas());
 
-			handleX = MathUtils.clamp((int) p.getX() - handleXOffset, x, x + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+			float temp = MathUtils.clamp((int) p.getX() - handleXOffset, x, x + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+
+			if (temp != handleX)
+				valueChanged = true;
+
+			handleX = temp;
 		}
 		// TODO: make drawing math in floats instead of integers in order to get more
 		// precise numbers
 		value = MathUtils.map(handleX, x, x + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1, minValue, maxValue);
+
+		if (valueChanged)
+			callbackList.forEach((r) -> { r.run(value); });
 
 		g.setColor(Color.WHITE);
 		g.drawRoundRect(x, y, SLIDER_WIDTH, SLIDER_HEIGHT, 25, 25);
@@ -182,5 +196,24 @@ public class UIHudSliderElement extends UIHudElement {
 	 */
 	public float getValue() {
 		return value;
+	}
+
+	/**
+	 * 
+	 * @param r
+	 */
+	public void addCallback(SliderCallback r) {
+		callbackList.add(r);
+	}
+
+	/**
+	 * 
+	 * @author Nuno Pereira
+	 *
+	 */
+	public interface SliderCallback {
+
+		public void run(final float newValue);
+
 	}
 }
