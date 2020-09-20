@@ -104,6 +104,8 @@ public class GameLauncher {
 		GameStateManager.initializeBoard();
 		GameStateManager.addBoard();
 
+		GameStateManager.initState();
+
 		while(isGameRunning) {
 
 			// ensure that all listeners can handle user events

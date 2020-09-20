@@ -18,7 +18,7 @@ import jGame.logging.ProgramLogger;
 public class GameStateManager {
 
 	/**
-	 * The board game state every game must have.
+	 * The board {@link GameState} every game must have.
 	 * 
 	 * @since 1.1.0
 	 */
@@ -62,8 +62,10 @@ public class GameStateManager {
 	 * @since 1.0.0
 	 */
 	public static synchronized void addGameState(String gameStateDescr, GameState gameState) {
-		if (gameStates.isEmpty())
+		if (gameStates.isEmpty()) {
+			ProgramLogger.writeLog("Setting current game state to " + gameState.toString());
 			currentState = gameState;
+		}
 		gameStates.put(gameStateDescr, gameState);
 
 		ProgramLogger.writeLog("Added game state: " + gameState.toString());
@@ -133,12 +135,14 @@ public class GameStateManager {
 	 */
 	public static void initializeBoard() {
 		board = new GameState(boardEntities, boardElements, "Board");
+		ProgramLogger.writeLog("Initializing Board");
 	}
 
 	/**
 	 * 
 	 */
 	public static void addBoard() {
+		ProgramLogger.writeLog("Adding Board");
 		addGameState("Board", board);
 	}
 
