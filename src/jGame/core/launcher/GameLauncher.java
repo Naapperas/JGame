@@ -61,6 +61,10 @@ public class GameLauncher {
 			new int[] { 7, 0, 0, 7 });
 	private static int fps = 0;
 
+	public static int getFPS() {
+		return fps;
+	}
+
 	// since 1.1.0
 	private static UIHudElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),

@@ -1,7 +1,7 @@
 package jGame.core.ui.hud;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * 
@@ -51,7 +51,7 @@ public class UIHudBoxElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics g) {
+	protected void render(Graphics2D g) {
 
 		Color startingColor = g.getColor();
 

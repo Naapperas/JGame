@@ -151,4 +151,10 @@ public class Constraints {
 		} else
 			return constrainedElement.y;
 	}
+
+	@Override
+	public String toString() {
+		return "Constraints [constraintType=" + constraintType + "]";
+	}
+
 }

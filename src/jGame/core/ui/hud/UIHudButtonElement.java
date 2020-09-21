@@ -2,7 +2,7 @@ package jGame.core.ui.hud;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -93,7 +93,7 @@ public class UIHudButtonElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics g) {
+	protected void render(Graphics2D g) {
 
 		Color startingColor = g.getColor();
 		Font startingFont = g.getFont();

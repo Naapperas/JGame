@@ -2,7 +2,7 @@ package jGame.core.ui.hud;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -189,7 +189,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	}
 
 	@Override
-	protected void render(Graphics g) {
+	protected void render(Graphics2D g) {
 
 		Font startingFont = g.getFont();
 		Color startingColor = g.getColor();

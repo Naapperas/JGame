@@ -3,7 +3,7 @@ package jGame.core.ui.hud;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * This class represents a textual visual element whose only purpose is to
@@ -304,7 +304,7 @@ public class UIHudTextElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics g) {
+	protected void render(Graphics2D g) {
 
 		Font startingFont = g.getFont();
 

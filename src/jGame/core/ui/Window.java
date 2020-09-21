@@ -329,6 +329,16 @@ public class Window {
 		((JComponent) windowFrame.getContentPane()).getActionMap().remove(key);
 	}
 
+	public void addInputListener(KeyAdapter keyInputListener, UIHudElement element) {
+		ProgramLogger.writeLog("Adding key input listener for " + element);
+		windowCanvas.addKeyListener(keyInputListener);
+	}
+
+	public void removeInputListener(KeyAdapter keyInputListener, UIHudElement element) {
+		ProgramLogger.writeLog("Adding key input listener for " + element);
+		windowCanvas.removeKeyListener(keyInputListener);
+	}
+
 	/**
 	 * Toggles the window to be fullscreen or not.
 	 * 

@@ -1,6 +1,7 @@
 package jGame.core.ui.hud;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.Serializable;
 
 /**
@@ -60,7 +61,7 @@ public abstract class UIHudElement implements Serializable {
 	 * @param g the {@link Graphics} object responsible for rendering this element
 	 * @since 1.0.0
 	 */
-	protected abstract void render(Graphics g);
+	protected abstract void render(Graphics2D g);
 
 	/**
 	 * Registers this element's input listener.
@@ -76,4 +77,11 @@ public abstract class UIHudElement implements Serializable {
 	 * @since 1.0.0
 	 */
 	public abstract void removeInputListener();
+
+	@Override
+	public String toString() {
+		return "UIHudElement [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", drawConstraints="
+				+ drawConstraints + "]";
+	}
+
 }
