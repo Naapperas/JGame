@@ -67,6 +67,7 @@ public class Animation {
 	 * Queues the given animation task for future execution.
 	 * 
 	 * @param task the task needed to animate this animation's sprite
+	 * @since 1.0.0
 	 */
 	private synchronized void queueAnimationTask(Runnable task) {
 		animationTasks.add(task);

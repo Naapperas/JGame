@@ -1,7 +1,8 @@
 package jGame.core.launcher;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
@@ -183,16 +184,18 @@ public class GameLauncher {
 			return;
 		}
 
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
+
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		//insert rendering code here
 
-		g.clearRect(0, 0, (int) mainWindow.getWindowCanvas().getBounds().getWidth(),
+		g2d.clearRect(0, 0, (int) mainWindow.getWindowCanvas().getBounds().getWidth(),
 				(int) mainWindow.getWindowCanvas().getBounds().getHeight());
-		g.setColor(mainWindow.getWindowCanvas().getBackground());
+		g2d.setColor(mainWindow.getWindowCanvas().getBackground());
 
-		//TODO: update rendering system
-		EntityManager.renderEntities(g);
+		EntityManager.renderEntities(g2d);
 
 		//draw FPS on screen
 		if (drawFPS)
@@ -201,10 +204,10 @@ public class GameLauncher {
 			FPSCounter.setTextToDisplay("");
 
 		// render all HUD elements on top of every game object
-		UIHud.render(g);
+		UIHud.render(g2d);
 
-		g.dispose();
-		g = null;
+		g2d.dispose();
+		g2d = null;
 		bs.show();
 		bs = null;
 	}

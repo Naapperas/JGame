@@ -1,6 +1,7 @@
 package jGame.core.ui.hud;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class UIHud {
 	 *          {@link UIHudElement}s
 	 * @since 1.0.0
 	 */
-	public synchronized static void render(Graphics g) {
+	public synchronized static void render(Graphics2D g) {
 
 		if (!HUD_ELEMENTS_TO_REMOVE.isEmpty()) {
 			HUD_ELEMENTS_TO_REMOVE.forEach((element) -> { HUD.remove(element); });

@@ -18,7 +18,7 @@ public class SoundManager {
 	 * Plays the specified audio file.
 	 * 
 	 * @param soundFileToPlay the audio file to be played
-	 * @return
+	 * @return a {@link SoundWorker} to play the specified audio
 	 * @since 1.0.0
 	 */
 	public static SoundWorker playSound(File soundFileToPlay) {
@@ -32,7 +32,7 @@ public class SoundManager {
 	 * Plays the audio file referenced by {@code soundFileToPlay}.
 	 * 
 	 * @param soundFileToPlay the {@link URL} to the audio file
-	 * @return
+	 * @return a {@link SoundWorker} to play the specified audio
 	 * @since 1.0.0
 	 */
 	public static SoundWorker playSound(URL soundFileToPlay) {
@@ -46,7 +46,7 @@ public class SoundManager {
 	 * Plays the specified audio file.
 	 * 
 	 * @param soundFileToPlay the path of the file to be played
-	 * @return
+	 * @return a {@link SoundWorker} to play the specified audio
 	 * @since 1.0.0
 	 */
 	public static SoundWorker playSound(String soundFileToPlay) {

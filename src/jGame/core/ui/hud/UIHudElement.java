@@ -55,36 +55,6 @@ public abstract class UIHudElement implements Serializable {
 	}
 
 	/**
-	 * Initializes this element at the specified <code>x</code> and <code>y</code>
-	 * coordinates, using the given location constraints.
-	 * 
-	 * @param x           the horizontal position of this element
-	 * @param y           the vertical position of this element
-	 * @param constraints the constraints with which to place this element
-	 * @since 1.1.0
-	 */
-	public UIHudElement(int x, int y, Constraints constraints) {
-		this(x, y);
-		this.drawConstraints = constraints;
-	}
-
-	/**
-	 * Initializes this element at the specified <code>x</code> and <code>y</code>
-	 * coordinates, using the given location constraints.
-	 * 
-	 * @param x           the horizontal position of this element
-	 * @param y           the vertical position of this element
-	 * @param width       the width of the element
-	 * @param height      the height of the element
-	 * @param constraints the constraints with which to place this element
-	 * @since 1.1.0
-	 */
-	public UIHudElement(int x, int y, int width, int height, Constraints constraints) {
-		this(x, y, width, height);
-		this.drawConstraints = constraints;
-	}
-
-	/**
 	 * Renders this element on the screen.
 	 * 
 	 * @param g the {@link Graphics} object responsible for rendering this element
