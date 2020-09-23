@@ -4,11 +4,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.SwingUtilities;
 
 import jGame.core.launcher.GameLauncher;
 
@@ -19,29 +24,52 @@ public class UIHudInputBoxElement extends UIHudElement {
 	 */
 	private static final long serialVersionUID = 2899739622778351704L;
 
-	private String input = "";
+	private StringBuilder input = new StringBuilder();
 
-	private KeyAdapter keyInputListenern = new KeyAdapter() {
+	private int cursorPosition = 0, cursorBlinkTimer = 0, inputCursorPosition = 0;
+	
+	private boolean hasFocus = false;
+
+	private KeyAdapter keyInputListener = new KeyAdapter() {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			super.keyPressed(e);
-		}
+			if (!hasFocus) // we only want to process events if we have focus
+				return;
 
+			// because we have no concept of "layer stack", events propagate to every
+			// listener, we need to call this method to ensure that no action dependent on
+			// keys is activated
+			GameLauncher.setHudEvent();
+
+			int keyCode = e.getKeyCode();
+			
+			if(keyCode == KeyEvent.VK_BACK_SPACE) {
+				if(input.length() > 0) {
+					input.deleteCharAt(inputCursorPosition-- - 1);
+				}
+			} else {
+				input.append(e.getKeyChar());
+				inputCursorPosition++;
+			}
+
+			System.out.println(getInput());
+
+			e.consume();
+		}
 	};
 
 	private MouseAdapter mouseListener = new MouseAdapter() {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			super.mousePressed(e);
+			if (isMouseOver())
+				hasFocus = true;
+			else {
+				hasFocus = false;
+				cursorBlinkTimer = 0;
+			}
 		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			super.mouseReleased(e);
-		}
-		
 	};
 
 	public UIHudInputBoxElement() {
@@ -81,25 +109,50 @@ public class UIHudInputBoxElement extends UIHudElement {
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
+		this.cursorPosition = x + 13;
+
 		g.drawRect(x, y, width, height);
+
+		g.setStroke(startingStroke);
+
+		if (hasFocus) {
+			if (cursorBlinkTimer <= GameLauncher.getFPS() / 2)
+				g.fillRect(cursorPosition, y + 6, 3, height - 12);
+			
+			cursorBlinkTimer++;
+		}
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);
 		g.setStroke(startingStroke);
 
+		if(cursorBlinkTimer >= GameLauncher.getFPS())
+			cursorBlinkTimer = 0;
+		
 	}
 
 	@Override
 	public void registerInputListener() {
-		GameLauncher.getMainWindow().addInputListener(keyInputListenern, this);
+		GameLauncher.getMainWindow().addInputListener(keyInputListener, this);
+		GameLauncher.getMainWindow().addMouseInputListener(mouseListener, this);
 	}
 
 	@Override
 	public void removeInputListener() {
-		GameLauncher.getMainWindow().removeInputListener(keyInputListenern, this);
+		GameLauncher.getMainWindow().removeInputListener(keyInputListener, this);
+		GameLauncher.getMainWindow().removeMouseInputListener(mouseListener, this);
 	}
 
 	public String getInput() {
-		return input;
+		return input.toString();
+	}
+
+	private boolean isMouseOver() {
+
+		Point mousePos = MouseInfo.getPointerInfo().getLocation();
+
+		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
+
+		return new Rectangle(x, y, width, height).contains(mousePos);
 	}
 }

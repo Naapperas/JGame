@@ -94,13 +94,22 @@ public class GameLauncher {
 
 	};
 
-	private static boolean pause = false;
+	private static boolean pause = false, hudEvent = false;
+
+	public static void setHudEvent() {
+		GameLauncher.hudEvent = true;
+	}
+
 	private static Action pauseAction = new AbstractAction() {
 
 		private static final long serialVersionUID = -8628054626023408846L;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (hudEvent) {
+				hudEvent = false;
+				return;
+			} // 'p' has been pressed on a hud element, need this to not pass events down
 			ProgramLogger.writeLog("Pausing game");
 			pause = !pause;
 		}

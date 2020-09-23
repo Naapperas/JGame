@@ -190,7 +190,6 @@ public class UIHudButtonElement extends UIHudElement {
 
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
 
-
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
 		return bounds.contains(mousePos);
