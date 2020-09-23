@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import jGame.core.launcher.GameLauncher;
 
@@ -26,6 +28,20 @@ public class UIHudInputBoxElement extends UIHudElement {
 			super.keyPressed(e);
 		}
 
+	};
+
+	private MouseAdapter mouseListener = new MouseAdapter() {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			super.mousePressed(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			super.mouseReleased(e);
+		}
+		
 	};
 
 	public UIHudInputBoxElement() {

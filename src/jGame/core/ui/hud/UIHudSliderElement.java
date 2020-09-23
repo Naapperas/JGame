@@ -197,10 +197,13 @@ public class UIHudSliderElement extends UIHudElement {
 
 		g.drawString(maxValue + "", x + SLIDER_WIDTH + 10, y + fontMetrics.getAscent() / 5 * 4);
 
-		int valueTextWidth = (int) fontMetrics.getStringBounds(value + "", g).getWidth();
+		DecimalFormat valueFormatter = new DecimalFormat("#.#");
 
-		g.drawString(new DecimalFormat("#.#").format(value) + "",
-				(int) handleX + SLIDER_HANDLE_WIDTH / 2 - valueTextWidth / 2, handleY - 10);
+		String fomattedValue = valueFormatter.format(value);
+
+		int valueTextWidth = (int) fontMetrics.getStringBounds(fomattedValue, g).getWidth();
+
+		g.drawString(fomattedValue, (int) handleX + SLIDER_HANDLE_WIDTH / 2 - valueTextWidth / 2, handleY - 10);
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);

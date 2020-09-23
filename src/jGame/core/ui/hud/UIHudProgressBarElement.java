@@ -76,8 +76,7 @@ public class UIHudProgressBarElement extends UIHudElement {
 		g.setColor(Color.WHITE);
 		g.drawRect(x, y, width, height);
 
-		int progressWidth = (int) MathUtils.map(this.progress, 0, 100, 0f, width - 4);
-		g.fillRect(x + 2, y + 2, progressWidth, height - 4);
+		g.fillRect(x + 2, y + 2, (int) MathUtils.map(this.progress, 0, 100, 0f, width - 4), height - 4);
 
 		g.setColor(startingColor);
 	}
