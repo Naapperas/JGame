@@ -31,7 +31,7 @@ public abstract class Entity implements Serializable {
 	protected String name;
 
 	// display properties
-	protected double x, y, startingX, startingY, velX, velY;
+	protected int x, y, startingX, startingY, velX, velY;
 	protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
@@ -64,14 +64,14 @@ public abstract class Entity implements Serializable {
 	 * @param height    the height of the entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, int width, int height) {
+	public Entity(int startingX, int startingY, int width, int height) {
 		this.x = this.startingX = startingX;
 		this.y = this.startingY = startingY;
 		this.width = width;
 		this.height = height;
 		velX = velY = 1;
 		colisionBounds = new Rectangle(width, height);
-		colisionBounds.setLocation((int) x, (int) y);
+		colisionBounds.setLocation(x, y);
 	}
 
 	/**
@@ -83,13 +83,13 @@ public abstract class Entity implements Serializable {
 	 * @param texture   the sprite to be rendered on top of the entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, Sprite texture) {
+	public Entity(int startingX, int startingY, Sprite texture) {
 		this.x = this.startingX = startingX;
 		this.y = this.startingY = startingY;
 		this.texture = texture;
 		velX = velY = 1;
 		this.colisionBounds = texture.getBounds();
-		colisionBounds.setLocation((int) x, (int) y);
+		colisionBounds.setLocation(x, y);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public abstract class Entity implements Serializable {
 	 * @param speed     the new speed of the entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, int width, int height, int speed) {
+	public Entity(int startingX, int startingY, int width, int height, int speed) {
 		this(startingX, startingY, width, height);
 		this.speed = speed;
 	}
@@ -119,7 +119,7 @@ public abstract class Entity implements Serializable {
 	 * @param speed     the new speed of the entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, Sprite texture, int speed) {
+	public Entity(int startingX, int startingY, Sprite texture, int speed) {
 		this(startingX, startingY, texture);
 		this.speed = speed;
 	}
@@ -136,11 +136,11 @@ public abstract class Entity implements Serializable {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, int width, int height, String name) {
+	public Entity(int startingX, int startingY, int width, int height, String name) {
 		this(startingX, startingY, width, height);
 		this.name = name;
 		colisionBounds = new Rectangle(width, height);
-		colisionBounds.setLocation((int) x, (int) y);
+		colisionBounds.setLocation(x, y);
 	}
 
 	/**
@@ -153,11 +153,11 @@ public abstract class Entity implements Serializable {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, Sprite texture, String name) {
+	public Entity(int startingX, int startingY, Sprite texture, String name) {
 		this(startingX, startingY, texture);
 		this.name = name;
 		this.colisionBounds = texture.getBounds();
-		colisionBounds.setLocation((int) x, (int) y);
+		colisionBounds.setLocation(x, y);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public abstract class Entity implements Serializable {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, int width, int height, int speed, String name) {
+	public Entity(int startingX, int startingY, int width, int height, int speed, String name) {
 		this(startingX, startingY, width, height, name);
 		this.speed = speed;
 	}
@@ -189,7 +189,7 @@ public abstract class Entity implements Serializable {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public Entity(double startingX, double startingY, Sprite texture, int speed, String name) {
+	public Entity(int startingX, int startingY, Sprite texture, int speed, String name) {
 		this(startingX, startingY, texture, name);
 		this.speed = speed;
 	}

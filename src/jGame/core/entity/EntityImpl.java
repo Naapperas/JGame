@@ -38,7 +38,7 @@ public final class EntityImpl extends Entity {
 	 * @param height    the height of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, int width, int height) {
+	public EntityImpl(int startingX, int startingY, int width, int height) {
 		super(startingX, startingY, width, height);
 		renderSprite = false;
 	}
@@ -53,7 +53,7 @@ public final class EntityImpl extends Entity {
 	 * @param texture   the sprite to render as the entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, Sprite texture) {
+	public EntityImpl(int startingX, int startingY, Sprite texture) {
 		super(startingX, startingY, texture);
 		renderSprite = true;
 	}
@@ -70,7 +70,7 @@ public final class EntityImpl extends Entity {
 	 * @param speed     the given speed of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, int width, int height, int speed) {
+	public EntityImpl(int startingX, int startingY, int width, int height, int speed) {
 		super(startingX, startingY, width, height, speed);
 		renderSprite = false;
 	}
@@ -86,7 +86,7 @@ public final class EntityImpl extends Entity {
 	 * @param speed     the given speed of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, Sprite texture, int speed) {
+	public EntityImpl(int startingX, int startingY, Sprite texture, int speed) {
 		super(startingX, startingY, texture, speed);
 		renderSprite = true;
 	}
@@ -103,7 +103,7 @@ public final class EntityImpl extends Entity {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, int width, int height, String name) {
+	public EntityImpl(int startingX, int startingY, int width, int height, String name) {
 		super(startingX, startingY, width, height, name);
 		renderSprite = false;
 	}
@@ -119,7 +119,7 @@ public final class EntityImpl extends Entity {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, Sprite texture, String name) {
+	public EntityImpl(int startingX, int startingY, Sprite texture, String name) {
 		super(startingX, startingY, texture, name);
 		renderSprite = true;
 	}
@@ -137,7 +137,7 @@ public final class EntityImpl extends Entity {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, int width, int height, int speed, String name) {
+	public EntityImpl(int startingX, int startingY, int width, int height, int speed, String name) {
 		super(startingX, startingY, width, height, speed, name);
 		renderSprite = false;
 	}
@@ -154,7 +154,7 @@ public final class EntityImpl extends Entity {
 	 * @param name      the name of this entity
 	 * @since 1.0.0
 	 */
-	public EntityImpl(double startingX, double startingY, Sprite texture, int speed, String name) {
+	public EntityImpl(int startingX, int startingY, Sprite texture, int speed, String name) {
 		super(startingX, startingY, texture, speed, name);
 		renderSprite = true;
 	}
@@ -261,13 +261,13 @@ public final class EntityImpl extends Entity {
 		// movement constraints code
 
 		// make so the x and y coordinates don't make the entity go out of the window
-		x = MathUtils.clamp(x, 0, (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
+		x = MathUtils.clamp(x, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
 				- this.getColisionBounds().getWidth()));
-		y = MathUtils.clamp(y, 0, (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+		y = MathUtils.clamp(y, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
 				- this.getColisionBounds().getHeight()));
 
 		// collision bounds relocation code
-		colisionBounds.setLocation((int) x, (int) y);
+		colisionBounds.setLocation(x, y);
 	}
 
 	@Override
