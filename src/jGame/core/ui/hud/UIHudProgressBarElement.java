@@ -3,6 +3,8 @@ package jGame.core.ui.hud;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import jGame.core.utils.MathUtils;
+
 public class UIHudProgressBarElement extends UIHudElement {
 
 	/**
@@ -10,6 +12,9 @@ public class UIHudProgressBarElement extends UIHudElement {
 	 */
 	private static final long serialVersionUID = -3065269234183461086L;
 
+	/**
+	 * The current progress tracked by this progress bar. Must be between 0 and 100.
+	 */
 	private int progress = 0;
 
 	public UIHudProgressBarElement() {
@@ -71,7 +76,8 @@ public class UIHudProgressBarElement extends UIHudElement {
 		g.setColor(Color.WHITE);
 		g.drawRect(x, y, width, height);
 
-		g.fillRect(x + 2, y + 2, progress, height - 4);
+		int progressWidth = (int) MathUtils.map(this.progress, 0, 100, 0f, width - 4);
+		g.fillRect(x + 2, y + 2, progressWidth, height - 4);
 
 		g.setColor(startingColor);
 	}
@@ -84,5 +90,13 @@ public class UIHudProgressBarElement extends UIHudElement {
 	@Override
 	public void removeInputListener() {
 		return;
+	}
+
+	public void setProgress(int newProgress) {
+		this.progress = newProgress;
+	}
+
+	public int getProgress() {
+		return this.progress;
 	}
 }

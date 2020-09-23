@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class UIHudSliderElement extends UIHudElement {
 	private static final long serialVersionUID = 1544055730175360067L;
 
 	private float value = 0, minValue = 0, maxValue = 0;
+
+	public float getMinValue() {
+		return minValue;
+	}
+
+	public float getMaxValue() {
+		return maxValue;
+	}
 
 	private boolean isMouseClicked = false;
 
@@ -79,7 +88,7 @@ public class UIHudSliderElement extends UIHudElement {
 		this.value = 0;
 		try {
 			this.handleX = MathUtils.map(minValue, minValue, maxValue, this.drawConstraints.getXLocation(),
-					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1f);
 		} catch (IllegalArgumentException ex) {
 			
 		}
@@ -97,7 +106,7 @@ public class UIHudSliderElement extends UIHudElement {
 		this.value = 0;
 		try {
 			this.handleX = MathUtils.map(minValue, minValue, maxValue, this.drawConstraints.getXLocation(),
-					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1f);
 		} catch (IllegalArgumentException ex) {
 			
 		}
@@ -114,7 +123,7 @@ public class UIHudSliderElement extends UIHudElement {
 		this.maxValue = maxValue;
 		try {
 			this.handleX = MathUtils.map(startValue, minValue, maxValue, this.drawConstraints.getXLocation(),
-					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1f);
 		} catch (IllegalArgumentException ex) {
 			
 		}
@@ -131,7 +140,7 @@ public class UIHudSliderElement extends UIHudElement {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		try {
-			this.handleX = MathUtils.map(startValue, minValue, maxValue, this.drawConstraints.getXLocation(),
+			this.handleX = MathUtils.map(this.value, minValue, maxValue, this.drawConstraints.getXLocation(),
 					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
 		} catch (IllegalArgumentException ex) {
 
@@ -190,7 +199,8 @@ public class UIHudSliderElement extends UIHudElement {
 
 		int valueTextWidth = (int) fontMetrics.getStringBounds(value + "", g).getWidth();
 
-		g.drawString(value + "", (int) handleX + SLIDER_HANDLE_WIDTH / 2 - valueTextWidth / 2, handleY - 10);
+		g.drawString(new DecimalFormat("#.#").format(value) + "",
+				(int) handleX + SLIDER_HANDLE_WIDTH / 2 - valueTextWidth / 2, handleY - 10);
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);
@@ -231,6 +241,7 @@ public class UIHudSliderElement extends UIHudElement {
 	 * @author Nuno Pereira
 	 *
 	 */
+	@FunctionalInterface
 	public interface SliderCallback {
 
 		public void run(final float newValue);

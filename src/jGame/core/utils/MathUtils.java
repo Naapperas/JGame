@@ -272,7 +272,10 @@ public final class MathUtils {
 	 * @throws IllegalArgumentException if the value isn't in the "origin" range
 	 * @see #clamp(int, int, int)
 	 * @since 1.0.0
+	 * @deprecated due to non-floating nature, slopes would be calculated in integer
+	 *             form and lead to wrong results
 	 */
+	@Deprecated
 	public static float map(int number, int originMin, int originMax, int destinyMin, int destinyMax) throws IllegalArgumentException{
 		
 		if (number < originMin || number > originMax)
@@ -281,8 +284,8 @@ public final class MathUtils {
 		//despite checking, clamp the number just to be safe
 		number = clamp(number, originMin, originMax);
 		
-		int slope = (destinyMax - destinyMin)/(originMax-originMin);
-		int offset = destinyMin - slope*originMin; 
+		float slope = (destinyMax - destinyMin) / (originMax - originMin);
+		float offset = destinyMin - slope * originMin;
 		
 		return slope * number + offset;
 	}
@@ -301,7 +304,10 @@ public final class MathUtils {
 	 * @throws IllegalArgumentException if the value isn't in the "origin" range
 	 * @see #clamp(long, long, long)
 	 * @since 1.0.0
+	 * @deprecated due to non-floating nature, slopes would be calculated in integer
+	 *             form and lead to wrong results
 	 */
+	@Deprecated
 	public static float map(long number, long originMin, long originMax, long destinyMin, long destinyMax) throws IllegalArgumentException{
 		
 		if (number < originMin || number > originMax)
@@ -310,8 +316,8 @@ public final class MathUtils {
 		//despite checking, clamp the number just to be safe
 		number = clamp(number, originMin, originMax);
 		
-		long slope = (destinyMax - destinyMin)/(originMax-originMin);
-		long offset = destinyMin - slope*originMin; 
+		float slope = (destinyMax - destinyMin)/(originMax-originMin);
+		float offset = destinyMin - slope*originMin; 
 		
 		return slope * number + offset;
 	}
