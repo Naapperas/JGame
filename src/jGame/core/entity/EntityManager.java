@@ -88,11 +88,11 @@ public class EntityManager {
 	 * 
 	 * @param g the Graphics object responsible for rendering the objects on the
 	 *          screen.
-	 * @see #updateEntities(java.awt.Graphics)
+	 * @see #updateEntities(java.awt.Graphics2D)
 	 * @see #tickEntities()
 	 * @since 1.0.0
 	 */
-	public static synchronized void updateEntities(java.awt.Graphics g) {		
+	public static synchronized void updateEntities(java.awt.Graphics2D g) {
 		tickEntities();
 		renderEntities(g);
 	}
@@ -104,7 +104,7 @@ public class EntityManager {
 	 *          screen.
 	 * @since 1.0.0
 	 */
-	public static synchronized void renderEntities(java.awt.Graphics g) {	
+	public static synchronized void renderEntities(java.awt.Graphics2D g) {
 		ENTITIES_LIST.forEach((entity)->{
 			if(entity.isRenderable())
 				entity.render(g);

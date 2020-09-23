@@ -1,6 +1,7 @@
 package jGame.core.entity;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.io.Serializable;
@@ -200,7 +201,7 @@ public abstract class Entity implements Serializable {
 	 * @see Graphics
 	 * @since 1.0.0
 	 */
-	public abstract void render(Graphics g);
+	public abstract void render(Graphics2D g);
 	
 	/**
 	 * Updates the entity and readies it for rendering. Also, all

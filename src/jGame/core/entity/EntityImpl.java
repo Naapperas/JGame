@@ -1,7 +1,7 @@
 package jGame.core.entity;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -271,7 +271,7 @@ public final class EntityImpl extends Entity {
 	}
 
 	@Override
-	public synchronized void render(Graphics g) {
+	public synchronized void render(Graphics2D g) {
 		
 		// change rendering code based on render type, aka, if this entity has a sprite
 		// or not
