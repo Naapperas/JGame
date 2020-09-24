@@ -106,10 +106,10 @@ public class GameLauncher {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (hudEvent) {
+			if (hudEvent) { // 'p' has been pressed on a hud element, need this to not pass events down
 				hudEvent = false;
 				return;
-			} // 'p' has been pressed on a hud element, need this to not pass events down
+			}
 			ProgramLogger.writeLog("Pausing game");
 			pause = !pause;
 		}
