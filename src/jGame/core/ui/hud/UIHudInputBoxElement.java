@@ -49,27 +49,35 @@ public class UIHudInputBoxElement extends UIHudElement {
 			int keyCode = e.getKeyCode();
 			
 			if (keyCode == KeyEvent.VK_BACK_SPACE) {
-				if(input.length() > 0) {
+				if (input.length() > 0 && inputCursorPosition != 0) {
 					input.deleteCharAt(inputCursorPosition-- - 1);
 				}
+			} else if (keyCode == KeyEvent.VK_DELETE) {
+				if (input.length() > 0 && inputCursorPosition != input.length()) {
+					input.deleteCharAt(inputCursorPosition);
+				}
 			} else if (keyCode == KeyEvent.VK_RIGHT) {
-				
-			
+				if (inputCursorPosition != input.length())
+					inputCursorPosition++;
+				cursorBlinkTimer = 0;
 			} else if (keyCode == KeyEvent.VK_LEFT) {
-				
+				if (inputCursorPosition != 0)
+					inputCursorPosition--;
+				cursorBlinkTimer = 0;
 			}else {
 
 				if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL
-						|| keyCode == KeyEvent.VK_CAPS_LOCK) {
+						|| keyCode == KeyEvent.VK_CAPS_LOCK || keyCode == KeyEvent.VK_UP
+						|| keyCode == KeyEvent.VK_DOWN) {
 					return;
 				}
 
-				input.append(e.getKeyChar());
-				inputCursorPosition++;
-			}
+				char c = e.getKeyChar();
 
-			System.out.println(getInput());
-			System.out.println(keyCode);
+				if (Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c))
+					input.insert(inputCursorPosition++, e.getKeyChar());
+
+			}
 
 			e.consume();
 		}
@@ -152,20 +160,27 @@ public class UIHudInputBoxElement extends UIHudElement {
 			
 			int characterWidth = (int) fontMetrics.getStringBounds(character, g).getWidth();
 
-			if ((textPosition + 1) > (x + width)) {
-				textStartPosition -= characterWidth;
-			}
-
 			textPosition += characterWidth + 1;
 
-			cursorPosition += characterWidth + 1;
+			if (textPosition > (x + width)) {
+				
+				int offset = (textPosition - (x + width));
+				
+				textStartPosition -= offset - 1;
+				textPosition -= offset - 1;
+				System.out.println("AHHHHHHHHHHHH");
+			}
 		}
 
 		g.drawString(getInput(), textStartPosition, y + height - 12);
 
 		if (hasFocus) {
-			if (cursorBlinkTimer <= GameLauncher.getFPS() / 2)
+			if (cursorBlinkTimer <= GameLauncher.getFPS() / 2) {
+				this.cursorPosition += (int) fontMetrics.getStringBounds(input.substring(0, inputCursorPosition), g)
+						.getWidth();
+
 				g.fillRect(MathUtils.clamp(cursorPosition, x + 5, x + width - 10), y + 6, 3, height - 12);
+			}
 
 			cursorBlinkTimer++;
 		}
