@@ -62,10 +62,40 @@ public class UIHudInputBoxElement extends UIHudElement {
 				if (inputCursorPosition != input.length())
 					inputCursorPosition++;
 				cursorBlinkTimer = 0;
+
+				if (e.isControlDown() && !e.isShiftDown()) {
+					// word skipping
+
+					if (!Character.isWhitespace(e.getKeyChar())) {
+
+						for (int i = inputCursorPosition; i < input.length(); i++) {
+							if (Character.isWhitespace(input.charAt(i)))
+								return;
+
+							inputCursorPosition++;
+						}
+					}
+				}
+
 			} else if (keyCode == KeyEvent.VK_LEFT) {
 				if (inputCursorPosition != 0)
 					inputCursorPosition--;
 				cursorBlinkTimer = 0;
+
+				if (e.isControlDown() && !e.isShiftDown()) {
+					// word skipping
+
+					if (!Character.isWhitespace(e.getKeyChar())) {
+
+						for (int i = inputCursorPosition; i > 0; i--) {
+							if (Character.isWhitespace(input.charAt(i)))
+								return;
+
+							inputCursorPosition--;
+						}
+					}
+				}
+
 			}else {
 
 				if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL
@@ -165,15 +195,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 			
 			int characterWidth = (int) fontMetrics.getStringBounds(character, g).getWidth();
 
-			if ((textPosition + characterWidth) > (x + width)) {
-				/*
-				 * int offset = (textPosition - (x + width));
-				 * 
-				 * textStartPosition -= offset - 1; textPosition -= offset - 1;
-				 */
-
+			if ((textPosition + characterWidth) > (x + width))
 				overflow = true;
-			}
 
 			textPosition += characterWidth + 1;
 
@@ -183,9 +206,9 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 		if (hasFocus) {
 			if (cursorBlinkTimer <= GameLauncher.getFPS() / 2) {
-				this.cursorPosition += (int) fontMetrics
-						.getStringBounds(input.substring(0, inputCursorPosition), g)
-						.getWidth();
+				this.cursorPosition += (int) fontMetrics.getStringBounds(
+						input.substring(0, MathUtils.clamp(inputCursorPosition, 0, Integer.MAX_VALUE)), g)
+						.getWidth(); // clamp number to assure it is non-negative
 
 				g.fillRect(MathUtils.clamp(cursorPosition, x + 5, x + width - 5), y + 6, 3, height - 12);
 			}
