@@ -54,10 +54,12 @@ public class UIHudInputBoxElement extends UIHudElement {
 				if (input.length() > 0 && inputCursorPosition != 0) {
 					input.deleteCharAt(inputCursorPosition-- - 1);
 				}
+				cursorBlinkTimer = 0;
 			} else if (keyCode == KeyEvent.VK_DELETE) {
 				if (input.length() > 0 && inputCursorPosition != input.length()) {
 					input.deleteCharAt(inputCursorPosition);
 				}
+				cursorBlinkTimer = 0;
 			} else if (keyCode == KeyEvent.VK_RIGHT) {
 				if (inputCursorPosition != input.length())
 					inputCursorPosition++;
@@ -69,7 +71,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 					if (!Character.isWhitespace(e.getKeyChar())) {
 
 						for (int i = inputCursorPosition; i < input.length(); i++) {
-							if (Character.isWhitespace(input.charAt(i)))
+							if (Character.isWhitespace(input.charAt(i - 1))
+									&& !Character.isWhitespace(input.charAt(i)))
 								return;
 
 							inputCursorPosition++;
@@ -88,7 +91,7 @@ public class UIHudInputBoxElement extends UIHudElement {
 					if (!Character.isWhitespace(e.getKeyChar())) {
 
 						for (int i = inputCursorPosition; i > 0; i--) {
-							if (Character.isWhitespace(input.charAt(i)))
+							if (Character.isWhitespace(input.charAt(i)) && !Character.isWhitespace(input.charAt(i - 1)))
 								return;
 
 							inputCursorPosition--;
@@ -108,7 +111,6 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 				if ((Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c)) && !overflow) {
 					input.insert(inputCursorPosition++, e.getKeyChar());
-					System.out.println("added");
 				}
 			}
 
