@@ -34,6 +34,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 	
 	private boolean hasFocus = false;
 
+	private boolean overflow = false;
+
 	private KeyAdapter keyInputListener = new KeyAdapter() {
 
 		@Override
@@ -74,9 +76,10 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 				char c = e.getKeyChar();
 
-				if (Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c))
+				if ((Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c)) && !overflow) {
 					input.insert(inputCursorPosition++, e.getKeyChar());
-
+					System.out.println("added");
+				}
 			}
 
 			e.consume();
@@ -131,6 +134,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 		
 		g.setStroke(new BasicStroke(3));
 		
+		overflow = false;
+
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
@@ -160,26 +165,29 @@ public class UIHudInputBoxElement extends UIHudElement {
 			
 			int characterWidth = (int) fontMetrics.getStringBounds(character, g).getWidth();
 
+			if ((textPosition + characterWidth) > (x + width)) {
+				/*
+				 * int offset = (textPosition - (x + width));
+				 * 
+				 * textStartPosition -= offset - 1; textPosition -= offset - 1;
+				 */
+
+				overflow = true;
+			}
+
 			textPosition += characterWidth + 1;
 
-			if (textPosition > (x + width)) {
-				
-				int offset = (textPosition - (x + width));
-				
-				textStartPosition -= offset - 1;
-				textPosition -= offset - 1;
-				System.out.println("AHHHHHHHHHHHH");
-			}
 		}
 
 		g.drawString(getInput(), textStartPosition, y + height - 12);
 
 		if (hasFocus) {
 			if (cursorBlinkTimer <= GameLauncher.getFPS() / 2) {
-				this.cursorPosition += (int) fontMetrics.getStringBounds(input.substring(0, inputCursorPosition), g)
+				this.cursorPosition += (int) fontMetrics
+						.getStringBounds(input.substring(0, inputCursorPosition), g)
 						.getWidth();
 
-				g.fillRect(MathUtils.clamp(cursorPosition, x + 5, x + width - 10), y + 6, 3, height - 12);
+				g.fillRect(MathUtils.clamp(cursorPosition, x + 5, x + width - 5), y + 6, 3, height - 12);
 			}
 
 			cursorBlinkTimer++;
