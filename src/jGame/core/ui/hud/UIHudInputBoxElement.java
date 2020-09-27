@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -35,6 +36,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 	private boolean hasFocus = false;
 
 	private boolean overflow = false;
+
+	private char cachedChar = ' ';
 
 	private KeyAdapter keyInputListener = new KeyAdapter() {
 
@@ -78,6 +81,10 @@ public class UIHudInputBoxElement extends UIHudElement {
 							inputCursorPosition++;
 						}
 					}
+				} else if (!e.isControlDown() && e.isShiftDown()) {
+					
+				} else if (e.isControlDown() && e.isShiftDown()) {
+
 				}
 
 			} else if (keyCode == KeyEvent.VK_LEFT) {
@@ -97,6 +104,10 @@ public class UIHudInputBoxElement extends UIHudElement {
 							inputCursorPosition--;
 						}
 					}
+				} else if (!e.isControlDown() && e.isShiftDown()) {
+
+				} else if (e.isControlDown() && e.isShiftDown()) {
+
 				}
 
 			}else {
@@ -107,14 +118,26 @@ public class UIHudInputBoxElement extends UIHudElement {
 					return;
 				}
 
+				if (KeyEvent.getKeyText(e.getKeyCode()).contentEquals("Dead Acute")) {
+					if ((e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0) {
+						cachedChar = '`';
+					} else {
+						cachedChar = '´';
+					}
+					return;
+				}
+				System.out.println(cachedChar);
+
 				char c = e.getKeyChar();
 
-				if ((Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c)) && !overflow) {
+				if ((Character.isAlphabetic(c) || Character.isWhitespace(c) || Character.isDigit(c)
+						|| Character.isDefined(c)) && !overflow) {
 					input.insert(inputCursorPosition++, e.getKeyChar());
 				}
 			}
 
 			e.consume();
+			cachedChar = ' ';
 		}
 	};
 
