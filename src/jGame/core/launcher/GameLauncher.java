@@ -234,6 +234,7 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		ProgramLogger.writeLog("Terminating game!");
+		GameStateManager.terminateState();
 		System.exit(0);
 
 	}

@@ -80,7 +80,9 @@ public abstract class UIHudElement implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UIHudElement [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", drawConstraints="
+
+		return this.getClass().getSimpleName() + " [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height
+				+ ", drawConstraints="
 				+ drawConstraints + "]";
 	}
 
