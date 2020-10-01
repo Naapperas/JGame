@@ -54,16 +54,13 @@ public class UIHudInputBoxElement extends UIHudElement {
 				if (input.length() > 0 && inputCursorPosition != 0) {
 					input.deleteCharAt(inputCursorPosition-- - 1);
 				}
-				cursorBlinkTimer = 0;
 			} else if (keyCode == KeyEvent.VK_DELETE) {
 				if (input.length() > 0 && inputCursorPosition != input.length()) {
 					input.deleteCharAt(inputCursorPosition);
 				}
-				cursorBlinkTimer = 0;
 			} else if (keyCode == KeyEvent.VK_RIGHT) {
 				if (inputCursorPosition != input.length())
 					inputCursorPosition++;
-				cursorBlinkTimer = 0;
 
 				if (e.isControlDown() && !e.isShiftDown()) {
 					// word skipping
@@ -87,7 +84,6 @@ public class UIHudInputBoxElement extends UIHudElement {
 			} else if (keyCode == KeyEvent.VK_LEFT) {
 				if (inputCursorPosition != 0)
 					inputCursorPosition--;
-				cursorBlinkTimer = 0;
 
 				if (e.isControlDown() && !e.isShiftDown()) {
 					// word skipping
@@ -123,6 +119,8 @@ public class UIHudInputBoxElement extends UIHudElement {
 				}
 			}
 
+			cursorBlinkTimer = 0;
+
 			e.consume();
 		}
 	};
@@ -131,14 +129,18 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (e.isConsumed())
+			if (e.isConsumed()) {
 				return;
+			}
 
-			hasFocus = isMouseOver();
+			if (isMouseOver()) {
+				hasFocus = true;
+				e.consume();
+			} else {
+				hasFocus = false;
+			}
 
 			cursorBlinkTimer = 0;
-
-			e.consume();
 		}
 	};
 

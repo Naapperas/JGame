@@ -5,10 +5,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -263,6 +266,8 @@ public class Window {
 	 * @since 1.0.0
 	 */
 	public void addInputListener(KeyAdapter inputListener, Entity entity) {
+		if (Arrays.asList(windowCanvas.getListeners(KeyListener.class)).contains(inputListener))
+			return;
 		ProgramLogger.writeLog("Adding key input listener for " + entity);
 		windowCanvas.addKeyListener(inputListener);
 	}
@@ -276,6 +281,8 @@ public class Window {
 	 * @since 1.0.0
 	 */
 	public void addMouseInputListener(MouseAdapter mouseInputListener, UIHudElement hudElement) {
+		if (Arrays.asList(windowCanvas.getListeners(MouseListener.class)).contains(mouseInputListener))
+			return;
 		ProgramLogger.writeLog("Adding mouse input listener for " + hudElement);
 		windowCanvas.addMouseListener(mouseInputListener);
 	}
@@ -330,6 +337,8 @@ public class Window {
 	}
 
 	public void addInputListener(KeyAdapter keyInputListener, UIHudElement element) {
+		if (Arrays.asList(windowCanvas.getListeners(KeyListener.class)).contains(keyInputListener))
+			return;
 		ProgramLogger.writeLog("Adding key input listener for " + element);
 		windowCanvas.addKeyListener(keyInputListener);
 	}

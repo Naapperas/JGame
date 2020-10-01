@@ -36,9 +36,10 @@ public class UIHudDropdownElement extends UIHudElement {
 	private MouseAdapter mouseInput = new MouseAdapter() {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (e.isConsumed())
+		public void mousePressed(MouseEvent e) {
+			if (e.isConsumed()) {
 				return;
+			}
 
 			if (isMouseOver()) {
 				showDropdown = true;
@@ -50,7 +51,7 @@ public class UIHudDropdownElement extends UIHudElement {
 	};
 
 	{
-		this.zIndex = 99;
+		this.zIndex = 999;
 	}
 
 	public UIHudDropdownElement() {

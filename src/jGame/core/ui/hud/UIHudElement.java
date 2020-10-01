@@ -88,7 +88,7 @@ public abstract class UIHudElement implements Serializable {
 
 		return this.getClass().getSimpleName() + " [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height
 				+ ", drawConstraints="
-				+ drawConstraints + "]";
+				+ drawConstraints + ", zIndex=" + zIndex + "]";
 	}
 
 }

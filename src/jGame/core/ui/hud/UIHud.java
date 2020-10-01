@@ -2,10 +2,14 @@ package jGame.core.ui.hud;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import jGame.core.launcher.GameLauncher;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -19,7 +23,6 @@ public class UIHud {
 
 	// list of all visual elements to render as an HUD
 	private static final List<UIHudElement> HUD = new ArrayList<UIHudElement>();
-	private static final List<UIHudElement> HUD_ELEMENTS_TO_REMOVE = new ArrayList<UIHudElement>();
 
 	// make uninstantiatable
 	private UIHud() {
@@ -33,11 +36,6 @@ public class UIHud {
 	 * @since 1.0.0
 	 */
 	public synchronized static void render(Graphics2D g) {
-
-		if (!HUD_ELEMENTS_TO_REMOVE.isEmpty()) {
-			HUD_ELEMENTS_TO_REMOVE.forEach((element) -> { HUD.remove(element); });
-			HUD_ELEMENTS_TO_REMOVE.clear();
-		}
 
 		if (!HUD.isEmpty())
 			HUD.forEach((element) -> { element.render(g); });
@@ -58,22 +56,31 @@ public class UIHud {
 		HUD.add(hudElement);
 
 		if (HUD.size() > 1)
-			sortElements();
+			sortElements(true);
 
 	}
 
-	public static void sortElements() {
+	public static void sortElements(final boolean order) {
 		ProgramLogger.writeLog("Sorting HUD elements.");
 		HUD.sort(new Comparator<UIHudElement>() {
 
 			@Override
 			public int compare(UIHudElement o1, UIHudElement o2) {
-				if (o1.zIndex > o2.zIndex)
-					return 1;
-				else if (o1.zIndex < o2.zIndex)
-					return -1;
-				else
-					return 0;
+				if (order) {
+					if (o1.zIndex > o2.zIndex)
+						return 1;
+					else if (o1.zIndex < o2.zIndex)
+						return -1;
+					else
+						return 0;
+				} else {
+					if (o1.zIndex > o2.zIndex)
+						return -1;
+					else if (o1.zIndex < o2.zIndex)
+						return 1;
+					else
+						return 0;
+				}
 			}
 		});
 	}
@@ -86,7 +93,7 @@ public class UIHud {
 	 */
 	public synchronized static void removeHUDUIElement(UIHudElement hudElement) {
 		ProgramLogger.writeLog("Removing " + hudElement);
-		HUD_ELEMENTS_TO_REMOVE.add(hudElement);
+		HUD.remove(hudElement);
 	}
 
 	/**
@@ -96,6 +103,23 @@ public class UIHud {
 	 */
 	public synchronized static void registerInputListeners() {
 		ProgramLogger.writeLog("Registering input listeners for HUD elements");
-		HUD.forEach((element) -> { element.registerInputListener(); });
+		for (int i = HUD.size() - 1; i >= 0; i--) { // events need to be checked from top to bottom, add listeners
+													// in reverse order
+			HUD.get(i).registerInputListener();
+		}
+	}
+
+	public synchronized static void updateInputListeners() {
+		ProgramLogger.writeLog("Updating input listeners for HUD elements");
+		Arrays.asList(GameLauncher.getMainWindow().getWindowCanvas().getListeners(MouseListener.class)).clear();
+		Arrays.asList(GameLauncher.getMainWindow().getWindowCanvas().getListeners(KeyListener.class)).clear();
+		for (int i = HUD.size() - 1; i >= 0; i--) { // events need to be checked from top to bottom, add listeners
+													// in reverse order
+			HUD.get(i).registerInputListener();
+		}
+	}
+
+	public static List<UIHudElement> getHud() {
+		return HUD;
 	}
 }

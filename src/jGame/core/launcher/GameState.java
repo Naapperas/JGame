@@ -32,9 +32,9 @@ public class GameState {
 	 * @since 1.0.0
 	 */
 	public GameState(List<Entity> entities, List<UIHudElement> hudElements, String gameStateName) {
-		stateEntities.addAll(entities);
-		stateHUDElements.addAll(hudElements);
-		stateName = gameStateName;
+		this.stateEntities.addAll(entities);
+		this.stateHUDElements.addAll(hudElements);
+		this.stateName = gameStateName;
 	}
 
 	/**
@@ -57,8 +57,9 @@ public class GameState {
 		if (!stateHUDElements.isEmpty()) {
 			stateHUDElements.forEach((element) -> {
 				UIHud.addHUDUIElement(element);
-				element.registerInputListener();
 			});
+
+			UIHud.registerInputListeners();
 		}
 		ProgramLogger.writeLog(this + " initiated.");
 	}
