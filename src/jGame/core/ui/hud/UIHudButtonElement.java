@@ -40,8 +40,13 @@ public class UIHudButtonElement extends UIHudElement {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (bounds.contains(e.getPoint()))
+			if (e.isConsumed())
+				return;
+
+			if (bounds.contains(e.getPoint())) {
 				theElement.processClick(e);
+				e.consume();
+			}
 		}
 	};
 
