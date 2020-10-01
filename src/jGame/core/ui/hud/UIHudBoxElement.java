@@ -18,8 +18,11 @@ public class UIHudBoxElement extends UIHudElement {
 	private int width, height;
 	private Color drawColor = null;
 
+	{
+		this.zIndex = 50;
+	}
+
 	public UIHudBoxElement() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

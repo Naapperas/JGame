@@ -10,6 +10,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class UIHudDropdownElement extends UIHudElement {
 
 	private boolean showDropdown = false;
 
+	private String optionDisplay;
+
+	private static final int SCROLLBAR_WIDTH = 20;
+
 	private MouseAdapter mouseInput = new MouseAdapter() {
 
 		@Override
@@ -38,11 +43,13 @@ public class UIHudDropdownElement extends UIHudElement {
 				showDropdown = false;
 			}
 		}
-
 	};
 
+	{
+		this.zIndex = 99;
+	}
+
 	public UIHudDropdownElement() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements) {
@@ -63,6 +70,7 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.width = maxWidth;
 		this.height = maxHeight;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.optionDisplay = "Selecionar opção...";
 	}
 
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements) {
@@ -71,12 +79,13 @@ public class UIHudDropdownElement extends UIHudElement {
 		
 		if(elements != null)
 			for (UIHudButtonElement element : elements) {
-				element.width = width;
+				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
 		this.width = width;
 		this.height = height;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.optionDisplay = "Selecionar opção...";
 	}
 
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
@@ -97,6 +106,7 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.width = maxWidth;
 		this.height = maxHeight;
 		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
+		this.optionDisplay = "Selecionar opção...";
 	}
 
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
@@ -106,12 +116,87 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if(elements != null)
 			for (UIHudButtonElement element : elements) {
-				element.width = width;
+				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
 		this.width = width;
 		this.height = height;
 		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
+		this.optionDisplay = "Selecionar opção...";
+	}
+
+	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, String optionDisplay) {
+		super(x, y);
+		this.dropdownButtons = elements;
+
+		int maxWidth = Integer.MIN_VALUE;
+		int maxHeight = Integer.MIN_VALUE;
+		if (elements != null)
+			for (UIHudButtonElement element : elements) {
+				if (element.width > maxWidth)
+					maxWidth = element.width;
+
+				if (element.height > maxHeight)
+					maxHeight = element.height;
+			}
+
+		this.width = maxWidth;
+		this.height = maxHeight;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.optionDisplay = optionDisplay;
+	}
+
+	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
+			String optionDisplay) {
+		super(x, y, width, height);
+		this.dropdownButtons = elements;
+
+		if (elements != null)
+			for (UIHudButtonElement element : elements) {
+				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
+				element.height = height;
+			}
+		this.width = width;
+		this.height = height;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.optionDisplay = optionDisplay;
+	}
+
+	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
+			int[] constraintSpecs, String optionDisplay) {
+		super(x, y);
+		this.dropdownButtons = elements;
+
+		int maxWidth = Integer.MIN_VALUE;
+		int maxHeight = Integer.MIN_VALUE;
+		if (elements != null)
+			for (UIHudButtonElement element : elements) {
+				if (element.width > maxWidth)
+					maxWidth = element.width;
+
+				if (element.height > maxHeight)
+					maxHeight = element.height;
+			}
+		this.width = maxWidth;
+		this.height = maxHeight;
+		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
+		this.optionDisplay = optionDisplay;
+	}
+
+	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
+			int constraintType, int[] constraintSpecs, String optionDisplay) {
+		super(x, y, width, height);
+		this.dropdownButtons = elements;
+
+		if (elements != null)
+			for (UIHudButtonElement element : elements) {
+				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
+				element.height = height;
+			}
+		this.width = width;
+		this.height = height;
+		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
+		this.optionDisplay = optionDisplay;
 	}
 
 	@Override
@@ -122,6 +207,20 @@ public class UIHudDropdownElement extends UIHudElement {
 		Stroke startingStroke = g.getStroke();
 		Shape startingClip = g.getClip();
 
+		Rectangle2D textBounds = g.getFontMetrics(startingFont).getStringBounds(optionDisplay, g);
+
+		int textWidth = (int) textBounds.getWidth();
+		int textHeight = (int) textBounds.getHeight();
+
+		float scaleX = (float) (this.width / textBounds.getWidth());
+
+		g.setFont(startingFont.deriveFont(startingFont.getSize() * scaleX * 0.62f));
+
+		textBounds = g.getFontMetrics(g.getFont()).getStringBounds(optionDisplay, g);
+
+		textWidth = (int) textBounds.getWidth();
+		textHeight = (int) textBounds.getHeight();
+
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
@@ -129,7 +228,15 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		g.drawRect(x, y, width, height);
 
-		if (this.showDropdown) { System.out.println("AHGhhh"); }
+		g.drawString(optionDisplay, ((this.x + (this.width / 2)) - (textWidth / 2)),
+				((this.y + (this.height / 2)) + (textHeight / 4)));
+
+		if (this.showDropdown) {
+
+			g.clearRect(x, y + height + 5, width, height * 3);
+			g.drawRect(x, y + height + 5, width, height * 3);
+
+		}
 
 		g.setColor(startingColor);
 		g.setFont(startingFont);
@@ -153,6 +260,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
-		return new Rectangle(x, y, width, height).contains(mousePos);
+		return new Rectangle(x, y, width, height).contains(mousePos)
+				|| (new Rectangle(x, y + height + 5, width, height * 3).contains(mousePos) && showDropdown);
 	}
 }

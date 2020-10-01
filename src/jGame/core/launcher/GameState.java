@@ -45,19 +45,21 @@ public class GameState {
 	 */
 	public void initState() {
 
-		if (!stateEntities.isEmpty())
+		if (!stateEntities.isEmpty()) {
 			stateEntities.forEach((entity) -> {
 				EntityManager.addEntity(entity);
-				entity.registerInputListener();
 				entity.restart();
 			});
 
-		if (!stateHUDElements.isEmpty())
+			EntityManager.registerInputListeners();
+		}
+
+		if (!stateHUDElements.isEmpty()) {
 			stateHUDElements.forEach((element) -> {
 				UIHud.addHUDUIElement(element);
 				element.registerInputListener();
 			});
-
+		}
 		ProgramLogger.writeLog(this + " initiated.");
 	}
 

@@ -25,8 +25,11 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 
 	private String textToDisplay = null;
 
+	{
+		this.zIndex = 50;
+	}
+
 	public UIHudCheckBoxElement() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

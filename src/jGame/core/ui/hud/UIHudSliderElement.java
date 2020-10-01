@@ -74,6 +74,10 @@ public class UIHudSliderElement extends UIHudElement {
 
 	private List<SliderCallback> callbackList = new LinkedList<SliderCallback>();
 
+	{
+		this.zIndex = 50;
+	}
+
 	public UIHudSliderElement() {
 	}
 

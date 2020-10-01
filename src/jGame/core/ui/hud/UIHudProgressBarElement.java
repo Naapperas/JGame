@@ -17,6 +17,10 @@ public class UIHudProgressBarElement extends UIHudElement {
 	 */
 	private int progress = 0;
 
+	{
+		this.zIndex = 50;
+	}
+
 	public UIHudProgressBarElement() {
 	}
 

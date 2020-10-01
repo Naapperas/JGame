@@ -70,6 +70,10 @@ public class GameLauncher {
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
 			new int[] { 10, 10, 0, 0 }) {
 
+		{
+			this.zIndex = 200;
+		}
+
 		/**
 		 * 
 		 */
@@ -136,6 +140,7 @@ public class GameLauncher {
 		long timer = System.currentTimeMillis();
 		int frames = 0;
 
+		FPSCounter.setZIndex(9999);
 		UIHud.addHUDUIElement(FPSCounter);
 
 		GameStateManager.addUIHudElementToBoard(pauseMenu);

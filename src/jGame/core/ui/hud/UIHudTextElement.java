@@ -24,6 +24,10 @@ public class UIHudTextElement extends UIHudElement {
 	private Font textFont = null;
 	private Color textColor = Color.WHITE;
 
+	{
+		this.zIndex = 50;
+	}
+
 	protected UIHudTextElement() {
 	}
 

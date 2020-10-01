@@ -20,6 +20,7 @@ public abstract class UIHudElement implements Serializable {
 
 	// the coordinates of the element
 	protected int x, y, width, height;
+	protected int zIndex;
 	protected Constraints drawConstraints;
 
 	protected UIHudElement() {
@@ -77,6 +78,10 @@ public abstract class UIHudElement implements Serializable {
 	 * @since 1.0.0
 	 */
 	public abstract void removeInputListener();
+
+	public void setZIndex(int newIndex) {
+		this.zIndex = newIndex;
+	}
 
 	@Override
 	public String toString() {

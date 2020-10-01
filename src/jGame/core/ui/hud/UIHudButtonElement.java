@@ -40,11 +40,14 @@ public class UIHudButtonElement extends UIHudElement {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
 			if (bounds.contains(e.getPoint()))
 				theElement.processClick(e);
 		}
 	};
+
+	{
+		this.zIndex = 50;
+	}
 
 	protected UIHudButtonElement() {
 	}

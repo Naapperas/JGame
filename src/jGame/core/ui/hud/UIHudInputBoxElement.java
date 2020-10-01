@@ -123,8 +123,6 @@ public class UIHudInputBoxElement extends UIHudElement {
 				}
 			}
 
-			System.out.println(getInput());
-
 			e.consume();
 		}
 	};
@@ -133,14 +131,17 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (isMouseOver())
-				hasFocus = true;
-			else {
-				hasFocus = false;
-				cursorBlinkTimer = 0;
-			}
+
+			hasFocus = isMouseOver();
+
+			cursorBlinkTimer = 0;
+
 		}
 	};
+
+	{
+		this.zIndex = 50;
+	}
 
 	public UIHudInputBoxElement() {
 	}
