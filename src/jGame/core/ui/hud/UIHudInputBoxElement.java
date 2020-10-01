@@ -131,11 +131,14 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			if (e.isConsumed())
+				return;
 
 			hasFocus = isMouseOver();
 
 			cursorBlinkTimer = 0;
 
+			e.consume();
 		}
 	};
 

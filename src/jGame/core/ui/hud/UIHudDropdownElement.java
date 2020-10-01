@@ -37,8 +37,12 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			if (e.isConsumed())
+				return;
+
 			if (isMouseOver()) {
-				showDropdown = !showDropdown;
+				showDropdown = true;
+				e.consume();
 			} else {
 				showDropdown = false;
 			}
