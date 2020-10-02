@@ -135,14 +135,6 @@ public class UIHudButtonElement extends UIHudElement {
 			
 			// set text color
 			g.setColor(Color.BLACK);
-
-			// set text font
-			g.setFont(g.getFont().deriveFont(Font.BOLD));
-
-			textBounds = g.getFontMetrics(g.getFont()).getStringBounds(buttonText, g);
-
-			textWidth = (int) textBounds.getWidth();
-			textHeight = (int) textBounds.getHeight();
 		} else {
 			// draw the frame of the button
 			g.drawRect(this.x, this.y, width, height);
@@ -158,6 +150,7 @@ public class UIHudButtonElement extends UIHudElement {
 		g.setFont(startingFont);
 
 		bounds.setLocation(this.x, this.y);
+		bounds.setSize(this.width, this.height);
 	}
 
 	@Override
@@ -201,11 +194,6 @@ public class UIHudButtonElement extends UIHudElement {
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
 		return bounds.contains(mousePos);
-	}
-
-	@Override
-	public String toString() {
-		return "UIHudButtonElement [buttonText=" + buttonText + ", width=" + width + ", height=" + height + "]";
 	}
 
 }

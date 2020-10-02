@@ -22,6 +22,8 @@ public class UIHudBoxElement extends UIHudElement {
 		this.zIndex = 50;
 	}
 
+	// TODO: add constraints
+
 	public UIHudBoxElement() {
 	}
 
@@ -36,6 +38,7 @@ public class UIHudBoxElement extends UIHudElement {
 		super(x, y);
 		this.width = width;
 		this.height = height;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
 	/**
@@ -51,6 +54,7 @@ public class UIHudBoxElement extends UIHudElement {
 		this.width = width;
 		this.height = height;
 		this.drawColor = drawingColor;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
 	@Override

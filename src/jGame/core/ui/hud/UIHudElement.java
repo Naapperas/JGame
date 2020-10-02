@@ -83,6 +83,10 @@ public abstract class UIHudElement implements Serializable {
 		this.zIndex = newIndex;
 	}
 
+	public void setDrawConstraints(Constraints drawConstraints) {
+		this.drawConstraints = drawConstraints;
+	}
+
 	@Override
 	public String toString() {
 

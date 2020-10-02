@@ -32,6 +32,11 @@ public class UIHudDropdownElement extends UIHudElement {
 	private String optionDisplay;
 
 	private static final int SCROLLBAR_WIDTH = 20;
+	private int buttonDrawY = 0;
+
+	private Rectangle clipArea = null;
+
+	private boolean buttonListenersAdded = false;
 
 	private MouseAdapter mouseInput = new MouseAdapter() {
 
@@ -41,11 +46,53 @@ public class UIHudDropdownElement extends UIHudElement {
 				return;
 			}
 
-			if (isMouseOver()) {
+			if (isMouseOver(true)) {
+
+				if (showDropdown) {
+					if (dropdownButtons != null && buttonListenersAdded) {
+						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
+							uiHudButtonElement.removeInputListener();
+							UIHud.removeHUDUIElement(uiHudButtonElement);
+
+						}
+
+						buttonListenersAdded = false;
+					}
+				} else {
+					if (dropdownButtons != null && !buttonListenersAdded) {
+						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
+							uiHudButtonElement.registerInputListener();
+							UIHud.addHUDUIElement(uiHudButtonElement);
+						}
+						buttonListenersAdded = true;
+					}
+				}
+
+				showDropdown = !showDropdown;
+				e.consume();
+			} else if (isMouseOver(false)) {
 				showDropdown = true;
+
+				if (dropdownButtons != null && !buttonListenersAdded) {
+					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
+						uiHudButtonElement.registerInputListener();
+						UIHud.addHUDUIElement(uiHudButtonElement);
+					}
+					buttonListenersAdded = true;
+				}
 				e.consume();
 			} else {
 				showDropdown = false;
+
+				if (dropdownButtons != null && buttonListenersAdded) {
+					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
+						uiHudButtonElement.removeInputListener();
+						UIHud.removeHUDUIElement(uiHudButtonElement);
+
+					}
+
+					buttonListenersAdded = false;
+				}
 			}
 		}
 	};
@@ -65,6 +112,8 @@ public class UIHudDropdownElement extends UIHudElement {
 		int maxHeight = Integer.MIN_VALUE;
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				if (element.width > maxWidth)
 					maxWidth = element.width;
 
@@ -84,6 +133,8 @@ public class UIHudDropdownElement extends UIHudElement {
 		
 		if(elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
@@ -102,6 +153,8 @@ public class UIHudDropdownElement extends UIHudElement {
 		int maxHeight = Integer.MIN_VALUE;
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				if (element.width > maxWidth)
 					maxWidth = element.width;
 
@@ -121,6 +174,8 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if(elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
@@ -138,6 +193,9 @@ public class UIHudDropdownElement extends UIHudElement {
 		int maxHeight = Integer.MIN_VALUE;
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
+
 				if (element.width > maxWidth)
 					maxWidth = element.width;
 
@@ -158,6 +216,8 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
@@ -176,6 +236,8 @@ public class UIHudDropdownElement extends UIHudElement {
 		int maxHeight = Integer.MIN_VALUE;
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				if (element.width > maxWidth)
 					maxWidth = element.width;
 
@@ -195,6 +257,8 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if (elements != null)
 			for (UIHudButtonElement element : elements) {
+				element.setZIndex(this.zIndex + 1);
+				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
 			}
@@ -229,6 +293,10 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
+		this.buttonDrawY = y + height + 5;
+
+		if (this.clipArea == null) { this.clipArea = new Rectangle(x - 1, y + height + 4, width + 2, height * 3 + 2); }
+
 		g.setColor(Color.WHITE);
 
 		g.drawRect(x, y, width, height);
@@ -238,9 +306,19 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if (this.showDropdown) {
 
-			g.clearRect(x, y + height + 5, width, height * 3);
-			g.drawRect(x, y + height + 5, width, height * 3);
+			g.setClip(clipArea);
 
+			g.clearRect(x, y + height + 5, width, height * 3);
+			g.drawRect(x, buttonDrawY, width, height * 3);
+
+			if (dropdownButtons != null)
+				for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
+
+					uiHudButtonElement.x = this.x;
+					uiHudButtonElement.y = this.buttonDrawY;
+
+					this.buttonDrawY += uiHudButtonElement.height;
+				}
 		}
 
 		g.setColor(startingColor);
@@ -259,13 +337,13 @@ public class UIHudDropdownElement extends UIHudElement {
 		GameLauncher.getMainWindow().removeMouseInputListener(mouseInput, this);
 	}
 
-	private boolean isMouseOver() {
+	private boolean isMouseOver(boolean button) {
 
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
 
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
-		return new Rectangle(x, y, width, height).contains(mousePos)
-				|| (new Rectangle(x, y + height + 5, width, height * 3).contains(mousePos) && showDropdown);
+		return button ? new Rectangle(x, y, width, height)
+				.contains(mousePos) : new Rectangle(x, y + height + 5, width, height * 3).contains(mousePos);
 	}
 }

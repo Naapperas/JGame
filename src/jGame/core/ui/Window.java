@@ -344,7 +344,7 @@ public class Window {
 	}
 
 	public void removeInputListener(KeyAdapter keyInputListener, UIHudElement element) {
-		ProgramLogger.writeLog("Adding key input listener for " + element);
+		ProgramLogger.writeLog("Removing key input listener for " + element);
 		windowCanvas.removeKeyListener(keyInputListener);
 	}
 
