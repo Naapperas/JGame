@@ -52,7 +52,7 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (dropdownButtons != null && buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.removeInputListener();
-							UIHud.removeHUDUIElement(uiHudButtonElement);
+							// UIHud.removeHUDUIElement(uiHudButtonElement);
 
 						}
 
@@ -62,7 +62,7 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (dropdownButtons != null && !buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.registerInputListener();
-							UIHud.addHUDUIElement(uiHudButtonElement);
+							// UIHud.addHUDUIElement(uiHudButtonElement);
 						}
 						buttonListenersAdded = true;
 					}
@@ -76,7 +76,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (dropdownButtons != null && !buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.registerInputListener();
-						UIHud.addHUDUIElement(uiHudButtonElement);
+						// UIHud.addHUDUIElement(uiHudButtonElement);
 					}
 					buttonListenersAdded = true;
 				}
@@ -87,7 +87,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (dropdownButtons != null && buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.removeInputListener();
-						UIHud.removeHUDUIElement(uiHudButtonElement);
+						// UIHud.removeHUDUIElement(uiHudButtonElement);
 
 					}
 
@@ -316,6 +316,8 @@ public class UIHudDropdownElement extends UIHudElement {
 
 					uiHudButtonElement.x = this.x;
 					uiHudButtonElement.y = this.buttonDrawY;
+
+					uiHudButtonElement.render(g);
 
 					this.buttonDrawY += uiHudButtonElement.height;
 				}

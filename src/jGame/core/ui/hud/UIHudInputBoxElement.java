@@ -130,6 +130,7 @@ public class UIHudInputBoxElement extends UIHudElement {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isConsumed()) {
+				hasFocus = false;
 				return;
 			}
 
