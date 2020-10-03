@@ -33,6 +33,8 @@ public class UIHudButtonElement extends UIHudElement {
 	protected Rectangle bounds;
 	private String buttonText;
 
+	private boolean checkForMouse = true;
+
 	// the actual listener responsible for handling user input
 	private MouseAdapter mouseListener = new MouseAdapter() {
 
@@ -43,7 +45,7 @@ public class UIHudButtonElement extends UIHudElement {
 			if (e.isConsumed())
 				return;
 
-			if (bounds.contains(e.getPoint())) {
+			if (bounds.contains(e.getPoint()) && checkForMouse) {
 				theElement.processClick(e);
 				e.consume();
 			}
@@ -129,9 +131,9 @@ public class UIHudButtonElement extends UIHudElement {
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
 
-		if (isMouseOver()) { // draw alternate look for hovered buttons
+		if (isMouseOver() && checkForMouse) { // draw alternate look for hovered buttons
 			// fill the frame of the button
-			g.fillRect(this.x, this.y, width, height);
+			g.fillRect(this.x, this.y, width + 1, height);
 			
 			// set text color
 			g.setColor(Color.BLACK);
@@ -194,6 +196,10 @@ public class UIHudButtonElement extends UIHudElement {
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
 		return bounds.contains(mousePos);
+	}
+
+	public void checkForMouse(boolean value) {
+		this.checkForMouse = value;
 	}
 
 }

@@ -65,39 +65,6 @@ public class GameLauncher {
 		return fps;
 	}
 
-	// since 1.1.0
-	private static UIHudElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
-			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
-			new int[] { 10, 10, 0, 0 }) {
-
-		{
-			this.zIndex = 200;
-		}
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4372277764333169074L;
-
-		@Override
-		protected void processClick(MouseEvent e) {
-			pause = !pause;
-		}
-
-		@Override
-		public void registerInputListener() {
-			super.registerInputListener();
-			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
-		}
-
-		@Override
-		public void removeInputListener() {
-			super.removeInputListener();
-			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
-		}
-
-	};
-
 	private static boolean pause = false, hudEvent = false;
 
 	public static void setHudEvent() {
@@ -117,6 +84,40 @@ public class GameLauncher {
 			ProgramLogger.writeLog("Pausing game");
 			pause = !pause;
 		}
+	};
+
+	// since 1.1.0
+	private static UIHudElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
+			new int[] { 10, 10, 0, 0 }) {
+
+		{
+			this.zIndex = 200;
+		}
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4372277764333169074L;
+
+		@Override
+		protected void processClick(MouseEvent e) {
+			pauseAction.actionPerformed(null); // we already defined the behaviour for this previously, so no need to
+												// repeat.
+		}
+
+		@Override
+		public void registerInputListener() {
+			super.registerInputListener();
+			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
+		}
+
+		@Override
+		public void removeInputListener() {
+			super.removeInputListener();
+			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
+		}
+
 	};
 
 	/**

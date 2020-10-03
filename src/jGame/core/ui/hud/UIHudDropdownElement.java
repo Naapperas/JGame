@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import jGame.core.launcher.GameLauncher;
+import jGame.core.utils.MathUtils;
 
 public class UIHudDropdownElement extends UIHudElement {
 
@@ -32,11 +33,11 @@ public class UIHudDropdownElement extends UIHudElement {
 	private String optionDisplay;
 
 	private static final int SCROLLBAR_WIDTH = 20;
-	private int buttonDrawY = 0;
+	private int buttonDrawY = 0, scrollBarY = 0, scrollBarHeight = 0, scrollBarYOffset = 0;
 
 	private Rectangle clipArea = null;
 
-	private boolean buttonListenersAdded = false;
+	private boolean buttonListenersAdded = false, mouseOnScrollbar = false;
 
 	private MouseAdapter mouseInput = new MouseAdapter() {
 
@@ -52,8 +53,6 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (dropdownButtons != null && buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.removeInputListener();
-							// UIHud.removeHUDUIElement(uiHudButtonElement);
-
 						}
 
 						buttonListenersAdded = false;
@@ -62,22 +61,31 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (dropdownButtons != null && !buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.registerInputListener();
-							// UIHud.addHUDUIElement(uiHudButtonElement);
 						}
+
 						buttonListenersAdded = true;
 					}
 				}
 
 				showDropdown = !showDropdown;
+				mouseOnScrollbar = true;
 				e.consume();
 			} else if (isMouseOver(false)) {
 				showDropdown = true;
 
+				if (new Rectangle(x + width - SCROLLBAR_WIDTH, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight)
+						.contains(e.getPoint())) {
+					mouseOnScrollbar = true;
+					
+					scrollBarYOffset = e.getY() - scrollBarY;
+
+				}
+
 				if (dropdownButtons != null && !buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.registerInputListener();
-						// UIHud.addHUDUIElement(uiHudButtonElement);
 					}
+
 					buttonListenersAdded = true;
 				}
 				e.consume();
@@ -87,13 +95,20 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (dropdownButtons != null && buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.removeInputListener();
-						// UIHud.removeHUDUIElement(uiHudButtonElement);
-
 					}
 
 					buttonListenersAdded = false;
+					mouseOnScrollbar = true;
 				}
 			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (e.isConsumed())
+				return;
+			mouseOnScrollbar = false;
+			e.consume();
 		}
 	};
 
@@ -110,7 +125,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		int maxWidth = Integer.MIN_VALUE;
 		int maxHeight = Integer.MIN_VALUE;
-		if (elements != null)
+		if (elements != null) {
 			for (UIHudButtonElement element : elements) {
 				element.setZIndex(this.zIndex + 1);
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
@@ -120,6 +135,9 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (element.height > maxHeight)
 					maxHeight = element.height;
 			}
+
+			for (UIHudButtonElement element : elements) { element.bounds.setSize(maxWidth, maxHeight); }
+		}
 
 		this.width = maxWidth;
 		this.height = maxHeight;
@@ -137,6 +155,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
+				element.bounds.setSize(element.width, element.height);
 			}
 		this.width = width;
 		this.height = height;
@@ -151,7 +170,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		int maxWidth = Integer.MIN_VALUE;
 		int maxHeight = Integer.MIN_VALUE;
-		if (elements != null)
+		if (elements != null) {
 			for (UIHudButtonElement element : elements) {
 				element.setZIndex(this.zIndex + 1);
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
@@ -161,6 +180,9 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (element.height > maxHeight)
 					maxHeight = element.height;
 			}
+
+			for (UIHudButtonElement element : elements) { element.bounds.setSize(maxWidth, maxHeight); }
+		}
 		this.width = maxWidth;
 		this.height = maxHeight;
 		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
@@ -178,6 +200,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
+				element.bounds.setSize(element.width, element.height);
 			}
 		this.width = width;
 		this.height = height;
@@ -191,7 +214,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		int maxWidth = Integer.MIN_VALUE;
 		int maxHeight = Integer.MIN_VALUE;
-		if (elements != null)
+		if (elements != null) {
 			for (UIHudButtonElement element : elements) {
 				element.setZIndex(this.zIndex + 1);
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
@@ -203,6 +226,8 @@ public class UIHudDropdownElement extends UIHudElement {
 					maxHeight = element.height;
 			}
 
+			for (UIHudButtonElement element : elements) { element.bounds.setSize(maxWidth, maxHeight); }
+		}
 		this.width = maxWidth;
 		this.height = maxHeight;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
@@ -220,6 +245,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
+				element.bounds.setSize(element.width, element.height);
 			}
 		this.width = width;
 		this.height = height;
@@ -234,7 +260,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		int maxWidth = Integer.MIN_VALUE;
 		int maxHeight = Integer.MIN_VALUE;
-		if (elements != null)
+		if (elements != null) {
 			for (UIHudButtonElement element : elements) {
 				element.setZIndex(this.zIndex + 1);
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
@@ -244,6 +270,9 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (element.height > maxHeight)
 					maxHeight = element.height;
 			}
+
+			for (UIHudButtonElement element : elements) { element.bounds.setSize(maxWidth, maxHeight); }
+		}
 		this.width = maxWidth;
 		this.height = maxHeight;
 		this.drawConstraints = new Constraints(this, constraintType, constraintSpecs);
@@ -261,6 +290,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				element.setDrawConstraints(new Constraints(element, Constraints.NONE, null));
 				element.width = width - UIHudDropdownElement.SCROLLBAR_WIDTH;
 				element.height = height;
+				element.bounds.setSize(element.width, element.height);
 			}
 		this.width = width;
 		this.height = height;
@@ -292,8 +322,31 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
+		
+		// adjust scrollbar height according to number of elements in the dropdown list
+		// clamp value so we don't get tiny scrollbars
+		scrollBarHeight = (this.dropdownButtons.size() > 3) ? MathUtils
+				.clamp((height * 3) / (this.dropdownButtons.size() - 2), 20, height * 3) : 0;
 
-		this.buttonDrawY = y + height + 5;
+		Point mousePos = MouseInfo.getPointerInfo().getLocation();
+		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
+
+		if (mouseOnScrollbar) {
+			this.scrollBarY = MathUtils.clamp(mousePos.y - scrollBarYOffset, y + height + 5,
+					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1);
+			//    | start position | height of |        height of
+			//    |of dropdown menu| dropdown  |        scrollbar
+
+		}
+
+		try {
+			if (this.dropdownButtons.size() > 3)
+				this.buttonDrawY = (int) MathUtils.map(scrollBarY, y + height + 5f,
+						y + height + 4 + height * 3 + 2 - scrollBarHeight - 1, y + height + 5f,
+						(y + height + 5f) - ((this.dropdownButtons.size() - 3) * this.height));
+			else
+				this.buttonDrawY = y + height + 5;
+		} catch (Exception e) {}
 
 		if (this.clipArea == null) { this.clipArea = new Rectangle(x - 1, y + height + 4, width + 2, height * 3 + 2); }
 
@@ -308,19 +361,40 @@ public class UIHudDropdownElement extends UIHudElement {
 
 			g.setClip(clipArea);
 
-			g.clearRect(x, y + height + 5, width, height * 3);
-			g.drawRect(x, buttonDrawY, width, height * 3);
+			g.clearRect(clipArea.x, clipArea.y, clipArea.width, clipArea.height);
+			g.drawRect(x, y + height + 5, width, height * 3);
 
-			if (dropdownButtons != null)
+			if (dropdownButtons != null) {
 				for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 
 					uiHudButtonElement.x = this.x;
 					uiHudButtonElement.y = this.buttonDrawY;
 
-					uiHudButtonElement.render(g);
+					if (this.dropdownButtons.size() <= 3)
+						uiHudButtonElement.width = width;
+
+					uiHudButtonElement.bounds.setLocation(uiHudButtonElement.x, uiHudButtonElement.y);
+
+					if (uiHudButtonElement.bounds.intersects(clipArea)) {
+
+						if (clipArea.contains(mousePos))
+							uiHudButtonElement.checkForMouse(true);
+						else
+							uiHudButtonElement.checkForMouse(false);
+
+						uiHudButtonElement.render(g);
+
+					}
 
 					this.buttonDrawY += uiHudButtonElement.height;
 				}
+			}
+
+			if (this.dropdownButtons.size() > 3) {
+				g.setClip(startingClip);
+
+				g.fillRoundRect(x + width - SCROLLBAR_WIDTH, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight, 5, 5);
+			}
 		}
 
 		g.setColor(startingColor);
