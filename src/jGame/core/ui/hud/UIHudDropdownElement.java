@@ -110,6 +110,7 @@ public class UIHudDropdownElement extends UIHudElement {
 			mouseOnScrollbar = false;
 			e.consume();
 		}
+
 	};
 
 	{

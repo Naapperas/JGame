@@ -29,6 +29,7 @@ public class Constraints {
 	 * 
 	 * @param constraintTypes a variable number of constraints to constrain the
 	 *                        element
+	 * 
 	 * @return the code of the given constrain type
 	 * @since 1.1.0
 	 */
@@ -118,7 +119,6 @@ public class Constraints {
 	 * Returns the {@code y} position of the constrained element, according to the
 	 * applied constraints.
 	 * 
-	 * 
 	 * @return the y location of the constrained element
 	 * @since 1.1.0
 	 */
@@ -130,24 +130,55 @@ public class Constraints {
 		 */
 
 		if ((this.constraintType & Constraints.CENTER_VERTICAL_CONSTRAINT) != 0) {
-			if (this.constrainedElement instanceof UIHudTextElement)
-				return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
+			if (this.constrainedElement instanceof UIHudTextElement) {
+				if (this.constrainedElement.parentElement != null)
+					return this.constrainedElement.parentElement.y + (this.constrainedElement.parentElement.height / 2)
+							+ (constrainedElement.height / 4);
+				else
+					return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
 						+ (constrainedElement.height / 4);
-			else
-				return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
+			} else {
+				if (this.constrainedElement.parentElement != null) {
+					return this.constrainedElement.parentElement.y + (this.constrainedElement.parentElement.height / 2)
+							- (constrainedElement.height / 2);
+				}else {
+					return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight() / 2)
 						- (constrainedElement.height / 2);
+				}
+			}
 		} else if ((this.constraintType & Constraints.FROM_TOP_CONSTRAINT) != 0) {
-			if (this.constrainedElement instanceof UIHudTextElement)
-				return this.contraintValues[Constraints.TOP] + this.constrainedElement.height;
-			else
-				return this.contraintValues[Constraints.TOP];
+			if (this.constrainedElement instanceof UIHudTextElement) {
+				if (this.constrainedElement.parentElement != null) {
+					return this.constrainedElement.parentElement.y + this.contraintValues[Constraints.TOP]
+							+ this.constrainedElement.height;
+				} else {
+					return this.contraintValues[Constraints.TOP] + this.constrainedElement.height;
+				}
+			} else {
+				if (this.constrainedElement.parentElement != null) {
+					return this.constrainedElement.parentElement.y + this.contraintValues[Constraints.TOP];
+				} else {
+					return this.contraintValues[Constraints.TOP];
+				}
+			}
 		} else if ((this.constraintType & Constraints.FROM_BOTTOM_CONSTRAINT) != 0) {
-			if (this.constrainedElement instanceof UIHudTextElement)
-				return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-						- this.contraintValues[Constraints.BOTTOM];
-			else
-				return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-					- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
+			if (this.constrainedElement instanceof UIHudTextElement) {
+				if (this.constrainedElement.parentElement != null) {
+					return this.constrainedElement.parentElement.y + this.constrainedElement.parentElement.height
+							- this.contraintValues[Constraints.BOTTOM];
+				} else {
+					return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+							- this.contraintValues[Constraints.BOTTOM];
+				}
+			} else {
+				if (this.constrainedElement.parentElement != null) {
+					return this.constrainedElement.parentElement.y + this.constrainedElement.parentElement.height
+							- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
+				} else {
+					return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+							- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
+				}
+			}
 		} else
 			return constrainedElement.y;
 	}

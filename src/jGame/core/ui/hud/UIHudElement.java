@@ -22,6 +22,8 @@ public abstract class UIHudElement implements Serializable {
 	protected int x, y, width, height;
 	protected int zIndex;
 	protected Constraints drawConstraints;
+	
+	protected UIHudElement parentElement = null;
 
 	protected UIHudElement() {
 	}
