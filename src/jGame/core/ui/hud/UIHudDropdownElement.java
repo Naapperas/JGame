@@ -38,7 +38,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 	private Rectangle clipArea = null;
 
-	private boolean buttonListenersAdded = false, mouseOnScrollbar = false;
+	private boolean buttonListenersAdded = false, mouseOnScrollbar = false, scrollWheel = false;
 
 	private MouseAdapter mouseInput = new MouseAdapter() {
 
@@ -72,6 +72,11 @@ public class UIHudDropdownElement extends UIHudElement {
 				mouseOnScrollbar = true;
 				e.consume();
 			} else if (isMouseOver(false)) {
+				if (!showDropdown) {
+					e.consume();
+					return;
+				}
+
 				showDropdown = true;
 
 				if (new Rectangle(x + width - SCROLLBAR_WIDTH, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight)
@@ -114,13 +119,11 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
-			System.out.println(showDropdown);
-			System.out.println(e.isConsumed());
 			if (e.isConsumed() || !showDropdown)
 				return;
 
-			System.out.println(e);
-			
+			scrollBarY += e.getScrollAmount() * e.getPreciseWheelRotation();
+			scrollWheel = true;
 			e.consume();
 		}
 	};
@@ -344,12 +347,16 @@ public class UIHudDropdownElement extends UIHudElement {
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
-		if (mouseOnScrollbar) {
+		if (mouseOnScrollbar && !scrollWheel) {
 			this.scrollBarY = MathUtils.clamp(mousePos.y - scrollBarYOffset, y + height + 5,
 					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1);
 			//    | start position | height of |        height of
 			//    |of dropdown menu| dropdown  |        scrollbar
 
+		} else if (!mouseOnScrollbar && scrollWheel) {
+			this.scrollBarY = MathUtils.clamp(this.scrollBarY, y + height + 5,
+					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1);
+			this.scrollWheel = false;
 		}
 
 		try {
@@ -433,7 +440,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
-		return (button ? new Rectangle(x, y, width, height) : new Rectangle(x, y + height + 5, width, height * 3))
-				.contains(mousePos);
+		return button ? new Rectangle(x, y, width, height)
+				.contains(mousePos) : new Rectangle(x, y + height + 5, width, height * 3).contains(mousePos);
 	}
 }
