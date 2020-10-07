@@ -10,6 +10,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,17 @@ public class UIHudDropdownElement extends UIHudElement {
 			e.consume();
 		}
 
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent e) {
+			System.out.println(showDropdown);
+			System.out.println(e.isConsumed());
+			if (e.isConsumed() || !showDropdown)
+				return;
+
+			System.out.println(e);
+			
+			e.consume();
+		}
 	};
 
 	{
@@ -407,6 +419,7 @@ public class UIHudDropdownElement extends UIHudElement {
 	@Override
 	public void registerInputListener() {
 		GameLauncher.getMainWindow().addMouseInputListener(mouseInput, this);
+		GameLauncher.getMainWindow().getWindowCanvas().addMouseWheelListener(mouseInput);
 	}
 
 	@Override
@@ -420,7 +433,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
-		return button ? new Rectangle(x, y, width, height)
-				.contains(mousePos) : new Rectangle(x, y + height + 5, width, height * 3).contains(mousePos);
+		return (button ? new Rectangle(x, y, width, height) : new Rectangle(x, y + height + 5, width, height * 3))
+				.contains(mousePos);
 	}
 }
