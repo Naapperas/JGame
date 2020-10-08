@@ -15,7 +15,7 @@ public class Constraints {
 	// the element to be constrained
 	private UIHudElement constrainedElement;
 	private int constraintType;
-	private int[] contraintValues = new int[4];
+	private int[] constraintValues = new int[4];
 
 	public static int TOP = 0, RIGHT = 1, BOTTOM = 2, LEFT = 3;
 
@@ -88,7 +88,7 @@ public class Constraints {
 	public Constraints(UIHudElement constrainedElement, int constraintType, int[] contraintValues) {
 		this.constrainedElement = Objects.requireNonNull(constrainedElement);
 		this.constraintType = constraintType;
-		this.contraintValues = contraintValues;
+		this.constraintValues = contraintValues;
 	}
 
 	/**
@@ -104,13 +104,27 @@ public class Constraints {
 		// text
 
 		if ((this.constraintType & Constraints.CENTER_HORIZONTAL_CONSTRAINT) != 0) {
-			return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth() / 2)
-					- (constrainedElement.width / 2);
+			if (this.constrainedElement.parentElement != null) {
+				return this.constrainedElement.parentElement.x + this.constrainedElement.parentElement.width / 2
+						- (constrainedElement.width / 2);
+			} else {
+				return (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth() / 2)
+						- (constrainedElement.width / 2);
+			}
 		} else if ((this.constraintType & Constraints.FROM_LEFT_CONSTRAINT) != 0) {
-			return this.contraintValues[Constraints.LEFT];
+			if (this.constrainedElement.parentElement != null) {
+				return this.constrainedElement.parentElement.x + this.constraintValues[Constraints.LEFT];
+			} else {
+				return this.constraintValues[Constraints.LEFT];
+			}
 		} else if ((this.constraintType & Constraints.FROM_RIGHT_CONSTRAINT) != 0) {
-			return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
-					- this.contraintValues[Constraints.RIGHT] - this.constrainedElement.width;
+			if (this.constrainedElement.parentElement != null) {
+				return this.constrainedElement.parentElement.x + this.constrainedElement.parentElement.width
+						- this.constrainedElement.width - this.constraintValues[Constraints.RIGHT];
+			} else {
+				return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
+						- this.constraintValues[Constraints.RIGHT] - this.constrainedElement.width;
+			}
 		} else
 			return constrainedElement.x;
 	}
@@ -149,34 +163,34 @@ public class Constraints {
 		} else if ((this.constraintType & Constraints.FROM_TOP_CONSTRAINT) != 0) {
 			if (this.constrainedElement instanceof UIHudTextElement) {
 				if (this.constrainedElement.parentElement != null) {
-					return this.constrainedElement.parentElement.y + this.contraintValues[Constraints.TOP]
+					return this.constrainedElement.parentElement.y + this.constraintValues[Constraints.TOP]
 							+ this.constrainedElement.height;
 				} else {
-					return this.contraintValues[Constraints.TOP] + this.constrainedElement.height;
+					return this.constraintValues[Constraints.TOP] + this.constrainedElement.height;
 				}
 			} else {
 				if (this.constrainedElement.parentElement != null) {
-					return this.constrainedElement.parentElement.y + this.contraintValues[Constraints.TOP];
+					return this.constrainedElement.parentElement.y + this.constraintValues[Constraints.TOP];
 				} else {
-					return this.contraintValues[Constraints.TOP];
+					return this.constraintValues[Constraints.TOP];
 				}
 			}
 		} else if ((this.constraintType & Constraints.FROM_BOTTOM_CONSTRAINT) != 0) {
 			if (this.constrainedElement instanceof UIHudTextElement) {
 				if (this.constrainedElement.parentElement != null) {
 					return this.constrainedElement.parentElement.y + this.constrainedElement.parentElement.height
-							- this.contraintValues[Constraints.BOTTOM];
+							- this.constraintValues[Constraints.BOTTOM];
 				} else {
 					return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-							- this.contraintValues[Constraints.BOTTOM];
+							- this.constraintValues[Constraints.BOTTOM];
 				}
 			} else {
 				if (this.constrainedElement.parentElement != null) {
 					return this.constrainedElement.parentElement.y + this.constrainedElement.parentElement.height
-							- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
+							- this.constraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
 				} else {
 					return (int) GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-							- this.contraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
+							- this.constraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
 				}
 			}
 		} else
