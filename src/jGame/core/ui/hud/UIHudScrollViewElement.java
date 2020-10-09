@@ -4,6 +4,11 @@ import java.awt.Graphics2D;
 
 public class UIHudScrollViewElement extends UIHudElement {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4758621534607053227L;
+
 	public UIHudScrollViewElement() {
 		// TODO Auto-generated constructor stub
 	}

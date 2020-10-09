@@ -100,7 +100,7 @@ public class Constraints {
 	 */
 	public int getXLocation() {
 
-		// UIHudCheckBoxElements have a box and some text, we ned tro account for the
+		// UIHudCheckBoxElements have a box and some text, we need to account for the
 		// text
 
 		if ((this.constraintType & Constraints.CENTER_HORIZONTAL_CONSTRAINT) != 0) {
