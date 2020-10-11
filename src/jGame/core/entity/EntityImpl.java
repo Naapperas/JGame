@@ -164,6 +164,11 @@ public final class EntityImpl extends Entity {
 
 		this.inputListener = new KeyAdapter() {
 
+			/*
+			 * Set boolean variable instead of directly changing velX and velY so movement
+			 * is smoother, as it happens in the tick method.
+			 */
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 

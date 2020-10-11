@@ -74,7 +74,7 @@ public class GameStateManager {
 	/**
 	 * Removes the given game state.
 	 * 
-	 * @param gameStateDescr the game state object to be removed
+	 * @param gameStateDescr the description of the game state object to be removed
 	 * @since 1.0.0
 	 */
 	public static synchronized void removeGameState(String gameStateDescr) {
@@ -99,39 +99,49 @@ public class GameStateManager {
 	}
 
 	/**
+	 * Adds an {@link Entity} object to the game board.
 	 * 
-	 * @param entityToAdd
+	 * @param entityToAdd the entity to add to the game board
+	 * @since 1.2.0
 	 */
 	public static void addEntityToBoard(Entity entityToAdd) {
 		boardEntities.add(entityToAdd);
 	}
 
 	/**
+	 * Adds an {@link UIHudElement} object to the game board.
 	 * 
-	 * @param elementToAdd
+	 * @param elementToAdd the element to add to the game board
+	 * @since 1.2.0
 	 */
 	public static void addUIHudElementToBoard(UIHudElement elementToAdd) {
 		boardElements.add(elementToAdd);
 	}
 
 	/**
+	 * Adds a list of {@link Entity} objects to the game board.
 	 * 
-	 * @param entitiesToAdd
+	 * @param entitiesToAdd the list of entities to add to the game board
+	 * @since 1.2.0
 	 */
 	public static void addEntitiesToBoard(List<Entity> entitiesToAdd) {
 		boardEntities.addAll(entitiesToAdd);
 	}
 
 	/**
+	 * Adds a list of {@link UIHudElement} objects to the game board.
 	 * 
-	 * @param elementsToAdd
+	 * @param elementsToAdd the list of elements to add to the game board
+	 * @since 1.2.0
 	 */
 	public static void addUIHudElementsToBoard(List<UIHudElement> elementsToAdd) {
 		boardElements.addAll(elementsToAdd);
 	}
 
 	/**
+	 * Initializes the game board.
 	 * 
+	 * @since 1.2.0
 	 */
 	public static void initializeBoard() {
 		board = new GameState(boardEntities, boardElements, "Board");
@@ -139,7 +149,9 @@ public class GameStateManager {
 	}
 
 	/**
+	 * Adds the game board to the list of game states.
 	 * 
+	 * @since 1.2.0
 	 */
 	public static void addBoard() {
 		ProgramLogger.writeLog("Adding Board");

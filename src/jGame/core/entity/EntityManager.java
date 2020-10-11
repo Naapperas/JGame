@@ -17,6 +17,9 @@ public class EntityManager {
 	// the lists of entities/entities to remove
 	private static final ArrayList<Entity> ENTITIES_LIST = new ArrayList<Entity>();
 	private static final ArrayList<Entity> ENTITIES_TO_REMOVE_LIST = new ArrayList<Entity>();
+	// we need this extra list because of the way entities are updated. If we remove
+	// from the update queue every entity queued for removal, less updates are done,
+	// increasing overall performance.
 	
 	/**
 	 * Adds an entity to the entities list, if it isn't already present, otherwise
@@ -91,7 +94,10 @@ public class EntityManager {
 	 * @see #updateEntities(java.awt.Graphics2D)
 	 * @see #tickEntities()
 	 * @since 1.0.0
+	 * @deprecated since the main loop runs so fast, ticks happen very less often
+	 *             than renders, so we need to separate those to commands
 	 */
+	@Deprecated
 	public static synchronized void updateEntities(java.awt.Graphics2D g) {
 		tickEntities();
 		renderEntities(g);
@@ -105,6 +111,9 @@ public class EntityManager {
 	 * @since 1.0.0
 	 */
 	public static synchronized void renderEntities(java.awt.Graphics2D g) {
+		// since this is called after tick (when it is eventually called), we don'd need
+		// to check for removed entities, we only care about rendering what we have on
+		// the screen.
 		ENTITIES_LIST.forEach((entity)->{
 			if(entity.isRenderable())
 				entity.render(g);
@@ -112,10 +121,9 @@ public class EntityManager {
 	}
 	
 	/**
-	 * Updates all the entities before rendering them on the screen. After all
-	 * entities are updated, every entity which was queued for removal is removed
-	 * from the entities list. Finally, the entity removal list is cleared so it
-	 * doesn't infinitely increase in size with unused entities.
+	 * Updates all the entities before rendering them on the screen. The entity
+	 * removal list is traversed beforehand in order to remove from the "update
+	 * queue" any entity we do not wish to update anymore.
 	 * 
 	 * @see Entity#tick()
 	 * @since 1.0.0

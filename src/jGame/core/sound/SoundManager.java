@@ -43,7 +43,7 @@ public class SoundManager {
 	}
 
 	/**
-	 * Plays the specified audio file.
+	 * Plays the audio file referenced by {@code soundFileToPlay}.
 	 * 
 	 * @param soundFileToPlay the path of the file to be played
 	 * @return a {@link SoundWorker} to play the specified audio

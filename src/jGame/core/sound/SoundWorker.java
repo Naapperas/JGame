@@ -66,6 +66,8 @@ public class SoundWorker extends SwingWorker<String, Object> {
 	@Override
 	protected String doInBackground() throws Exception {
 
+		// standard audio playback in Java
+
 		sourceLine.start();
 
 		int numBytesRead = 0;
@@ -133,6 +135,14 @@ public class SoundWorker extends SwingWorker<String, Object> {
 		}
 	}
 
+	/**
+	 * Returns a given control from the source data line.
+	 * 
+	 * @param controlType the type of control to query
+	 * @return a {@link Control} object representing a given setting of the source
+	 *         data line
+	 * @since 1.2.0
+	 */
 	public Control getControl(Control.Type controlType) {
 		return sourceLine.getControl(controlType);
 	}

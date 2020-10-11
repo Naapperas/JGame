@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Class responsible for performing animations on entity sprites: rolling
+ * through a series of images, thus creating the illusion of animation.
  * 
  * @author Nuno Pereira
  * @since 1.0.0
@@ -43,7 +45,7 @@ public class Animation {
 		}
 	};
 
-	// the task responsible for changing this
+	// the task responsible for changing this animation
 	private final Runnable animationTask = () -> {
 		
 		this.animationIndex += this.animationDirection;

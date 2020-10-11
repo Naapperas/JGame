@@ -25,7 +25,7 @@ public class Constraints {
 	}
 
 	/**
-	 * Constructs a given constraint type out of the supplied constraints.
+	 * Constructs a given constraint type out of the supplied constraint codes.
 	 * 
 	 * @param constraintTypes a variable number of constraints to constrain the
 	 *                        element
@@ -40,22 +40,32 @@ public class Constraints {
 	}
 
 	/**
+	 * The constraint code for no constraints, position is set by the client.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int NONE = 0;
 
 	/**
+	 * The constraint code for centering elements horizontally.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int CENTER_HORIZONTAL_CONSTRAINT = BIT_MASK(1);
 
 	/**
+	 * The constraint code for centering elements vertically.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int CENTER_VERTICAL_CONSTRAINT = BIT_MASK(2);
 
 	/**
+	 * The constraint code for centering elements horizontally and vertically. It is
+	 * the same as a bitwise OR of {@link Constraints#CENTER_HORIZONTAL_CONSTRAINT}
+	 * and {@link Constraints#CENTER_VERTICAL_CONSTRAINT}.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int CENTER_POINT_CONSTRAINT = concat(CENTER_HORIZONTAL_CONSTRAINT, CENTER_VERTICAL_CONSTRAINT);
 

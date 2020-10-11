@@ -35,7 +35,9 @@ public class Sprite implements Serializable {
 	// TODO: make overloads for all overloads of ImageIO.read
 
 	/**
-	 * Loads all animation frames for using by the sprite when animating.
+	 * Loads all animation frames for using by the sprite when animating. Every
+	 * {@code InputStream} in {@code inputs} is closed after its image has been
+	 * loaded.
 	 * 
 	 * @param inputs an array of {@link InputStream} objects containing image data
 	 * @throws Exception if we try to change the type (static/animated) of this

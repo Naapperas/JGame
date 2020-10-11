@@ -59,7 +59,8 @@ public class GameState {
 				UIHud.addHUDUIElement(element);
 			});
 
-			UIHud.registerInputListeners();
+			UIHud.registerInputListeners(); // register input listeners after every element has been added so we
+											// register each listener in the correct order
 		}
 		ProgramLogger.writeLog(this + " initiated.");
 	}

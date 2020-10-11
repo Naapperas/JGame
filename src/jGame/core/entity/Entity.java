@@ -18,7 +18,6 @@ import jGame.core.launcher.GameLauncher;
  * 
  * @author Nuno Pereira
  * @since 1.0.0
- *
  */
 public abstract class Entity implements Serializable {
 
@@ -239,7 +238,7 @@ public abstract class Entity implements Serializable {
 	protected abstract void setUpInputListener();
 
 	/**
-	 * Restarts the player inside the game. Implementation isdependant on the
+	 * Restarts the player inside the game. Implementation is dependent on the
 	 * client.
 	 * 
 	 * @since 1.0.0
@@ -290,7 +289,9 @@ public abstract class Entity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Entity [name=" + name + "]";
+		return "Entity [name=" + name + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", speed="
+				+ speed + "]";
 	}
+
 
 }
