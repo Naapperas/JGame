@@ -202,7 +202,8 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 
 		this.width = (int) ((this.boxSideLenght * 1.35)
 				+ g.getFontMetrics(g.getFont().deriveFont(startingFont.getSize() * scale))
-						.getStringBounds(textToDisplay, g).getWidth());
+						.getStringBounds(textToDisplay, g).getWidth()); // set the width of the element to contain the
+																		// width of the text
 
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
@@ -219,7 +220,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 			g.setColor(startingColor);
 		}
 
-		if (textToDisplay != null) {
+		if (textToDisplay != null) { // if we have text to display, then do it
 			g.setFont(g.getFont().deriveFont(startingFont.getSize() * scale));
 			g.setColor(Color.WHITE);
 			g.drawString(textToDisplay, (int) (this.x + this.boxSideLenght * 1.35),

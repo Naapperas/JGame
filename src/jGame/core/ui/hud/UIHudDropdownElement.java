@@ -48,13 +48,13 @@ public class UIHudDropdownElement extends UIHudElement {
 				return;
 			}
 
-			if (isMouseOver(true)) {
+			if (isMouseOver(true)) { // true = dropdown button
 
 				if (showDropdown) {
 					if (dropdownButtons != null && buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.removeInputListener();
-						}
+						} // add listeners so they listen for input when dropdown is visible
 
 						buttonListenersAdded = false;
 					}
@@ -62,7 +62,7 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (dropdownButtons != null && !buttonListenersAdded) {
 						for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 							uiHudButtonElement.registerInputListener();
-						}
+						} // remove listeners so they don't listen for input when dropdown is not visible
 
 						buttonListenersAdded = true;
 					}
@@ -71,7 +71,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				showDropdown = !showDropdown;
 				mouseOnScrollbar = true;
 				e.consume();
-			} else if (isMouseOver(false)) {
+			} else if (isMouseOver(false)) {// false = dropdown area
 				if (!showDropdown) {
 					e.consume();
 					return;
@@ -129,12 +129,20 @@ public class UIHudDropdownElement extends UIHudElement {
 	};
 
 	{
+		// set this element's zIndex super high so dropdown area is rendered on top of
+		// the other elements
 		this.zIndex = 999;
 	}
 
 	public UIHudDropdownElement() {
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param elements
+	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements) {
 		super(x, y);
 		this.dropdownButtons = elements;
@@ -161,6 +169,14 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = "Selecionar opção...";
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param elements
+	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements) {
 		super(x, y, width, height);
 		this.dropdownButtons = elements;
@@ -179,6 +195,14 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = "Selecionar opção...";
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param elements
+	 * @param constraintType
+	 * @param constraintSpecs
+	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
 			int[] constraintSpecs) {
 		super(x, y);
@@ -205,6 +229,16 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = "Selecionar opção...";
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param elements
+	 * @param constraintType
+	 * @param constraintSpecs
+	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			int constraintType, int[] constraintSpecs) {
 		super(x, y, width, height);
@@ -224,6 +258,13 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = "Selecionar opção...";
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param elements
+	 * @param optionDisplay
+	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, String optionDisplay) {
 		super(x, y);
 		this.dropdownButtons = elements;
@@ -250,6 +291,15 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = optionDisplay;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param elements
+	 * @param optionDisplay
+	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			String optionDisplay) {
 		super(x, y, width, height);
@@ -269,6 +319,15 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = optionDisplay;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param elements
+	 * @param constraintType
+	 * @param constraintSpecs
+	 * @param optionDisplay
+	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
 			int[] constraintSpecs, String optionDisplay) {
 		super(x, y);
@@ -295,6 +354,17 @@ public class UIHudDropdownElement extends UIHudElement {
 		this.optionDisplay = optionDisplay;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param elements
+	 * @param constraintType
+	 * @param constraintSpecs
+	 * @param optionDisplay
+	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			int constraintType, int[] constraintSpecs, String optionDisplay) {
 		super(x, y, width, height);
@@ -342,20 +412,22 @@ public class UIHudDropdownElement extends UIHudElement {
 		// adjust scrollbar height according to number of elements in the dropdown list
 		// clamp value so we don't get tiny scrollbars
 		scrollBarHeight = (this.dropdownButtons.size() > 3) ? MathUtils
-				.clamp((height * 3) / (this.dropdownButtons.size() - 2), 20, height * 3) : 0;
+				.clamp((height * 3) / (this.dropdownButtons.size() - 2), 20, height * 3) : 0; // display scrollbar only
+																								// if elements overflow
+																								// display area
 
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
 		SwingUtilities.convertPointFromScreen(mousePos, GameLauncher.getMainWindow().getWindowCanvas());
 
 		if (mouseOnScrollbar && !scrollWheel) {
 			this.scrollBarY = MathUtils.clamp(mousePos.y - scrollBarYOffset, y + height + 5,
-					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1);
+					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1); // follow mouse
 			//    | start position | height of |        height of
 			//    |of dropdown menu| dropdown  |        scrollbar
 
 		} else if (!mouseOnScrollbar && scrollWheel) {
 			this.scrollBarY = MathUtils.clamp(this.scrollBarY, y + height + 5,
-					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1);
+					y + height + 4 + height * 3 + 2 - scrollBarHeight - 1); // offset relative to previous value
 			this.scrollWheel = false;
 		}
 
@@ -364,6 +436,9 @@ public class UIHudDropdownElement extends UIHudElement {
 				this.buttonDrawY = (int) MathUtils.map(scrollBarY, y + height + 5f,
 						y + height + 4 + height * 3 + 2 - scrollBarHeight - 1, y + height + 5f,
 						(y + height + 5f) - ((this.dropdownButtons.size() - 3) * this.height));
+			// set the y position to draw the buttons, this creates the illusion of
+			// scrolling through the elements of the dropdown
+
 			else
 				this.buttonDrawY = y + height + 5;
 		} catch (Exception e) {}
@@ -379,7 +454,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 		if (this.showDropdown) {
 
-			g.setClip(clipArea);
+			g.setClip(clipArea); // clip to draw only on the dropdown area
 
 			g.clearRect(clipArea.x, clipArea.y, clipArea.width, clipArea.height);
 			g.drawRect(x, y + height + 5, width, height * 3);
@@ -391,11 +466,12 @@ public class UIHudDropdownElement extends UIHudElement {
 					uiHudButtonElement.y = this.buttonDrawY;
 
 					if (this.dropdownButtons.size() <= 3)
-						uiHudButtonElement.width = width;
+						uiHudButtonElement.width = width; // there is no scrollbar, change width of every element
 
 					uiHudButtonElement.bounds.setLocation(uiHudButtonElement.x, uiHudButtonElement.y);
 
-					if (uiHudButtonElement.bounds.intersects(clipArea)) {
+					if (uiHudButtonElement.bounds.intersects(clipArea)) { // we only want to render elements that are
+																			// totally/partially visible
 
 						if (clipArea.contains(mousePos))
 							uiHudButtonElement.checkForMouse(true);
@@ -434,6 +510,12 @@ public class UIHudDropdownElement extends UIHudElement {
 		GameLauncher.getMainWindow().removeMouseInputListener(mouseInput, this);
 	}
 
+	/**
+	 * 
+	 * @param button
+	 * @return weather the mouse is over this element or not
+	 * @since 1.2.0
+	 */
 	private boolean isMouseOver(boolean button) {
 
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();

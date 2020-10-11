@@ -47,7 +47,7 @@ public class UIHudButtonElement extends UIHudElement {
 
 			if (bounds.contains(e.getPoint()) && checkForMouse) {
 				theElement.processClick(e);
-				e.consume();
+				e.consume(); // we only want to consume the event if we process it
 			}
 		}
 	};

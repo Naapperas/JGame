@@ -55,11 +55,18 @@ public class UIHud {
 		ProgramLogger.writeLog("Adding " + hudElement);
 		HUD.add(hudElement);
 
-		if (HUD.size() > 1)
+		if (HUD.size() > 1) // no need to waste time sorting one element
 			sortElements(true);
 
 	}
 
+	/**
+	 * Sorts all the elements in this HUD according to their {@code zIndex}
+	 * 
+	 * @param order the order in which to sort element: {@code true} for regular,
+	 *              {@code false} for backwards
+	 * @since 1.2.0
+	 */
 	public static void sortElements(final boolean order) {
 		ProgramLogger.writeLog("Sorting HUD elements.");
 		HUD.sort(new Comparator<UIHudElement>() {
@@ -119,6 +126,12 @@ public class UIHud {
 		}
 	}
 
+	/**
+	 * Returns the HUD elements.
+	 * 
+	 * @return the HUD elements
+	 * @since 1.0.0
+	 */
 	public static List<UIHudElement> getHud() {
 		return HUD;
 	}

@@ -70,30 +70,45 @@ public class Constraints {
 	public static int CENTER_POINT_CONSTRAINT = concat(CENTER_HORIZONTAL_CONSTRAINT, CENTER_VERTICAL_CONSTRAINT);
 
 	/**
+	 * The constraint code for placing elements relative to the top-most border of
+	 * the element's container, weather it be the window or another element.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int FROM_TOP_CONSTRAINT = BIT_MASK(3);
 
 	/**
+	 * The constraint code for placing elements relative to the right-most border of
+	 * the element's container, weather it be the window or another element.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int FROM_RIGHT_CONSTRAINT = BIT_MASK(4);
 
 	/**
+	 * The constraint code for placing elements relative to the bottom-most border
+	 * of the element's container, weather it be the window or another element.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int FROM_BOTTOM_CONSTRAINT = BIT_MASK(5);
 
 	/**
+	 * The constraint code for placing elements relative to the left-most border of
+	 * the element's container, weather it be the window or another element.
 	 * 
+	 * @since 1.1.0
 	 */
 	public static int FROM_LEFT_CONSTRAINT = BIT_MASK(6);
 
 	/**
+	 * Constructs a Contraints object for the given {@code constrainedElement}, of
+	 * type {@code constraintType} and using the values in {@code contraintValues}
 	 * 
-	 * @param constrainedElement
-	 * @param constraintType
-	 * @param contraintValues
+	 * @param constrainedElement the element to constrain
+	 * @param constraintType     the type of constraint to apply to the element
+	 * @param contraintValues    the values to apply when constraining the object
+	 * @since 1.1.0
 	 */
 	public Constraints(UIHudElement constrainedElement, int constraintType, int[] contraintValues) {
 		this.constrainedElement = Objects.requireNonNull(constrainedElement);
@@ -151,6 +166,10 @@ public class Constraints {
 		/*
 		 * Strings get drawn from the left bottom corner (baseline), as opposed to other
 		 * elements, check special cases
+		 */
+
+		/*
+		 * If parent element is not null, constraint relative to the parent element
 		 */
 
 		if ((this.constraintType & Constraints.CENTER_VERTICAL_CONSTRAINT) != 0) {

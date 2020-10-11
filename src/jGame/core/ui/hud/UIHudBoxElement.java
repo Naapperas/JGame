@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 
 /**
  * 
+ * Creates a colored square.
+ * 
  * @author Nuno Pereira
- *
+ * @since 1.1.0
  */
 public class UIHudBoxElement extends UIHudElement {
 
@@ -16,23 +18,25 @@ public class UIHudBoxElement extends UIHudElement {
 	private static final long serialVersionUID = -9098431952860544631L;
 
 	private int width, height;
-	private Color drawColor = null;
+	private Color drawColor = Color.WHITE;
 
 	{
 		this.zIndex = 50;
 	}
 
 	// TODO: add constraints
-
 	public UIHudBoxElement() {
 	}
 
 	/**
+	 * Constructs a box element in the given location with the given dimensions,
+	 * colored white.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * @param x      the horizontal position of this element
+	 * @param y      the vertical position of this element
+	 * @param width  the width of this element
+	 * @param height the height of this element
+	 * @since 1.2.0
 	 */
 	public UIHudBoxElement(int x, int y, int width, int height) {
 		super(x, y);
@@ -42,12 +46,15 @@ public class UIHudBoxElement extends UIHudElement {
 	}
 
 	/**
+	 * Constructs a box element in the given location with the given dimensions and
+	 * with the desired color.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param drawingColor
+	 * @param x            the horizontal position of this element
+	 * @param y            the vertical position of this element
+	 * @param width        the width of this element
+	 * @param height       the height of this element
+	 * @param drawingColor the color of this square
+	 * @since 1.2.0
 	 */
 	public UIHudBoxElement(int x, int y, int width, int height, Color drawingColor) {
 		super(x, y);
