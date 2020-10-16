@@ -141,7 +141,7 @@ public class SoundWorker extends SwingWorker<String, Object> {
 	 * @param controlType the type of control to query
 	 * @return a {@link Control} object representing a given setting of the source
 	 *         data line
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public Control getControl(Control.Type controlType) {
 		return sourceLine.getControl(controlType);

@@ -20,6 +20,12 @@ import javax.swing.SwingUtilities;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
 
+/**
+ * 
+ * @author Nuno Pereira
+ * @since 1.2.0
+ *
+ */
 public class UIHudDropdownElement extends UIHudElement {
 
 	/**
@@ -27,6 +33,7 @@ public class UIHudDropdownElement extends UIHudElement {
 	 */
 	private static final long serialVersionUID = 7509427206795717555L;
 
+	// the list of buttons to be rendered
 	private List<UIHudButtonElement> dropdownButtons = new ArrayList<UIHudButtonElement>();
 
 	private boolean showDropdown = false;
@@ -36,6 +43,7 @@ public class UIHudDropdownElement extends UIHudElement {
 	private static final int SCROLLBAR_WIDTH = 20;
 	private int buttonDrawY = 0, scrollBarY = 0, scrollBarHeight = 0, scrollBarYOffset = 0;
 
+	// the clip area to restrict drawing to the "dropdown area"
 	private Rectangle clipArea = null;
 
 	private boolean buttonListenersAdded = false, mouseOnScrollbar = false, scrollWheel = false;
@@ -83,14 +91,17 @@ public class UIHudDropdownElement extends UIHudElement {
 						.contains(e.getPoint())) {
 					mouseOnScrollbar = true;
 					
-					scrollBarYOffset = e.getY() - scrollBarY;
+					scrollBarYOffset = e.getY() - scrollBarY; // add offset so scrollbar follows the position in which
+																// the mouse was clicked, instead of snapping its y
+																// component to the mouse's y value in game coordinate
+																// space
 
 				}
 
 				if (dropdownButtons != null && !buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.registerInputListener();
-					}
+					} // add listeners so they listen for input when dropdown is visible
 
 					buttonListenersAdded = true;
 				}
@@ -101,7 +112,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				if (dropdownButtons != null && buttonListenersAdded) {
 					for (UIHudButtonElement uiHudButtonElement : dropdownButtons) {
 						uiHudButtonElement.removeInputListener();
-					}
+					} // remove listeners so they don't listen for input when dropdown is not visible
 
 					buttonListenersAdded = false;
 					mouseOnScrollbar = true;
@@ -122,7 +133,7 @@ public class UIHudDropdownElement extends UIHudElement {
 			if (e.isConsumed() || !showDropdown)
 				return;
 
-			scrollBarY += e.getScrollAmount() * e.getPreciseWheelRotation();
+			scrollBarY += /* e.getScrollAmount() * */e.getPreciseWheelRotation();
 			scrollWheel = true;
 			e.consume();
 		}
@@ -473,7 +484,8 @@ public class UIHudDropdownElement extends UIHudElement {
 					if (uiHudButtonElement.bounds.intersects(clipArea)) { // we only want to render elements that are
 																			// totally/partially visible
 
-						if (clipArea.contains(mousePos))
+						if (clipArea.contains(mousePos)) // mouse interaction is only to be accounted for if the the
+															// element is totally/partially visible
 							uiHudButtonElement.checkForMouse(true);
 						else
 							uiHudButtonElement.checkForMouse(false);
@@ -511,8 +523,9 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Returns weather the mouse is over this element or not.
 	 * 
-	 * @param button
+	 * @param button condition to check if mouse is over the dropdown button/area
 	 * @return weather the mouse is over this element or not
 	 * @since 1.2.0
 	 */

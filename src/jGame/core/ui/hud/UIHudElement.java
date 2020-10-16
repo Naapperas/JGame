@@ -9,7 +9,6 @@ import java.io.Serializable;
  * 
  * @author Nuno Pereira
  * @since 1.0.0
- *
  */
 public abstract class UIHudElement implements Serializable {
 
@@ -23,6 +22,7 @@ public abstract class UIHudElement implements Serializable {
 	protected int zIndex;
 	protected Constraints drawConstraints;
 	
+	// support for nested elements
 	protected UIHudElement parentElement = null;
 
 	protected UIHudElement() {
@@ -85,6 +85,12 @@ public abstract class UIHudElement implements Serializable {
 		this.zIndex = newIndex;
 	}
 
+	/**
+	 * Resets the new draw constraints for this elements.
+	 * 
+	 * @param drawConstraints the new draw constraints for this element
+	 * @since 1.2.0
+	 */
 	public void setDrawConstraints(Constraints drawConstraints) {
 		this.drawConstraints = drawConstraints;
 	}

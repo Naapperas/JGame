@@ -84,7 +84,7 @@ public class Window {
 		try {
 			doSyncUIUpdate(() -> { init(width, height, title); });
 		} catch (InvocationTargetException | InterruptedException e) {
-			e.printStackTrace();
+			ProgramLogger.writeErrorLog(e);
 		}
 	}
 
@@ -336,6 +336,14 @@ public class Window {
 		((JComponent) windowFrame.getContentPane()).getActionMap().remove(key);
 	}
 
+	/**
+	 * Adds a key input listener associated with the given {@code UIHudElement} to
+	 * this window.
+	 * 
+	 * @param keyInputListener the listener of the given {@code element}
+	 * @param element          the element whose listener is being registered
+	 * @since 1.2.0
+	 */
 	public void addInputListener(KeyAdapter keyInputListener, UIHudElement element) {
 		if (Arrays.asList(windowCanvas.getListeners(KeyListener.class)).contains(keyInputListener))
 			return;
@@ -343,6 +351,14 @@ public class Window {
 		windowCanvas.addKeyListener(keyInputListener);
 	}
 
+	/**
+	 * Removes a key input listener associated with the given {@code UIHudElement}
+	 * to this window.
+	 * 
+	 * @param keyInputListener the listener of the given {@code element}
+	 * @param element          the element whose listener is being removed
+	 * @since 1.2.0
+	 */
 	public void removeInputListener(KeyAdapter keyInputListener, UIHudElement element) {
 		ProgramLogger.writeLog("Removing key input listener for " + element);
 		windowCanvas.removeKeyListener(keyInputListener);

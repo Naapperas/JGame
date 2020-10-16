@@ -2,6 +2,13 @@ package jGame.core.ui.hud;
 
 import java.awt.Graphics2D;
 
+/**
+ * 
+ * TO BE IMPLEMENTED
+ * 
+ * @author Nuno Pereira
+ * @since 1.2.0
+ */
 public class UIHudScrollViewElement extends UIHudElement {
 
 	/**

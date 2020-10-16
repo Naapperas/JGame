@@ -99,7 +99,7 @@ public class ProgramLogger {
 				firstLine = false;
 			} else
 				sb.append("                                       " + key + " - " + p.getProperty(key)
-						+ System.lineSeparator());
+						+ System.lineSeparator()); // indent whatever is not on the first line
 
 		}
 

@@ -11,7 +11,6 @@ import jGame.logging.ProgramLogger;
  * 
  * @author Nuno Pereira
  * @since 1.0.0
- *
  */
 public final class WindowUtils {
 	 

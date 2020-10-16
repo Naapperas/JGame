@@ -36,7 +36,7 @@ public class UIHudBoxElement extends UIHudElement {
 	 * @param y      the vertical position of this element
 	 * @param width  the width of this element
 	 * @param height the height of this element
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public UIHudBoxElement(int x, int y, int width, int height) {
 		super(x, y);
@@ -54,7 +54,7 @@ public class UIHudBoxElement extends UIHudElement {
 	 * @param width        the width of this element
 	 * @param height       the height of this element
 	 * @param drawingColor the color of this square
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public UIHudBoxElement(int x, int y, int width, int height, Color drawingColor) {
 		super(x, y);

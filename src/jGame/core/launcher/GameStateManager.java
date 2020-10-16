@@ -102,7 +102,7 @@ public class GameStateManager {
 	 * Adds an {@link Entity} object to the game board.
 	 * 
 	 * @param entityToAdd the entity to add to the game board
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void addEntityToBoard(Entity entityToAdd) {
 		boardEntities.add(entityToAdd);
@@ -112,7 +112,7 @@ public class GameStateManager {
 	 * Adds an {@link UIHudElement} object to the game board.
 	 * 
 	 * @param elementToAdd the element to add to the game board
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void addUIHudElementToBoard(UIHudElement elementToAdd) {
 		boardElements.add(elementToAdd);
@@ -122,7 +122,7 @@ public class GameStateManager {
 	 * Adds a list of {@link Entity} objects to the game board.
 	 * 
 	 * @param entitiesToAdd the list of entities to add to the game board
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void addEntitiesToBoard(List<Entity> entitiesToAdd) {
 		boardEntities.addAll(entitiesToAdd);
@@ -132,7 +132,7 @@ public class GameStateManager {
 	 * Adds a list of {@link UIHudElement} objects to the game board.
 	 * 
 	 * @param elementsToAdd the list of elements to add to the game board
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void addUIHudElementsToBoard(List<UIHudElement> elementsToAdd) {
 		boardElements.addAll(elementsToAdd);
@@ -141,7 +141,7 @@ public class GameStateManager {
 	/**
 	 * Initializes the game board.
 	 * 
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void initializeBoard() {
 		board = new GameState(boardEntities, boardElements, "Board");
@@ -151,7 +151,7 @@ public class GameStateManager {
 	/**
 	 * Adds the game board to the list of game states.
 	 * 
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
 	public static void addBoard() {
 		ProgramLogger.writeLog("Adding Board");

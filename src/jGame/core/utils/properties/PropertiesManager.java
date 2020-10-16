@@ -29,9 +29,7 @@ public class PropertiesManager {
 	 * use.
 	 * 
 	 * @param propertiesFileIS the input stream pointing to the properties file.
-	 * 
 	 * @since 1.0.0
-	 * 
 	 */
 	public static void fetchProperties(InputStream propertiesFileIS) {
 		if(propertiesFetched)return;
@@ -53,9 +51,7 @@ public class PropertiesManager {
 	 * Loads all the properties from the file and makes them available for use.
 	 * 
 	 * @param propertiesFile the properties file to read properties from.
-	 * 
 	 * @since 1.0.0
-	 * 
 	 */
 	public static void fetchProperties(File propertiesFile) {
 		
@@ -87,7 +83,6 @@ public class PropertiesManager {
 	 *                           from.
 	 * 
 	 * @since 1.0.0
-	 * 
 	 */
 	public static void fetchProperties(String propertiesFilePath) {
 
@@ -116,8 +111,8 @@ public class PropertiesManager {
 	 * @param propertyName the name/key of the desired property
 	 * @param defaultValue a default value to be returned if there is no property
 	 *                     with key {@code propertyName}
-	 * @return the value for the property with key <code>propertyName</code>,
-	 *         or{@code defaultValue}, if no property with key {@code propertyName}
+	 * @return the value for the property with key <code>propertyName</code>, or
+	 *         {@code defaultValue}, if no property with key {@code propertyName}
 	 *         exists.
 	 * @since 1.0.0
 	 */
