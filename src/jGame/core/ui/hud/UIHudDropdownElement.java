@@ -21,10 +21,11 @@ import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
 
 /**
+ * Dropdown list of "clickable" buttons to fit inside a reduced space that
+ * appears and disappears when the users clicks this element.
  * 
  * @author Nuno Pereira
  * @since 1.2.0
- *
  */
 public class UIHudDropdownElement extends UIHudElement {
 
@@ -34,6 +35,7 @@ public class UIHudDropdownElement extends UIHudElement {
 
 	private boolean showDropdown = false;
 
+	// the string to display
 	private String optionDisplay;
 
 	private static final int SCROLLBAR_WIDTH = 20;

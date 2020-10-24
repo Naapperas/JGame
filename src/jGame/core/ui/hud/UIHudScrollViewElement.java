@@ -89,7 +89,7 @@ public class UIHudScrollViewElement extends UIHudElement {
 		super(x, y, width, height);
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 		this.elements = elements;
-		for (UIHudElement uiHudElement : elements) {
+		for (UIHudElement uiHudElement : this.elements) {
 			uiHudElement.parentElement = this;
 			if (uiHudElement.width > this.width)
 				uiHudElement.width = this.width;
@@ -97,14 +97,17 @@ public class UIHudScrollViewElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates an scrollview element in the given position and with the given
+	 * dimensions, using the applied constraints. The elements to display are passed
+	 * in as an argument.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param constraintType
-	 * @param constraintValues
-	 * @param elements
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param width            the width of this element
+	 * @param height           the height of this element
+	 * @param constraintType   the type of constraints to apply
+	 * @param constraintValues the values to apply when constraining the element
+	 * @param elements         the list of elements to display
 	 * @since 1.2.0
 	 */
 	public UIHudScrollViewElement(int x, int y, int width, int height, int constraintType, int[] constraintValues,
@@ -112,7 +115,7 @@ public class UIHudScrollViewElement extends UIHudElement {
 		super(x, y, width, height);
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
 		this.elements = elements;
-		for (UIHudElement uiHudElement : elements) {
+		for (UIHudElement uiHudElement : this.elements) {
 			uiHudElement.parentElement = this;
 			if (uiHudElement.width > this.width)
 				uiHudElement.width = this.width;
@@ -132,6 +135,10 @@ public class UIHudScrollViewElement extends UIHudElement {
 		g.setStroke(new BasicStroke(2));
 
 		g.drawRect(x, y, width, height);
+
+		if (this.elements != null) {
+
+		}
 
 		g.setColor(startingColor);
 		g.setStroke(startingStroke);
