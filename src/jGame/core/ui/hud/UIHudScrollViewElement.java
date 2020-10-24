@@ -1,38 +1,140 @@
 package jGame.core.ui.hud;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.util.LinkedList;
 
 /**
- * 
- * TO BE IMPLEMENTED
+ * A scroll view element to represent an extensive collection of
+ * {@link UIHudElement}s in a reduced amount of space.
  * 
  * @author Nuno Pereira
  * @since 1.2.0
  */
 public class UIHudScrollViewElement extends UIHudElement {
 
+	private LinkedList<UIHudElement> elements = null;
+
+	private MouseAdapter listener = new MouseAdapter() {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			super.mousePressed(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			super.mouseReleased(e);
+		}
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent e) {
+			// TODO Auto-generated method stub
+			super.mouseWheelMoved(e);
+		}
+	};
+
 	/**
+	 * Creates an scrollview element in the given position and with the given
+	 * dimensions. There are no constraints applied to this element.
 	 * 
+	 * @param x      the horizontal position of this element
+	 * @param y      the vertical position of this element
+	 * @param width  the width of this element
+	 * @param height the height of this element
+	 * @since 1.2.0
 	 */
-	private static final long serialVersionUID = -4758621534607053227L;
-
-	public UIHudScrollViewElement() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public UIHudScrollViewElement(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
-	}
-
 	public UIHudScrollViewElement(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		// TODO Auto-generated constructor stub
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+	}
+
+	/**
+	 * Creates an scrollview element in the given position and with the given
+	 * dimensions, using the applied constraints.
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param width            the width of this element
+	 * @param height           the height of this element
+	 * @param constraintType   the type of constraints to apply
+	 * @param constraintValues the values to apply when constraining the element
+	 * @since 1.2.0
+	 */
+	public UIHudScrollViewElement(int x, int y, int width, int height, int constraintType, int[] constraintValues) {
+		super(x, y, width, height);
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
+	}
+
+	/**
+	 * Creates an scrollview element in the given position and with the given
+	 * dimensions. There are no constraints applied to this element. The elements to
+	 * display are passed in as an argument.
+	 * 
+	 * @param x        the horizontal position of this element
+	 * @param y        the vertical position of this element
+	 * @param width    the width of this element
+	 * @param height   the height of this element
+	 * @param elements the list of elements to display
+	 * @since 1.2.0
+	 */
+	public UIHudScrollViewElement(int x, int y, int width, int height, LinkedList<UIHudElement> elements) {
+		super(x, y, width, height);
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.elements = elements;
+		for (UIHudElement uiHudElement : elements) {
+			uiHudElement.parentElement = this;
+			if (uiHudElement.width > this.width)
+				uiHudElement.width = this.width;
+		}
+	}
+
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param constraintType
+	 * @param constraintValues
+	 * @param elements
+	 * @since 1.2.0
+	 */
+	public UIHudScrollViewElement(int x, int y, int width, int height, int constraintType, int[] constraintValues,
+			LinkedList<UIHudElement> elements) {
+		super(x, y, width, height);
+		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
+		this.elements = elements;
+		for (UIHudElement uiHudElement : elements) {
+			uiHudElement.parentElement = this;
+			if (uiHudElement.width > this.width)
+				uiHudElement.width = this.width;
+		}
 	}
 
 	@Override
 	protected void render(Graphics2D g) {
-		// TODO Auto-generated method stub
+		
+		Color startingColor = g.getColor();
+		Stroke startingStroke = g.getStroke();
+
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
+
+		g.setColor(Color.WHITE);
+		g.setStroke(new BasicStroke(2));
+
+		g.drawRect(x, y, width, height);
+
+		g.setColor(startingColor);
+		g.setStroke(startingStroke);
 
 	}
 

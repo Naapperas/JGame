@@ -14,11 +14,6 @@ import java.awt.Graphics2D;
  */
 public class UIHudTextElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5009618223466781942L;
-
 	// the text to be rendered, self-explanatory
 	private String textToDisplay = "";
 	private Font textFont = null;

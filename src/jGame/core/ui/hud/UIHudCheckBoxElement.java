@@ -14,11 +14,6 @@ import java.awt.geom.Rectangle2D;
  */
 public class UIHudCheckBoxElement extends UIHudButtonElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4408367719217626720L;
-
 	// the state of the checkbox
 	private boolean checkBoxTriggered = false;
 	private int boxSideLenght;

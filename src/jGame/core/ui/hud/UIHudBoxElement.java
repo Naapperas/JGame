@@ -12,11 +12,6 @@ import java.awt.Graphics2D;
  */
 public class UIHudBoxElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9098431952860544631L;
-
 	private int width, height;
 	private Color drawColor = Color.WHITE;
 

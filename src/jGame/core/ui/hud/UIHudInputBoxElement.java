@@ -30,11 +30,6 @@ import jGame.core.utils.MathUtils;
  */
 public class UIHudInputBoxElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2899739622778351704L;
-
 	// use a string builder, since it is more efficient than String concatenation
 	private StringBuilder input = new StringBuilder();
 

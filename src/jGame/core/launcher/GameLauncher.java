@@ -99,7 +99,7 @@ public class GameLauncher {
 	};
 
 	// since 1.1.0
-	private static UIHudElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+	private static UIHudButtonElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
 			new int[] { 10, 10, 0, 0 }) {
 
@@ -108,11 +108,6 @@ public class GameLauncher {
 			// might add.
 			this.zIndex = 200;
 		}
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4372277764333169074L;
 
 		@Override
 		protected void processClick(MouseEvent e) {
@@ -131,7 +126,6 @@ public class GameLauncher {
 			super.removeInputListener();
 			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
 		}
-
 	};
 
 	/**

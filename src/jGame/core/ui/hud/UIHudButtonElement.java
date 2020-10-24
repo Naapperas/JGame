@@ -24,11 +24,6 @@ import jGame.core.launcher.GameLauncher;
  */
 public class UIHudButtonElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2004026804332689505L;
-
 	// element coords and displayable text
 	protected Rectangle bounds;
 	private String buttonText;

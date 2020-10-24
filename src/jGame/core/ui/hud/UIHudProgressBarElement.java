@@ -15,11 +15,6 @@ import jGame.core.utils.MathUtils;
 public class UIHudProgressBarElement extends UIHudElement {
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3065269234183461086L;
-
-	/**
 	 * The current progress tracked by this progress bar. Must be between 0 and 100.
 	 * 
 	 * @since 1.2.0

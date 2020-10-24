@@ -28,10 +28,6 @@ import jGame.core.utils.MathUtils;
  */
 public class UIHudDropdownElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7509427206795717555L;
 
 	// the list of buttons to be rendered
 	private List<UIHudButtonElement> dropdownButtons = new ArrayList<UIHudButtonElement>();
@@ -81,7 +77,6 @@ public class UIHudDropdownElement extends UIHudElement {
 				e.consume();
 			} else if (isMouseOver(false)) {// false = dropdown area
 				if (!showDropdown) {
-					e.consume();
 					return;
 				}
 
@@ -520,6 +515,7 @@ public class UIHudDropdownElement extends UIHudElement {
 	@Override
 	public void removeInputListener() {
 		GameLauncher.getMainWindow().removeMouseInputListener(mouseInput, this);
+		GameLauncher.getMainWindow().getWindowCanvas().removeMouseWheelListener(mouseInput);
 	}
 
 	/**

@@ -31,10 +31,6 @@ import jGame.logging.ProgramLogger;
  */
 public class UIHudSliderElement extends UIHudElement {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1544055730175360067L;
 
 	// current, mimum and maximum values for the slider
 	private float value = 0, minValue = 0, maxValue = 0;
