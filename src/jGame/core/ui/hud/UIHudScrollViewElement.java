@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.LinkedList;
 
+import jGame.core.launcher.GameLauncher;
+
 /**
  * A scroll view element to represent an extensive collection of
  * {@link UIHudElement}s in a reduced amount of space.
@@ -147,14 +149,11 @@ public class UIHudScrollViewElement extends UIHudElement {
 
 	@Override
 	public void registerInputListener() {
-		// TODO Auto-generated method stub
-
+		GameLauncher.getMainWindow().addMouseInputListener(listener, this);
 	}
 
 	@Override
 	public void removeInputListener() {
-		// TODO Auto-generated method stub
-
+		GameLauncher.getMainWindow().removeMouseInputListener(listener, this);
 	}
-
 }

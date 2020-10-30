@@ -61,7 +61,7 @@ public abstract class UIHudElement {
 	protected abstract void render(Graphics2D g);
 
 	/**
-	 * Registers this element's input listener.
+	 * Registers this element's input listener(s).
 	 * 
 	 * @since 1.0.0
 	 */
@@ -69,7 +69,7 @@ public abstract class UIHudElement {
 
 	/**
 	 * 
-	 * Removes this element's input listener, if there is one.
+	 * Removes this element's input listener(s), if there is one.
 	 * 
 	 * @since 1.0.0
 	 */

@@ -54,6 +54,7 @@ public class UIHudDropdownElement extends UIHudElement {
 				return;
 			}
 
+			// forgot that MouseEvent has a field for mouse pos, might change later
 			if (isMouseOver(true)) { // true = dropdown button
 
 				if (showDropdown) {
@@ -146,10 +147,12 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position using the given elements.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param elements
+	 * @param x        the horizontal coordinate of this element
+	 * @param y        the vertical coordinate of this element
+	 * @param elements the list of elements to show
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements) {
 		super(x, y);
@@ -178,12 +181,15 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position with the given dimensions
+	 * using the given elements
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param elements
+	 * @param x        the horizontal position of this element
+	 * @param y        the vertical position of this element
+	 * @param width    the width of this element
+	 * @param height   the height of this element
+	 * @param elements the elements to display
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements) {
 		super(x, y, width, height);
@@ -204,12 +210,15 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position using the given elements and
+	 * the given constraints.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param elements
-	 * @param constraintType
-	 * @param constraintSpecs
+	 * @param x               the horizontal coordinate of this element
+	 * @param y               the vertical coordinate of this element
+	 * @param elements        the list of elements to show
+	 * @param constraintType  the type of constraint to apply
+	 * @param constraintSpecs the values to apply when constraining
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
 			int[] constraintSpecs) {
@@ -239,13 +248,17 @@ public class UIHudDropdownElement extends UIHudElement {
 
 	/**
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param elements
-	 * @param constraintType
-	 * @param constraintSpecs
+	 * Creates a dropdown element in the given position with the given dimensions
+	 * using the given elements and the given constraints.
+	 * 
+	 * @param x               the horizontal position of this element
+	 * @param y               the vertical position of this element
+	 * @param width           the width of this element
+	 * @param height          the height of this element
+	 * @param elements        the elements to display
+	 * @param constraintType  the type of constraints to apply
+	 * @param constraintSpecs the values to apply when constraining
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			int constraintType, int[] constraintSpecs) {
@@ -267,11 +280,14 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position using the given elements and
+	 * with the option display passed in.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param elements
-	 * @param optionDisplay
+	 * @param x             the horizontal position of this element
+	 * @param y             the vertical position of this element
+	 * @param elements      the elements to display
+	 * @param optionDisplay the text to display in the "default" button
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, String optionDisplay) {
 		super(x, y);
@@ -300,13 +316,16 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position with the given width,
+	 * showing the given elements and with the given initial text.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param elements
-	 * @param optionDisplay
+	 * @param x             the horizontal position of this element
+	 * @param y             the vertical position of this element
+	 * @param width         the width of this element
+	 * @param height        the height of this element
+	 * @param elements      the elements to display
+	 * @param optionDisplay the text to display in the "default" button
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			String optionDisplay) {
@@ -328,13 +347,16 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position, using the given constraints
+	 * and showing the given elements and default text.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param elements
-	 * @param constraintType
-	 * @param constraintSpecs
-	 * @param optionDisplay
+	 * @param x               the horizontal position of this element
+	 * @param y               the vertical position of this element
+	 * @param elements        the elements to display
+	 * @param constraintType  the types of constraints to apply
+	 * @param constraintSpecs the values to apply when constraining
+	 * @param optionDisplay   the text of the "default" button
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, List<UIHudButtonElement> elements, int constraintType,
 			int[] constraintSpecs, String optionDisplay) {
@@ -363,15 +385,18 @@ public class UIHudDropdownElement extends UIHudElement {
 	}
 
 	/**
+	 * Creates a dropdown element in the given position with the given dimensions,
+	 * using the given constraints and showing the given elements and default text.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param elements
-	 * @param constraintType
-	 * @param constraintSpecs
-	 * @param optionDisplay
+	 * @param x               the horizontal position of this element
+	 * @param y               the vertical position of this element
+	 * @param width           the width of this element
+	 * @param height          the height of this element
+	 * @param elements        the elements to display
+	 * @param constraintType  the types of constraints to apply
+	 * @param constraintSpecs the values to apply when constraining
+	 * @param optionDisplay   the text of the "default" button
+	 * @since 1.2.0
 	 */
 	public UIHudDropdownElement(int x, int y, int width, int height, List<UIHudButtonElement> elements,
 			int constraintType, int[] constraintSpecs, String optionDisplay) {

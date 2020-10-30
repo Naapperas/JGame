@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Represents a collection of fonts to be used throughout the application.
  * 
- * @author Nuno Pereia
+ * @author Nuno Pereira
  * @since 1.2.0
  */
 public class FontManager {
