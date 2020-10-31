@@ -2,6 +2,7 @@ package jGame.core.ui.hud;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
@@ -129,6 +130,7 @@ public class UIHudScrollViewElement extends UIHudElement {
 		
 		Color startingColor = g.getColor();
 		Stroke startingStroke = g.getStroke();
+		Font startingFont = g.getFont();
 
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
@@ -138,12 +140,28 @@ public class UIHudScrollViewElement extends UIHudElement {
 
 		g.drawRect(x, y, width, height);
 
+		int elementsHeight = 0;
+		int verticalElementDraw = this.y;
+
 		if (this.elements != null) {
 
+			for (UIHudElement uiHudElement : elements) {
+				elementsHeight += uiHudElement.height; 
+
+				uiHudElement.x = this.x;
+				uiHudElement.y = verticalElementDraw;
+				uiHudElement.render(g);
+				verticalElementDraw += uiHudElement.height + 5;
+
+				if (elementsHeight > this.height) {
+
+				}
+			}
 		}
 
 		g.setColor(startingColor);
 		g.setStroke(startingStroke);
+		g.setFont(startingFont);
 
 	}
 

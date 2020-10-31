@@ -90,4 +90,8 @@ public class FontManager {
 	public static Font getFont(String fontName) {
 		return fonts.get(fontName);
 	}
+
+	public static Font getDefaultFont() {
+		return fonts.get("default");
+	}
 }

@@ -1,6 +1,7 @@
 package jGame.core.launcher;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
 import jGame.core.ui.hud.UIHudElement;
 import jGame.core.ui.hud.UIHudTextElement;
+import jGame.core.ui.hud.fonts.FontManager;
 import jGame.core.utils.properties.PropertiesManager;
 import jGame.logging.ProgramLogger;
 
@@ -40,6 +42,8 @@ public class GameLauncher {
 		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e, "Error fetching properties.");
 		}
+
+		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
 
 	}
 

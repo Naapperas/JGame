@@ -9,6 +9,7 @@ module jGame {
 	exports jGame.core.launcher;
 	exports jGame.core.ui;
 	exports jGame.core.ui.hud;
+	exports jGame.core.ui.hud.fonts;
 	exports jGame.core.utils;
 	exports jGame.core.utils.properties;
 	exports jGame.core.entity;
