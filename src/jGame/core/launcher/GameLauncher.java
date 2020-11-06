@@ -369,9 +369,9 @@ public class GameLauncher {
 		private static final UIHudTextElement PAUSED_SCREEN_TITLE = new UIHudTextElement(
 				0, 
 				0, 
-				"", 
+				"Paused", 
 				Color.WHITE,
-				FontManager.getDefaultFont().deriveFont(20f),
+				FontManager.getDefaultFont().deriveFont(100f),
 				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_TOP_CONSTRAINT),
 				new int[] { 10, 0, 0, 0 });
 

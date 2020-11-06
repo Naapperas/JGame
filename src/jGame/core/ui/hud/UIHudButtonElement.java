@@ -163,20 +163,7 @@ public class UIHudButtonElement extends UIHudElement {
 	 * @since 1.0.0
 	 */
 	protected void processClick(MouseEvent e) {
-
 		// default implementation does nothing
-
-		/*
-		 * CODE ADDED FOR TEST PURPOSES
-		 * Rectangle bounds = new Rectangle(width, height);
-		 * bounds.setLocation(x, y);
-		 * 
-		 * if (bounds.contains(e.getPoint())) { System.out.println("click"); EntityImpl
-		 * square = new EntityImpl(100, 100, 50, 50); GameLauncher.queueTask(() -> {
-		 * square.setUpInputListener(); square.registerInputListener();
-		 * 
-		 * }); EntityManager.addEntity(square); }
-		 */
 	}
 
 	@Override
