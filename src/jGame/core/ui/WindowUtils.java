@@ -15,16 +15,28 @@ import jGame.logging.ProgramLogger;
 public final class WindowUtils {
 	 
 	//make framework based around Full HD single screen systems and scale accordingly
-	private static Dimension FULL_HD = null;
+	private static final Dimension FULL_HD = new Dimension(1920, 1080);
 	public static double HORIZONTAL_SCALE = 0, VERTICAL_SCALE = 0;
-	public static double FULLSCREEN_X = 0, FULLSCREEN_Y = 0;
 	
+	/**
+	 * Width of a fullscreen game on the user's window.
+	 * 
+	 * @since 1.0.0
+	 */
+	public static double FULLSCREEN_X = 0;
+
+	/**
+	 * Height of a fullscreen game on the user's window.
+	 * 
+	 * @since 1.0.0
+	 */
+	public static double FULLSCREEN_Y = 0;
+
 	// make uninstatiatable
 	private WindowUtils() {
 	}
 
 	static {
-		FULL_HD = new Dimension(1920, 1080);
 		setScreenDisplayScale();
 	}
 	

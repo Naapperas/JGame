@@ -58,7 +58,7 @@ public abstract class UIHudElement {
 	 * @param g the {@link Graphics} object responsible for rendering this element
 	 * @since 1.0.0
 	 */
-	protected abstract void render(Graphics2D g);
+	public abstract void render(Graphics2D g);
 
 	/**
 	 * Registers this element's input listener(s).
@@ -75,6 +75,22 @@ public abstract class UIHudElement {
 	 */
 	public abstract void removeInputListener();
 
+	/**
+	 * Sets the parent element of this element.
+	 * 
+	 * @param newParent the new parent element of this element
+	 * @since 1.2.0
+	 */
+	public void setParentElement(UIHudElement newParent) {
+		this.parentElement = newParent;
+	}
+
+	/**
+	 * Sets the zIndex of this element
+	 * 
+	 * @param newIndex the new draw index of this element
+	 * @since 1.2.0
+	 */
 	public void setZIndex(int newIndex) {
 		this.zIndex = newIndex;
 	}

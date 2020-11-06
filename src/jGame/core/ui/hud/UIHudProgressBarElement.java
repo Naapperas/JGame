@@ -95,7 +95,7 @@ public class UIHudProgressBarElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics2D g) {
+	public void render(Graphics2D g) {
 		Color startingColor = g.getColor();
 
 		this.x = this.drawConstraints.getXLocation();

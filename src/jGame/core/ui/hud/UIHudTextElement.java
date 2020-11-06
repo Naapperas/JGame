@@ -303,7 +303,7 @@ public class UIHudTextElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics2D g) {
+	public void render(Graphics2D g) {
 
 		Font startingFont = g.getFont();
 

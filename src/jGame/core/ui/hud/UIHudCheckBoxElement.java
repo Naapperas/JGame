@@ -187,7 +187,7 @@ public class UIHudCheckBoxElement extends UIHudButtonElement {
 	}
 
 	@Override
-	protected void render(Graphics2D g) {
+	public void render(Graphics2D g) {
 
 		Font startingFont = g.getFont();
 		Color startingColor = g.getColor();

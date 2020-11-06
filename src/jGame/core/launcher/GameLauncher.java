@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
 import jGame.core.ui.Window;
+import jGame.core.ui.WindowUtils;
 import jGame.core.ui.hud.Constraints;
 import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
@@ -87,6 +88,8 @@ public class GameLauncher {
 		GameLauncher.hudEvent = true;
 	}
 
+	private static UIHudPauseMenuElement pauseMenu = new UIHudPauseMenuElement();
+	
 	private static Action pauseAction = new AbstractAction() {
 
 		private static final long serialVersionUID = -8628054626023408846L;
@@ -97,13 +100,23 @@ public class GameLauncher {
 				hudEvent = false;
 				return;
 			}
-			ProgramLogger.writeLog("Pausing game");
+			ProgramLogger.writeLog("Pausing/Unpausing game");
+			if (!pause) {
+				System.out.println("Paused");
+				pauseMenu.registerInputListener();
+				UIHud.addHUDUIElement(pauseMenu);
+			} else {
+				System.out.println("Unpaused");
+				pauseMenu.removeInputListener();
+				UIHud.removeHUDUIElement(pauseMenu);
+			}
+			
 			pause = !pause;
 		}
 	};
 
 	// since 1.1.0
-	private static UIHudButtonElement pauseMenu = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+	private static UIHudButtonElement pauseMenuButton = new UIHudButtonElement(0, 0, 50, 20, "Pause",
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
 			new int[] { 10, 10, 0, 0 }) {
 
@@ -156,7 +169,7 @@ public class GameLauncher {
 		FPSCounter.setZIndex(9999);
 		UIHud.addHUDUIElement(FPSCounter);
 
-		GameStateManager.addUIHudElementToBoard(pauseMenu);
+		GameStateManager.addUIHudElementToBoard(pauseMenuButton);
 
 		GameStateManager.initializeBoard();
 		GameStateManager.addBoard();
@@ -336,5 +349,60 @@ public class GameLauncher {
 	 */
 	public synchronized static void setGameRunning(boolean isGameRunning) {
 		GameLauncher.isGameRunning = isGameRunning;
+	}
+
+	/**
+	 * 
+	 * @author Nuno Pereira
+	 * @since 1.2.0
+	 */
+	private static class UIHudPauseMenuElement extends UIHudElement {
+
+		private static UIHudButtonElement resumeButton = new UIHudButtonElement(0, 0, 200, 75, "Resume",
+				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
+				new int[] { 0, 0, 20, 0 }) {
+
+			@Override
+			protected void processClick(MouseEvent e) {
+				GameLauncher.unpause();
+			}
+		};
+
+		{
+			this.drawConstraints = new Constraints(this, Constraints.CENTER_POINT_CONSTRAINT, null);
+			this.width = (int) (WindowUtils.FULLSCREEN_X * .8);
+			this.height = (int) (WindowUtils.FULLSCREEN_Y * .85);
+			this.zIndex = 500;
+			resumeButton.setZIndex(this.zIndex + 1);
+			resumeButton.setParentElement(this);
+		}
+
+		@Override
+		public void render(Graphics2D g) {
+
+			Color startingColor = g.getColor();
+
+			g.setColor(new Color(1, 1, 1, 0.8f));
+
+			this.x = this.drawConstraints.getXLocation();
+			this.y = this.drawConstraints.getYLocation();
+			
+			g.drawRoundRect(this.x, this.y, this.width, this.height, 15, 15);
+			
+			resumeButton.render(g);
+
+			g.setColor(startingColor);
+			
+		}
+
+		@Override
+		public void registerInputListener() {
+			resumeButton.registerInputListener();
+		}
+
+		@Override
+		public void removeInputListener() {
+			resumeButton.removeInputListener();
+		}
 	}
 }

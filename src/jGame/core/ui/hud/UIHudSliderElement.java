@@ -234,7 +234,7 @@ public class UIHudSliderElement extends UIHudElement {
 	}
 
 	@Override
-	protected void render(Graphics2D g) {
+	public void render(Graphics2D g) {
 
 		boolean valueChanged = false;
 
