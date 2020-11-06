@@ -366,6 +366,15 @@ public class GameLauncher {
 			}
 		};
 
+		private static final UIHudTextElement PAUSED_SCREEN_TITLE = new UIHudTextElement(
+				0, 
+				0, 
+				"", 
+				Color.WHITE,
+				FontManager.getDefaultFont().deriveFont(20f),
+				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_TOP_CONSTRAINT),
+				new int[] { 10, 0, 0, 0 });
+
 		private LinkedList<UIHudElement> elementList = new LinkedList<UIHudElement>();
 
 		{
@@ -376,6 +385,9 @@ public class GameLauncher {
 			RESUME_BUTTON.setZIndex(this.zIndex + 1);
 			RESUME_BUTTON.setParentElement(this);
 			elementList.add(RESUME_BUTTON);
+			PAUSED_SCREEN_TITLE.setZIndex(this.zIndex + 1);
+			PAUSED_SCREEN_TITLE.setParentElement(this);
+			elementList.add(PAUSED_SCREEN_TITLE);
 		}
 
 		@Override
