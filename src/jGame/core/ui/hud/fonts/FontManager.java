@@ -91,6 +91,13 @@ public class FontManager {
 		return fonts.get(fontName);
 	}
 
+	/**
+	 * Returns the default font used by every element.
+	 * 
+	 * @return the default font used by every element
+	 * @since 1.2.0
+	 * @see Font
+	 */
 	public static Font getDefaultFont() {
 		return fonts.get("default");
 	}
