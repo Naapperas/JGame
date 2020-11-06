@@ -19,7 +19,7 @@ import jGame.core.launcher.GameLauncher;
  * @author Nuno Pereira
  * @since 1.2.0
  */
-public class UIHudScrollViewElement extends UIHudElement {
+class UIHudScrollViewElement extends UIHudElement {
 
 	private LinkedList<UIHudElement> elements = null;
 
