@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -16,7 +17,6 @@ import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
 import jGame.core.ui.Window;
-import jGame.core.ui.WindowUtils;
 import jGame.core.ui.hud.Constraints;
 import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
@@ -102,11 +102,9 @@ public class GameLauncher {
 			}
 			ProgramLogger.writeLog("Pausing/Unpausing game");
 			if (!pause) {
-				System.out.println("Paused");
 				pauseMenu.registerInputListener();
 				UIHud.addHUDUIElement(pauseMenu);
 			} else {
-				System.out.println("Unpaused");
 				pauseMenu.removeInputListener();
 				UIHud.removeHUDUIElement(pauseMenu);
 			}
@@ -358,23 +356,26 @@ public class GameLauncher {
 	 */
 	private static class UIHudPauseMenuElement extends UIHudElement {
 
-		private static UIHudButtonElement resumeButton = new UIHudButtonElement(0, 0, 200, 75, "Resume",
+		private static final UIHudButtonElement RESUME_BUTTON = new UIHudButtonElement(0, 0, 200, 75, "Resume",
 				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
 				new int[] { 0, 0, 20, 0 }) {
 
 			@Override
 			protected void processClick(MouseEvent e) {
-				GameLauncher.unpause();
+				GameLauncher.pauseAction.actionPerformed(null);
 			}
 		};
 
+		private LinkedList<UIHudElement> elementList = new LinkedList<UIHudElement>();
+
 		{
 			this.drawConstraints = new Constraints(this, Constraints.CENTER_POINT_CONSTRAINT, null);
-			this.width = (int) (WindowUtils.FULLSCREEN_X * .8);
-			this.height = (int) (WindowUtils.FULLSCREEN_Y * .85);
+			this.width = (int) (GameLauncher.getMainWindow().getWidth() * .8);
+			this.height = (int) (GameLauncher.getMainWindow().getWidth() * .6);
 			this.zIndex = 500;
-			resumeButton.setZIndex(this.zIndex + 1);
-			resumeButton.setParentElement(this);
+			RESUME_BUTTON.setZIndex(this.zIndex + 1);
+			RESUME_BUTTON.setParentElement(this);
+			elementList.add(RESUME_BUTTON);
 		}
 
 		@Override
@@ -382,14 +383,14 @@ public class GameLauncher {
 
 			Color startingColor = g.getColor();
 
-			g.setColor(new Color(1, 1, 1, 0.8f));
+			g.setColor(new Color(255, 255, 255, 255 / 2));
 
 			this.x = this.drawConstraints.getXLocation();
 			this.y = this.drawConstraints.getYLocation();
 			
-			g.drawRoundRect(this.x, this.y, this.width, this.height, 15, 15);
+			g.fillRoundRect(this.x, this.y, this.width, this.height, 15, 15);
 			
-			resumeButton.render(g);
+			for (UIHudElement uiHudElement : elementList) { uiHudElement.render(g); }
 
 			g.setColor(startingColor);
 			
@@ -397,12 +398,14 @@ public class GameLauncher {
 
 		@Override
 		public void registerInputListener() {
-			resumeButton.registerInputListener();
+			for (UIHudElement uiHudElement : elementList) {
+				uiHudElement.registerInputListener();
+			}
 		}
 
 		@Override
 		public void removeInputListener() {
-			resumeButton.removeInputListener();
+			for (UIHudElement uiHudElement : elementList) { uiHudElement.removeInputListener(); }
 		}
 	}
 }
