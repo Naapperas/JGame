@@ -88,7 +88,7 @@ public class GameLauncher {
 		GameLauncher.hudEvent = true;
 	}
 
-	private static UIHudPauseMenuElement pauseMenu = new UIHudPauseMenuElement();
+	private static UIHudPauseMenuElement pauseMenu = UIHudPauseMenuElement.singleton;
 	
 	private static Action pauseAction = new AbstractAction() {
 
@@ -114,7 +114,8 @@ public class GameLauncher {
 	};
 
 	// since 1.1.0
-	private static UIHudButtonElement pauseMenuButton = new UIHudButtonElement(0, 0, 50, 20, "Pause",
+	private static UIHudButtonElement pauseMenuButton = new UIHudButtonElement(0, 0, 50, 20,
+			PropertiesManager.getPropertyOrDefault("pauseButton.displayName", "Pause"),
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_RIGHT_CONSTRAINT),
 			new int[] { 10, 10, 0, 0 }) {
 
@@ -381,6 +382,8 @@ public class GameLauncher {
 
 		private LinkedList<UIHudElement> elementList = new LinkedList<UIHudElement>();
 
+		static final UIHudPauseMenuElement singleton = new UIHudPauseMenuElement();
+
 		{
 			this.drawConstraints = new Constraints(this, Constraints.CENTER_POINT_CONSTRAINT, null);
 			this.width = (int) (GameLauncher.getMainWindow().getWidth() * .8);
@@ -392,6 +395,31 @@ public class GameLauncher {
 			PAUSED_SCREEN_TITLE.setZIndex(this.zIndex + 1);
 			PAUSED_SCREEN_TITLE.setParentElement(this);
 			elementList.add(PAUSED_SCREEN_TITLE);
+		}
+
+		/**
+		 * Adds the given element to the pause menu.
+		 * 
+		 * @param element the element to add to the pause menu
+		 * @since 1.3.0
+		 */
+		public static void addPauseMenuElement(UIHudElement element) {
+			if (singleton.elementList.contains(element))
+				return;
+			singleton.elementList.add(1, element);
+		}
+
+		/**
+		 * Removes the element from the pause menu.
+		 * 
+		 * @param element the element to remove
+		 * @since 1.3.0
+		 */
+		public static void removePauseMenuElement(UIHudElement element) {
+			if (!singleton.elementList.contains(element))
+				return;
+			if (singleton.elementList.size() > 2)
+				singleton.elementList.remove(element);
 		}
 
 		@Override
