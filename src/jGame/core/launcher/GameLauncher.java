@@ -262,8 +262,8 @@ public class GameLauncher {
 	 */
 	private static void processGameTermination() {
 
-		ProgramLogger.writeLog("Terminating game!");
 		GameStateManager.terminateState();
+		ProgramLogger.writeLog("Terminating game!");
 		System.exit(0);
 
 	}
@@ -350,11 +350,15 @@ public class GameLauncher {
 	}
 
 	/**
+	 * Represents the pause menu that appears when the user pauses the game.
 	 * 
 	 * @author Nuno Pereira
 	 * @since 1.2.0
 	 */
-	private static class UIHudPauseMenuElement extends UIHudElement {
+	public static class UIHudPauseMenuElement extends UIHudElement {
+
+		private UIHudPauseMenuElement() {// make visible from outside game launcher but make unsintantiable
+		}
 
 		private static final UIHudButtonElement RESUME_BUTTON = new UIHudButtonElement(0, 0, 200, 75, "Resume",
 				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
