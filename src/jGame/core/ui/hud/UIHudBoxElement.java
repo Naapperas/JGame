@@ -63,7 +63,7 @@ public class UIHudBoxElement extends UIHudElement {
 	public void render(Graphics2D g) {
 
 		Color startingColor = g.getColor();
-
+		
 		if (drawColor != null)
 			g.setColor(drawColor);
 

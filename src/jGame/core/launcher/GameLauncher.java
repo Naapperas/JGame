@@ -148,9 +148,20 @@ public class GameLauncher {
 	 * Unpauses the game.
 	 *
 	 * @since 1.1.0
+	 * @deprecated Use {@link #togglePause()} instead
 	 */
+	@Deprecated
 	public static void unpause() {
 		pause = false;
+	}
+
+	/**
+	 * Toggles the pause action.
+	 * 
+	 * @since 1.3.0
+	 */
+	public static void togglePause() {
+		pauseAction.actionPerformed(null);
 	}
 
 	private static boolean isGameRunning = false, drawFPS = true;
@@ -380,6 +391,19 @@ public class GameLauncher {
 				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_TOP_CONSTRAINT),
 				new int[] { 10, 0, 0, 0 });
 
+		private static final UIHudButtonElement PAUSE_BACK_MENU_BUTTON = new UIHudButtonElement(350, 300, 200, 75,
+				"Back to Menu",
+				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
+				new int[] { 0, 0, 100, 0 }) {
+
+			@Override
+			protected void processClick(MouseEvent e) {
+				GameLauncher.togglePause();
+				GameStateManager.changeGameState("Menu");
+			}
+
+		};
+
 		private LinkedList<UIHudElement> elementList = new LinkedList<UIHudElement>();
 
 		static final UIHudPauseMenuElement singleton = new UIHudPauseMenuElement();
@@ -395,6 +419,9 @@ public class GameLauncher {
 			PAUSED_SCREEN_TITLE.setZIndex(this.zIndex + 1);
 			PAUSED_SCREEN_TITLE.setParentElement(this);
 			elementList.add(PAUSED_SCREEN_TITLE);
+			PAUSE_BACK_MENU_BUTTON.setZIndex(this.zIndex + 1);
+			PAUSE_BACK_MENU_BUTTON.setParentElement(this);
+			elementList.add(PAUSE_BACK_MENU_BUTTON);
 		}
 
 		/**
@@ -406,6 +433,7 @@ public class GameLauncher {
 		public static void addPauseMenuElement(UIHudElement element) {
 			if (singleton.elementList.contains(element))
 				return;
+			element.setParentElement(singleton);
 			singleton.elementList.add(1, element);
 		}
 
@@ -418,7 +446,7 @@ public class GameLauncher {
 		public static void removePauseMenuElement(UIHudElement element) {
 			if (!singleton.elementList.contains(element))
 				return;
-			if (singleton.elementList.size() > 2)
+			if (singleton.elementList.size() > 3)
 				singleton.elementList.remove(element);
 		}
 
