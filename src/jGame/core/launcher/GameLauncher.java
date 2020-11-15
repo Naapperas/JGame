@@ -16,6 +16,7 @@ import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
+import jGame.core.sound.SoundStore;
 import jGame.core.ui.Window;
 import jGame.core.ui.hud.Constraints;
 import jGame.core.ui.hud.UIHud;
@@ -45,6 +46,7 @@ public class GameLauncher {
 		}
 
 		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
+		SoundStore.init();
 
 	}
 

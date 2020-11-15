@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 
 import javax.sound.sampled.AudioFormat;
@@ -21,31 +22,46 @@ public class SoundStore {
 
 		String resourcePath = "audio/";
 		
-		InputStream audioInPath = getDataStream(resourcePath);
-		
-		if (audioInPath == null) { ProgramLogger.writeLog("No audio files detected"); }
-		else {
-			try {
+		InputStream audioInPath;
+		try {
 
-				BufferedReader br = new BufferedReader(new InputStreamReader(audioInPath));
-				String resource;
+			URL audioURL = getDataStream(resourcePath);
 
-				while ((resource = br.readLine()) != null) {
-					if (resource.endsWith(".wav")) {
-						// is .wav file, proceed
-						String soundName = resource.split(".")[0];
-						cacheSound(soundName, getSoundData(resourcePath + resource));
+			if (audioURL == null) {
+				ProgramLogger.writeLog("No audio files detected");
+			} else {
+			
+				audioInPath = audioURL.openStream();
+
+				if (audioInPath == null) {
+					ProgramLogger.writeLog("No audio files detected");
+				} else {
+					try {
+
+						BufferedReader br = new BufferedReader(new InputStreamReader(audioInPath));
+						String resource;
+
+						while ((resource = br.readLine()) != null) {
+							if (resource.endsWith(".wav")) {
+								// is .wav file, proceed
+								String soundName = resource.split("\\.")[0];
+								cacheSound(soundName, getSoundData(audioURL, resource));
+								ProgramLogger.writeLog("Caching sound: " + soundName);
+							}
+						}
+
+						audioInPath.close();
+					} catch (IOException e) {
+						ProgramLogger.writeErrorLog(e);
 					}
 				}
-
-				audioInPath.close();
-			} catch (IOException e) {
-				ProgramLogger.writeErrorLog(e);
 			}
+		} catch (IOException e) {
+			ProgramLogger.writeErrorLog(e);
 		}
 	}
 
-	private SoundStore() {
+	public SoundStore() {
 		// make non-instantiable
 	}
 
@@ -82,15 +98,23 @@ public class SoundStore {
 
 	/**
 	 * 
+	 * @param soundIdentifier
+	 * @return
+	 */
+	public static AudioFormat getFormat(String soundIdentifier) {
+		return (AudioFormat) soundMap.get(soundIdentifier).getValue(0);
+	}
+
+	/**
+	 * 
 	 * @param resource
 	 * @return
 	 */
-	private static InputStream getDataStream(String resource) {
+	private static URL getDataStream(String resource) {
 
-		InputStream audioInPath = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);
 
-		return (audioInPath == null ? SoundStore.class.getResourceAsStream(resource) : audioInPath);
-
+		return (audioInPath == null ? SoundStore.class.getResource(resource) : audioInPath);
 	}
 
 	/**
@@ -98,12 +122,15 @@ public class SoundStore {
 	 * @param resource
 	 * @return the sound data in the given resource
 	 */
-	public static Pair<AudioFormat, byte[]> getSoundData(String resource) {
+	private static Pair<AudioFormat, byte[]> getSoundData(URL parentDirectoryURL, String resource) {
 		byte[] sound = null;
 		AudioFormat format = null;
 
 		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(getDataStream(resource));
+
+			URL url = new URL(parentDirectoryURL.toString() + "/" + resource);
+
+			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
 
 			sound = ais.readAllBytes();
 
