@@ -19,7 +19,9 @@ import jGame.logging.ProgramLogger;
 public class SoundStore {
 
 	/**
+	 * Initialize the sound bank by checking the classpath for an "audio" folder.
 	 * 
+	 * @since 1.3.0
 	 */
 	public static void init() {
 
@@ -48,7 +50,14 @@ public class SoundStore {
 							if (resource.endsWith(".wav")) {
 								// is .wav file, proceed
 								String soundName = resource.split("\\.")[0];
-								cacheSound(soundName, getSoundData(audioURL, resource));
+								cacheSound(soundName, getSoundData(audioURL, resource)); // we need the function call to
+																							// be like this because
+																							// resources in a client
+																							// game using this framework
+																							// aren't accesible from
+																							// this class, so use the
+																							// url to get the absolute
+																							// path to the resource
 								ProgramLogger.writeLog("Caching sound: " + soundName);
 							}
 						}
@@ -96,6 +105,10 @@ public class SoundStore {
 	 * @since 1.3.0
 	 */
 	public static byte[] getSound(String soundIdentifier) {
+		if (!soundMap.containsKey(soundIdentifier)) {
+			ProgramLogger.writeLog("No sound named: " + soundIdentifier);
+			return null;
+		}
 		return (byte[]) soundMap.get(soundIdentifier).getValue(1);
 	}
 
@@ -106,6 +119,10 @@ public class SoundStore {
 	 * @since 1.3.0
 	 */
 	public static AudioFormat getFormat(String soundIdentifier) {
+		if (!soundMap.containsKey(soundIdentifier)) {
+			ProgramLogger.writeLog("No sound named: " + soundIdentifier);
+			return null;
+		}
 		return (AudioFormat) soundMap.get(soundIdentifier).getValue(0);
 	}
 

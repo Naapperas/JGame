@@ -40,7 +40,7 @@ public class GameLauncher {
 		// initializes all the relevant/required properties on class loading to be used
 		// at execution
 		try {
-			PropertiesManager.fetchProperties("");
+			PropertiesManager.fetchProperties();
 		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e, "Error fetching properties.");
 		}

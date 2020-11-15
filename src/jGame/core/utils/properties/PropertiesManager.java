@@ -1,12 +1,16 @@
 package jGame.core.utils.properties;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Properties;
 
+import jGame.core.sound.SoundStore;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -94,6 +98,60 @@ public class PropertiesManager {
 	}
 
 	/**
+	 * 
+	 * @since 1.3.0
+	 */
+	public static void fetchProperties() {
+
+
+		String resourcePath = "properties/";
+
+		InputStream propertiesInputStream;
+		try {
+
+			URL propertiesURL = getDataStream(resourcePath);
+
+			if (propertiesURL == null) {
+				ProgramLogger.writeLog("No property files detected");
+			} else {
+
+				propertiesInputStream = propertiesURL.openStream();
+
+				if (propertiesInputStream == null) {
+					ProgramLogger.writeLog("No property files detected");
+				} else {
+					try {
+
+						BufferedReader br = new BufferedReader(new InputStreamReader(propertiesInputStream));
+						String resource;
+
+						while ((resource = br.readLine()) != null) {
+							if (resource.endsWith(".properties")) {
+								// is properties file, process~
+								String path = new URL(propertiesURL.toString() + "/" + resource).toString()
+										.split(":")[1];
+
+								fetchProperties(path);
+							}
+						}
+
+						br.close();
+					} catch (IOException e) {
+						ProgramLogger.writeErrorLog(e);
+					}
+
+				}
+
+				if (propertiesInputStream != null)
+					propertiesInputStream.close();
+			}
+		} catch (IOException e) {
+			ProgramLogger.writeErrorLog(e);
+		}
+
+	}
+
+	/**
 	 * Returns the value of the property identified by <code>propertyName</code>.
 	 * 
 	 * @param propertyName the name/key of the desired property
@@ -118,6 +176,18 @@ public class PropertiesManager {
 	 */
 	public static String getPropertyOrDefault(String propertyName, String defaultValue) {
 		return properties.getProperty(propertyName, defaultValue);
+	}
+
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	private static URL getDataStream(String resource) {
+
+		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);
+
+		return (audioInPath == null ? SoundStore.class.getResource(resource) : audioInPath);
 	}
 
 }
