@@ -26,6 +26,12 @@ public class SoundStore {
 
 	private static boolean initiated = false;
 
+	/**
+	 * Returns weather the sound bank has been initialized.
+	 * 
+	 * @return weather the sound bank has been initialized
+	 * @since 2.0.0
+	 */
 	public static boolean initiated() {
 		return initiated;
 	}
@@ -66,7 +72,7 @@ public class SoundStore {
 																							// be like this because
 																							// resources in a client
 																							// game using this framework
-																							// aren't accesible from
+																							// aren't accessible from
 																							// this class, so use the
 																							// url to get the absolute
 																							// path to the resource
