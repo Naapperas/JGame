@@ -18,6 +18,9 @@ import jGame.logging.ProgramLogger;
 
 public class SoundStore {
 
+	/**
+	 * 
+	 */
 	public static void init() {
 
 		String resourcePath = "audio/";
@@ -61,7 +64,7 @@ public class SoundStore {
 		}
 	}
 
-	public SoundStore() {
+	private SoundStore() {
 		// make non-instantiable
 	}
 
@@ -99,7 +102,8 @@ public class SoundStore {
 	/**
 	 * 
 	 * @param soundIdentifier
-	 * @return
+	 * @return the format of the specified audio data
+	 * @since 1.3.0
 	 */
 	public static AudioFormat getFormat(String soundIdentifier) {
 		return (AudioFormat) soundMap.get(soundIdentifier).getValue(0);
