@@ -29,7 +29,7 @@ import jGame.logging.ProgramLogger;
 
 /**
  * This class is designed to be the entry-point for any game based on the JGame
- * framework
+ * framework.
  *
  * @author Nuno Pereira
  * @since 1.0.0
@@ -39,12 +39,7 @@ public class GameLauncher {
 	static {
 		// initializes all the relevant/required properties on class loading to be used
 		// at execution
-		try {
-			PropertiesManager.fetchProperties();
-		} catch (Exception e) {
-			ProgramLogger.writeErrorLog(e, "Error fetching properties.");
-		}
-
+		PropertiesManager.fetchProperties();
 		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
 		SoundStore.init();
 
