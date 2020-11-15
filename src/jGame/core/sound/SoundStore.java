@@ -20,7 +20,7 @@ import jGame.logging.ProgramLogger;
  * A sound bank to store all the audio data used by a game.
  * 
  * @author Nuno Pereira
- * @since 1.3.0
+ * @since 2.0.0
  */
 public class SoundStore {
 
@@ -33,7 +33,7 @@ public class SoundStore {
 	/**
 	 * Initialize the sound bank by checking the classpath for an "audio" folder.
 	 * 
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	public static void init() {
 
@@ -100,7 +100,7 @@ public class SoundStore {
 	 * @param soundIdentifier the identifier to use when addressing the given sound
 	 * @param soundData       the actual sound data of the sound to cache
 	 * @param format          the format of the sound data
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	public static void cacheSound(String soundIdentifier, byte[] soundData, AudioFormat format) {
 		cacheSound(soundIdentifier, Pair.with(format, soundData));
@@ -117,7 +117,7 @@ public class SoundStore {
 	 * 
 	 * @param soundIdentifier of the sound
 	 * @return the byte data of the sound to play
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	public static byte[] getSound(String soundIdentifier) {
 		if (!soundMap.containsKey(soundIdentifier)) {
@@ -132,7 +132,7 @@ public class SoundStore {
 	 * 
 	 * @param soundIdentifier the identifier of the sound
 	 * @return the format of the specified audio data
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	public static AudioFormat getFormat(String soundIdentifier) {
 		if (!soundMap.containsKey(soundIdentifier)) {

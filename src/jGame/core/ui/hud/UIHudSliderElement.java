@@ -227,7 +227,10 @@ public class UIHudSliderElement extends UIHudElement {
 		this.maxValue = maxValue;
 		try {
 			this.handleX = MathUtils.map(this.value, minValue, maxValue, this.drawConstraints.getXLocation(),
-					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
+					this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1); // handleX is
+																											// displaced
+																											// by 100,
+																											// dunno why
 		} catch (IllegalArgumentException ex) {
 			ProgramLogger.writeErrorLog(ex, "Attemtping to map value out of range!");
 		}
@@ -235,6 +238,14 @@ public class UIHudSliderElement extends UIHudElement {
 
 	@Override
 	public void render(Graphics2D g) {
+
+		this.handleX = MathUtils.map(this.value, minValue, maxValue, this.drawConstraints.getXLocation(),
+				this.drawConstraints.getXLocation() + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1); // this is a workaround
+																								// to a problem where
+																								// the handleX would get
+																								// shifted because of
+																								// constraints
+																								// redefinition
 
 		boolean valueChanged = false;
 
@@ -332,6 +343,9 @@ public class UIHudSliderElement extends UIHudElement {
 	 */
 	public void addCallback(SliderCallback r) {
 		callbackList.add(r);
+		callbackList.forEach((callback) -> { callback.run(value); }); // run all callbacks because we might want to
+																		// change some values even when the user doesn't
+																		// change the value through the slider
 	}
 
 	/**

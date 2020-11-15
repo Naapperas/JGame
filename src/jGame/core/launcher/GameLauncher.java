@@ -37,8 +37,8 @@ import jGame.logging.ProgramLogger;
 public class GameLauncher {
 
 	static {
-		// initializes all the relevant/required properties on class loading to be used
-		// at execution
+		// initializes all the relevant/required properties and classes on class loading
+		// to be used at execution
 		PropertiesManager.fetchProperties();
 		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
 		SoundStore.init();
@@ -155,7 +155,7 @@ public class GameLauncher {
 	/**
 	 * Toggles the pause action.
 	 * 
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	public static void togglePause() {
 		pauseAction.actionPerformed(null);
@@ -425,7 +425,7 @@ public class GameLauncher {
 		 * Adds the given element to the pause menu.
 		 * 
 		 * @param element the element to add to the pause menu
-		 * @since 1.3.0
+		 * @since 2.0.0
 		 */
 		public static void addPauseMenuElement(UIHudElement element) {
 			if (singleton.elementList.contains(element))
@@ -438,7 +438,7 @@ public class GameLauncher {
 		 * Removes the element from the pause menu.
 		 * 
 		 * @param element the element to remove
-		 * @since 1.3.0
+		 * @since 2.0.0
 		 */
 		public static void removePauseMenuElement(UIHudElement element) {
 			if (!singleton.elementList.contains(element))

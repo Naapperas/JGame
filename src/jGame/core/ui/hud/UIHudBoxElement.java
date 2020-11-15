@@ -59,6 +59,47 @@ public class UIHudBoxElement extends UIHudElement {
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
+	/**
+	 * Constructs a box element in the given location with the given dimensions,
+	 * colored white.
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param width            the width of this element
+	 * @param height           the height of this element
+	 * @param constraintType   the type of constraint to apply
+	 * @param constraintValues the values to apply when constraining this element
+	 * @since 2.0.0
+	 */
+	public UIHudBoxElement(int x, int y, int width, int height, int constraintType, int[] constraintValues) {
+		super(x, y);
+		this.width = width;
+		this.height = height;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+	}
+
+	/**
+	 * Constructs a box element in the given location with the given dimensions and
+	 * with the desired color.
+	 * 
+	 * @param x                the horizontal position of this element
+	 * @param y                the vertical position of this element
+	 * @param width            the width of this element
+	 * @param height           the height of this element
+	 * @param drawingColor     the color of this square
+	 * @param constraintType   the type of constraint to apply
+	 * @param constraintValues the values to apply when constraining this element
+	 * @since 2.0.0
+	 */
+	public UIHudBoxElement(int x, int y, int width, int height, Color drawingColor, int constraintType,
+			int[] constraintValues) {
+		super(x, y);
+		this.width = width;
+		this.height = height;
+		this.drawColor = drawingColor;
+		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+	}
+
 	@Override
 	public void render(Graphics2D g) {
 

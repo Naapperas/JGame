@@ -27,19 +27,16 @@ class UIHudScrollViewElement extends UIHudElement {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
 			super.mousePressed(e);
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
 			super.mouseReleased(e);
 		}
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
-			// TODO Auto-generated method stub
 			super.mouseWheelMoved(e);
 		}
 	};
