@@ -16,7 +16,19 @@ import org.javatuples.Pair;
 
 import jGame.logging.ProgramLogger;
 
+/**
+ * A sound bank to store all the audio data used by a game.
+ * 
+ * @author Nuno Pereira
+ * @since 1.3.0
+ */
 public class SoundStore {
+
+	private static boolean initiated = false;
+
+	public static boolean initiated() {
+		return initiated;
+	}
 
 	/**
 	 * Initialize the sound bank by checking the classpath for an "audio" folder.
@@ -71,36 +83,39 @@ public class SoundStore {
 		} catch (IOException e) {
 			ProgramLogger.writeErrorLog(e);
 		}
+
+		initiated = false;
 	}
 
 	private SoundStore() {
 		// make non-instantiable
 	}
 
+	// the actual mappings from identifier and sound info (format and actual data)
 	private static HashMap<String, Pair<AudioFormat, byte[]>> soundMap = new HashMap<String, Pair<AudioFormat, byte[]>>();
 
 	/**
+	 * Stores the given audio data in this audio bank.
 	 * 
-	 * @param soundIdentifier
-	 * @param soundData
-	 * @param format
+	 * @param soundIdentifier the identifier to use when addressing the given sound
+	 * @param soundData       the actual sound data of the sound to cache
+	 * @param format          the format of the sound data
+	 * @since 1.3.0
 	 */
 	public static void cacheSound(String soundIdentifier, byte[] soundData, AudioFormat format) {
 		cacheSound(soundIdentifier, Pair.with(format, soundData));
 	}
 
-	/**
-	 * 
-	 * @param soundIdentifier
-	 * @param audio
-	 */
+	// private method to serve as a bridge between the "pure" Java data types and
+	// the "javatuples" Pair
 	private static void cacheSound(String soundIdentifier, Pair<AudioFormat, byte[]> audio) {
 		soundMap.put(soundIdentifier, audio);
 	}
 
 	/**
+	 * Returns the sound data referred to by the given identifier.
 	 * 
-	 * @param soundIdentifier
+	 * @param soundIdentifier of the sound
 	 * @return the byte data of the sound to play
 	 * @since 1.3.0
 	 */
@@ -113,8 +128,9 @@ public class SoundStore {
 	}
 
 	/**
+	 * Returns the format of the sound data referred to by the given identifier.
 	 * 
-	 * @param soundIdentifier
+	 * @param soundIdentifier the identifier of the sound
 	 * @return the format of the specified audio data
 	 * @since 1.3.0
 	 */
@@ -126,11 +142,7 @@ public class SoundStore {
 		return (AudioFormat) soundMap.get(soundIdentifier).getValue(0);
 	}
 
-	/**
-	 * 
-	 * @param resource
-	 * @return
-	 */
+	// not necessary, but useful to guarantee that we get something
 	private static URL getDataStream(String resource) {
 
 		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);
@@ -138,18 +150,15 @@ public class SoundStore {
 		return (audioInPath == null ? SoundStore.class.getResource(resource) : audioInPath);
 	}
 
-	/**
-	 * 
-	 * @param resource
-	 * @return the sound data in the given resource
-	 */
+	// parses the given path and constructs a Pair object with the data and format
+	// of the data
 	private static Pair<AudioFormat, byte[]> getSoundData(URL parentDirectoryURL, String resource) {
 		byte[] sound = null;
 		AudioFormat format = null;
 
 		try {
 
-			URL url = new URL(parentDirectoryURL.toString() + "/" + resource);
+			URL url = new URL(parentDirectoryURL.toString() + "/" + resource); // form the URL to the resource
 
 			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
 
