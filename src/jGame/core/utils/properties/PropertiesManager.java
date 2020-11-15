@@ -98,6 +98,7 @@ public class PropertiesManager {
 	}
 
 	/**
+	 * Fetches the properties from the classpath.
 	 * 
 	 * @since 1.3.0
 	 */
@@ -127,11 +128,12 @@ public class PropertiesManager {
 
 						while ((resource = br.readLine()) != null) {
 							if (resource.endsWith(".properties")) {
-								// is properties file, process~
+								// is properties file, process
 								String path = new URL(propertiesURL.toString() + "/" + resource).toString()
 										.split(":")[1];
 
 								fetchProperties(path);
+								ProgramLogger.writeLog("Loaded properties");
 							}
 						}
 
@@ -178,11 +180,6 @@ public class PropertiesManager {
 		return properties.getProperty(propertyName, defaultValue);
 	}
 
-	/**
-	 * 
-	 * @param resource
-	 * @return
-	 */
 	private static URL getDataStream(String resource) {
 
 		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);

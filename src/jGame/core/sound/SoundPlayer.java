@@ -25,3 +25,21 @@ public class SoundPlayer {
 	}
 
 }
+
+/**
+ * 
+ * @author nunoa
+ *
+ */
+class SoundPlayerThread {
+
+	/**
+	 * 
+	 * @param soundData
+	 * @param soundFormat
+	 */
+	public void startNewPlayer(byte[] soundData, AudioFormat soundFormat) {
+
+	}
+
+}
