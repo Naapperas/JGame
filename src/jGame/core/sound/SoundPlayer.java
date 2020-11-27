@@ -11,6 +11,8 @@ import jGame.core.utils.MathUtils;
 import jGame.logging.ProgramLogger;
 
 /**
+ * The sound player for an application. In conjunction with {@link SoundStore},
+ * forms the audio API of the framework.
  * 
  * @author Nuno Pereira
  * @since 2.0.0
@@ -19,12 +21,19 @@ import jGame.logging.ProgramLogger;
 public class SoundPlayer {
 
 	/**
+	 * An enum representing the different types of sound that can be played.
 	 * 
-	 * @author nunoa
+	 * @author Nuno Pereira
+	 * @since 2.0.0
 	 *
 	 */
 	public enum SoundType {
 
+		/**
+		 * Represents sound effects.
+		 * 
+		 * @since 2.0.0
+		 */
 		SFX(2);
 
 		int type;
@@ -33,6 +42,12 @@ public class SoundPlayer {
 			this.type = type;
 		}
 
+		/**
+		 * Returns the type of this sound.
+		 * 
+		 * @return the type of this sound
+		 * @since 2.0.0
+		 */
 		public int getType() {
 			return this.type;
 		}
@@ -105,6 +120,7 @@ class SoundPlayerThread {
 	private static int threadCount = 0;
 
 	/**
+	 * Starts a new audio player thread
 	 * 
 	 * @param soundData
 	 * @param soundFormat
@@ -131,12 +147,19 @@ class SoundPlayerThread {
 				sourceLine.start();
 				
 				do {
-					FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
 
-					gainControl.setValue(MathUtils.clamp(SoundPlayer.volumeLevels[type.getType()],
-							gainControl.getMinimum(), gainControl.getMaximum()));
+					int bytesWritten = 0;
 
-					sourceLine.write(soundData, 0, soundData.length);
+					while (bytesWritten < soundData.length) {
+
+						FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
+
+						gainControl.setValue(MathUtils.clamp(SoundPlayer.volumeLevels[type.getType()],
+								gainControl.getMinimum(), gainControl.getMaximum()));
+
+						bytesWritten += sourceLine.write(soundData, bytesWritten, 12800);
+
+					}
 
 					if (sourceLine.isOpen())
 						sourceLine.drain();
@@ -152,7 +175,7 @@ class SoundPlayerThread {
 
 		};
 
-		Thread t = new Thread(r, "SoundPlayer" + ++threadCount);
+		Thread t = new Thread(r, "SoundPlayer" + type.getType() + "" + ++threadCount);
 
 		t.setDaemon(true);
 
