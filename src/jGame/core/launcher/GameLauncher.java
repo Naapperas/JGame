@@ -41,7 +41,7 @@ public class GameLauncher {
 		// to be used at execution
 		PropertiesManager.fetchProperties();
 		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
-		SoundStore.init();
+		SoundStore.init(PropertiesManager.getPropertyOrDefault("sounds", ""));
 
 	}
 
@@ -230,7 +230,7 @@ public class GameLauncher {
 	 */
 	private static void render() {
 		BufferStrategy bs = mainWindow.getWindowCanvas().getBufferStrategy();
-		if(bs == null) {
+		if (bs == null) {
 			mainWindow.getWindowCanvas().createBufferStrategy(BUFFER_AMOUNT);
 			return;
 		}
@@ -379,11 +379,7 @@ public class GameLauncher {
 			}
 		};
 
-		private static final UIHudTextElement PAUSED_SCREEN_TITLE = new UIHudTextElement(
-				0, 
-				0, 
-				"Paused", 
-				Color.WHITE,
+		private static final UIHudTextElement PAUSED_SCREEN_TITLE = new UIHudTextElement(0, 0, "Paused", Color.WHITE,
 				FontManager.getDefaultFont().deriveFont(100f),
 				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_TOP_CONSTRAINT),
 				new int[] { 10, 0, 0, 0 });
@@ -456,20 +452,18 @@ public class GameLauncher {
 
 			this.x = this.drawConstraints.getXLocation();
 			this.y = this.drawConstraints.getYLocation();
-			
+
 			g.fillRoundRect(this.x, this.y, this.width, this.height, 15, 15);
-			
+
 			for (UIHudElement uiHudElement : elementList) { uiHudElement.render(g); }
 
 			g.setColor(startingColor);
-			
+
 		}
 
 		@Override
 		public void registerInputListener() {
-			for (UIHudElement uiHudElement : elementList) {
-				uiHudElement.registerInputListener();
-			}
+			for (UIHudElement uiHudElement : elementList) { uiHudElement.registerInputListener(); }
 		}
 
 		@Override

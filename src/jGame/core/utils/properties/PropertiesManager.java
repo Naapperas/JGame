@@ -1,12 +1,10 @@
 package jGame.core.utils.properties;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
 
@@ -104,53 +102,20 @@ public class PropertiesManager {
 	 */
 	public static void fetchProperties() {
 
-
 		String resourcePath = "properties/";
 
-		InputStream propertiesInputStream;
-		try {
+		URL propertiesPathURL = getDataStream(resourcePath);
 
-			URL propertiesURL = getDataStream(resourcePath);
-
-			if (propertiesURL == null) {
-				ProgramLogger.writeLog("No property files detected");
-			} else {
-
-				propertiesInputStream = propertiesURL.openStream();
-
-				if (propertiesInputStream == null) {
-					ProgramLogger.writeLog("No property files detected");
-				} else {
-					try {
-
-						BufferedReader br = new BufferedReader(new InputStreamReader(propertiesInputStream));
-						String resource;
-
-						while ((resource = br.readLine()) != null) {
-							if (resource.endsWith(".properties")) {
-								// is properties file, process
-								String path = new URL(propertiesURL.toString() + "/" + resource).toString()
-										.split(":")[1];
-
-								fetchProperties(path);
-								ProgramLogger.writeLog("Loaded properties");
-							}
-						}
-
-						br.close();
-					} catch (IOException e) {
-						ProgramLogger.writeErrorLog(e);
-					}
-
-				}
-
-				if (propertiesInputStream != null)
-					propertiesInputStream.close();
+		if (propertiesPathURL == null) {
+			ProgramLogger.writeLog("No property files detected");
+		} else {
+			try {
+				URL propertiesURL = new URL(propertiesPathURL.toString() + "app.properties");
+				fetchProperties(propertiesURL.openStream());
+			} catch (IOException e) {
+				ProgramLogger.writeErrorLog(e);
 			}
-		} catch (IOException e) {
-			ProgramLogger.writeErrorLog(e);
 		}
-
 	}
 
 	/**

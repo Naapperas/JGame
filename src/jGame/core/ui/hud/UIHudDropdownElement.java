@@ -29,7 +29,6 @@ import jGame.core.utils.MathUtils;
  */
 public class UIHudDropdownElement extends UIHudElement {
 
-
 	// the list of buttons to be rendered
 	private List<UIHudButtonElement> dropdownButtons = new ArrayList<UIHudButtonElement>();
 

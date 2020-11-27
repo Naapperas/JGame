@@ -18,6 +18,11 @@ import jGame.logging.ProgramLogger;
  */
 public class SoundPlayer {
 
+	/**
+	 * 
+	 * @author nunoa
+	 *
+	 */
 	public enum SoundType {
 
 		SFX(2);
@@ -34,35 +39,53 @@ public class SoundPlayer {
 
 	}
 
-	public static int MAIN_VOLUME = 0;
-	public static int MUSIC_VOLUME = 1;
-	public static int SOUNF_FX_VOLUME = 2;
-
-	public static float[] volumeLevels = { 1.0f, 1.0f, 1.0f };
+	protected static float[] volumeLevels = { 1.0f, 1.0f, /* SFX */1.0f };
+	static boolean hasSound = true;
 
 	private SoundPlayer() {
 		// make uninstantiable
 	}
 
 	/**
+	 * Plays the given sound using the given sound type(used only for volume level
+	 * change). The sound is only played once i.e. it is not looped.
 	 * 
-	 * @param soundIdentifier
-	 * @param type
+	 * @param soundIdentifier the name of the sound to play
+	 * @param type            the type of sound to play (SFX, BackgroundTheme, etc)
 	 * @since 2.0.0
 	 */
 	public static void playSound(String soundIdentifier, SoundType type) {
+		playSound(soundIdentifier, type, false);
+	}
+
+	/**
+	 * Plays the given sound using the given sound type(used only for volume level
+	 * change). The sound may be looped or not, according to {@code looping}.
+	 * 
+	 * @param soundIdentifier the name of the sound to play
+	 * @param type            the type of sound to play (SFX, BackgroundTheme, etc)
+	 * @param looping         weather this sound data should be looped or not
+	 * @since 2.0.0
+	 */
+	public static void playSound(String soundIdentifier, SoundType type, boolean looping) {
+
+		if (!hasSound) {
+			ProgramLogger.writeLog("No sounds avaliable to play");
+			return;
+		}
 
 		byte[] soundData = SoundStore.getSound(soundIdentifier);
 		AudioFormat soundFormat = SoundStore.getFormat(soundIdentifier);
 		
-		SoundPlayerThread.startNewPlayer(soundData, soundFormat, type);
+		SoundPlayerThread.startNewPlayer(soundData, soundFormat, type, looping);
 
 	}
 
 	/**
+	 * Changes the volume level for the given type of sound.
 	 * 
-	 * @param newVolume
-	 * @param volumeID
+	 * @param newVolume the new volume to use
+	 * @param volumeID  the volume type
 	 * @since 2.0.0
 	 */
 	public static void changeVolumeLevel(float newVolume, int volumeID) {
@@ -86,9 +109,11 @@ class SoundPlayerThread {
 	 * @param soundData
 	 * @param soundFormat
 	 * @param type
+	 * @param looping
 	 * @since 2.0.0
 	 */
-	public static void startNewPlayer(final byte[] soundData, final AudioFormat soundFormat, SoundType type) {
+	public static void startNewPlayer(final byte[] soundData, final AudioFormat soundFormat, SoundType type,
+			boolean looping) {
 
 		// TODO: make it so sound is played right after this method is called (right
 		// now, the sound might not play exactly when this is called, undesirable
@@ -96,22 +121,28 @@ class SoundPlayerThread {
 
 		Runnable r = () -> {
 
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class, soundFormat);
+			ProgramLogger.writeLog("Playing audio!");
+
 			try {
-				SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+				SourceDataLine sourceLine = (SourceDataLine) AudioSystem
+						.getLine(new DataLine.Info(SourceDataLine.class, soundFormat));
 				sourceLine.open(soundFormat);
 
 				sourceLine.start();
+				
+				do {
+					FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
 
-				FloatControl gainControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(MathUtils.clamp(SoundPlayer.volumeLevels[type.getType()],
+							gainControl.getMinimum(), gainControl.getMaximum()));
 
-				gainControl.setValue(MathUtils.clamp(SoundPlayer.volumeLevels[type.getType()], gainControl.getMinimum(),
-						gainControl.getMaximum()));
+					sourceLine.write(soundData, 0, soundData.length);
 
-				sourceLine.write(soundData, 0, soundData.length);
+					if (sourceLine.isOpen())
+						sourceLine.drain();
+					
+				} while (looping);
 
-				if (sourceLine.isOpen())
-					sourceLine.drain();
 				sourceLine.close();
 			} catch (Exception e) {
 				ProgramLogger.writeErrorLog(e);

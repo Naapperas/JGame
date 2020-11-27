@@ -1,16 +1,11 @@
 package jGame.core.sound;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.javatuples.Pair;
 
@@ -39,55 +34,52 @@ public class SoundStore {
 	/**
 	 * Initialize the sound bank by checking the classpath for an "audio" folder.
 	 * 
+	 * Because of some limitations with reading the classpath for files, the user
+	 * must provide a list with the names of the resources they wish to load.
+	 * 
+	 * @param audioResources a comma separated list of the audio resources to load
+	 * 
 	 * @since 2.0.0
 	 */
-	public static void init() {
+	public static void init(String audioResources) {
+		
+		if (audioResources.isBlank()) {
+			ProgramLogger.writeLog("No audio files detected");
+			SoundPlayer.hasSound = false;
+			return;
+		}
 
 		String resourcePath = "audio/";
-		
-		InputStream audioInPath;
-		try {
 
-			URL audioURL = getDataStream(resourcePath);
+		URL audioURL = getDataStream(resourcePath); // this from a previous version of this method, but still works to
+													// check if there is an "audio" folder on the classpath
 
-			if (audioURL == null) {
-				ProgramLogger.writeLog("No audio files detected");
-			} else {
-			
-				audioInPath = audioURL.openStream();
+		if (audioURL == null) {
+			ProgramLogger.writeLog("No audio files detected");
+		} else {
 
-				if (audioInPath == null) {
-					ProgramLogger.writeLog("No audio files detected");
-				} else {
-					try {
-
-						BufferedReader br = new BufferedReader(new InputStreamReader(audioInPath));
-						String resource;
-
-						while ((resource = br.readLine()) != null) {
-							if (resource.endsWith(".wav")) {
-								// is .wav file, proceed
-								String soundName = resource.split("\\.")[0];
-								cacheSound(soundName, getSoundData(audioURL, resource)); // we need the function call to
-																							// be like this because
-																							// resources in a client
-																							// game using this framework
-																							// aren't accessible from
-																							// this class, so use the
-																							// url to get the absolute
-																							// path to the resource
-								ProgramLogger.writeLog("Caching sound: " + soundName);
-							}
-						}
-
-						audioInPath.close();
-					} catch (IOException e) {
-						ProgramLogger.writeErrorLog(e);
-					}
+			for (String resourceName : audioResources.split(",")) {
+				if (resourceName.endsWith(".wav")) {
+					// is .wav file, proceed
+					String soundName = resourceName.split("\\.")[0];
+					cacheSound(soundName, getSoundData(audioURL, resourceName)); // we need the function
+																					// call to
+																					// be like this because
+																					// resources in a client
+																					// game using this
+																					// framework
+																					// aren't accessible
+																					// from
+																					// this class, so use
+																					// the
+																					// url to get the
+																					// absolute
+																					// path to the resource
+					ProgramLogger.writeLog("Caching sound: " + soundName);
 				}
 			}
-		} catch (IOException e) {
-			ProgramLogger.writeErrorLog(e);
+
+			ProgramLogger.writeLog("Finnished caching all sounds!");
 		}
 
 		initiated = false;
@@ -122,7 +114,8 @@ public class SoundStore {
 	 * Returns the sound data referred to by the given identifier.
 	 * 
 	 * @param soundIdentifier of the sound
-	 * @return the byte data of the sound to play
+	 * @return the byte data of the sound to play, or null if there is no sound with
+	 *         the given identifier
 	 * @since 2.0.0
 	 */
 	public static byte[] getSound(String soundIdentifier) {
@@ -137,7 +130,8 @@ public class SoundStore {
 	 * Returns the format of the sound data referred to by the given identifier.
 	 * 
 	 * @param soundIdentifier the identifier of the sound
-	 * @return the format of the specified audio data
+	 * @return the format of the specified audio data, or null if there is no sound
+	 *         with the given identifier
 	 * @since 2.0.0
 	 */
 	public static AudioFormat getFormat(String soundIdentifier) {
@@ -153,7 +147,7 @@ public class SoundStore {
 
 		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);
 
-		return (audioInPath == null ? SoundStore.class.getResource(resource) : audioInPath);
+		return (audioInPath == null ? SoundStore.class.getClassLoader().getResource(resource) : audioInPath);
 	}
 
 	// parses the given path and constructs a Pair object with the data and format
@@ -164,7 +158,9 @@ public class SoundStore {
 
 		try {
 
-			URL url = new URL(parentDirectoryURL.toString() + "/" + resource); // form the URL to the resource
+			URL url = new URL(parentDirectoryURL.toString() + resource); // form the URL to the resource
+
+			ProgramLogger.writeLog(url.toString());
 
 			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
 
@@ -173,7 +169,7 @@ public class SoundStore {
 			format = ais.getFormat();
 
 			ais.close();
-		} catch (UnsupportedAudioFileException | IOException e) {
+		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e);
 		}
 		return Pair.with(format, sound);

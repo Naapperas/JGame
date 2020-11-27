@@ -1,10 +1,13 @@
 package jGame.logging;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -33,26 +36,32 @@ public class ProgramLogger {
 	private static Handler fileHandler;
 
 	static {
-
-		/*
-		 * File f = new File(System.getProperty("ChatProgram.rootFolder") +
-		 * "logs\\mainAppOutput" + Calendar.getInstance().get(Calendar.YEAR) + "-" +
-		 * (Calendar.getInstance().get(Calendar.MONTH) < 10 ? "0" +
-		 * Calendar.getInstance().get(Calendar.MONTH) :
-		 * Calendar.getInstance().get(Calendar.MONTH)) + "-" +
-		 * (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 10 ? "0" +
-		 * Calendar.getInstance() .get(Calendar.DAY_OF_MONTH) :
-		 * Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + ".log");
-		 * 
-		 * if (!f.exists()) try { f.createNewFile(); } catch (IOException e1) { // TODO
-		 * Auto-generated catch block e1.printStackTrace(); }
-		 * 
-		 * try { fileHandler = new FileHandler(f.getAbsolutePath(), true); } catch
-		 * (SecurityException | IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 * 
-		 * fileHandler.setFormatter(new LogFormatter()); LOGGER.addHandler(fileHandler);
-		 */
+		
+		File f = new File("C:\\Users\\nunoa\\OneDrive\\Desktop\\" + Calendar.getInstance().get(Calendar.YEAR) + "-"
+				+
+		  (Calendar.getInstance().get(Calendar.MONTH) < 10 ? "0" +
+		  Calendar.getInstance().get(Calendar.MONTH) :
+		  Calendar.getInstance().get(Calendar.MONTH)) + "-" +
+		  (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 10 ? "0" +
+		  Calendar.getInstance() .get(Calendar.DAY_OF_MONTH) :
+		  Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + ".log");
+		  
+		if (!f.exists())
+			try {
+				f.createNewFile();
+			} catch (IOException e1) { // TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		  
+		  try { 
+			  fileHandler = new FileHandler(f.getAbsolutePath(), true); 
+		  } catch (SecurityException | IOException e) { // TODO Auto-generated catch block
+			  e.printStackTrace(); 
+		  }
+		  
+		fileHandler.setFormatter(new LogFormatter());
+		LOGGER.addHandler(fileHandler);
+		 
 
 		LOGGER.setUseParentHandlers(false);
 
