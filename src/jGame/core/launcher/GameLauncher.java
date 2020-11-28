@@ -132,12 +132,16 @@ public class GameLauncher {
 		public void registerInputListener() {
 			super.registerInputListener();
 			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
+			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause1");
+			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('P'), "pause2");
 		}
 
 		@Override
 		public void removeInputListener() {
 			super.removeInputListener();
 			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
+			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause1");
+			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('P'), "pause2");
 		}
 	};
 
