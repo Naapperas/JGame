@@ -131,7 +131,6 @@ public class GameLauncher {
 		@Override
 		public void registerInputListener() {
 			super.registerInputListener();
-			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause");
 			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('p'), "pause1");
 			GameLauncher.getMainWindow().addAction(pauseAction, KeyStroke.getKeyStroke('P'), "pause2");
 		}
@@ -139,7 +138,6 @@ public class GameLauncher {
 		@Override
 		public void removeInputListener() {
 			super.removeInputListener();
-			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause");
 			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('p'), "pause1");
 			GameLauncher.getMainWindow().removeAction(KeyStroke.getKeyStroke('P'), "pause2");
 		}
@@ -374,8 +372,8 @@ public class GameLauncher {
 		}
 
 		private static final UIHudButtonElement RESUME_BUTTON = new UIHudButtonElement(0, 0, 200, 75, "Resume",
-				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
-				new int[] { 0, 0, 20, 0 }) {
+				Constraints.concat(Constraints.FROM_LEFT_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
+				new int[] { 0, 0, 20, 50 }) {
 
 			@Override
 			protected void processClick(MouseEvent e) {
@@ -390,8 +388,8 @@ public class GameLauncher {
 
 		private static final UIHudButtonElement PAUSE_BACK_MENU_BUTTON = new UIHudButtonElement(350, 300, 200, 75,
 				"Back to Menu",
-				Constraints.concat(Constraints.CENTER_HORIZONTAL_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
-				new int[] { 0, 0, 100, 0 }) {
+				Constraints.concat(Constraints.FROM_RIGHT_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
+				new int[] { 0, 50, 20, 0 }) {
 
 			@Override
 			protected void processClick(MouseEvent e) {

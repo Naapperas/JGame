@@ -120,12 +120,12 @@ class SoundPlayerThread {
 	private static int threadCount = 0;
 
 	/**
-	 * Starts a new audio player thread
+	 * Starts a new audio player thread and plays the specified sound.
 	 * 
-	 * @param soundData
-	 * @param soundFormat
-	 * @param type
-	 * @param looping
+	 * @param soundData   the data of the sound to play
+	 * @param soundFormat the audio format of the sound data
+	 * @param type        the type of sound to play
+	 * @param looping     weather the sound should loop or not
 	 * @since 2.0.0
 	 */
 	public static void startNewPlayer(final byte[] soundData, final AudioFormat soundFormat, SoundType type,
@@ -157,7 +157,13 @@ class SoundPlayerThread {
 						gainControl.setValue(MathUtils.clamp(SoundPlayer.volumeLevels[type.getType()],
 								gainControl.getMinimum(), gainControl.getMaximum()));
 
-						bytesWritten += sourceLine.write(soundData, bytesWritten, 12800);
+						int length = 40000;
+						
+						if(bytesWritten + length > soundData.length) {
+							length = soundData.length - bytesWritten;
+						}
+						
+						bytesWritten += sourceLine.write(soundData, bytesWritten, length);
 
 					}
 
