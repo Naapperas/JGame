@@ -34,7 +34,14 @@ public class SoundPlayer {
 		 * 
 		 * @since 2.0.0
 		 */
-		SFX(2);
+		SFX(2),
+		
+		/**
+		 * Represents background music.
+		 * 
+		 * @since 2.0.0
+		 */
+		BACKGROUND_MUSIC(1);
 
 		int type;
 
@@ -54,7 +61,7 @@ public class SoundPlayer {
 
 	}
 
-	protected static float[] volumeLevels = { 1.0f, 1.0f, /* SFX */1.0f };
+	protected static float[] volumeLevels = { 1.0f, /* BACKGROUND MUSIC */1.0f, /* SFX */1.0f };
 	static boolean hasSound = true;
 
 	private SoundPlayer() {
@@ -110,10 +117,10 @@ public class SoundPlayer {
 }
 
 /**
+ * A thread to play a given sound.
  * 
  * @author Nuno Pereira
  * @since 2.0.0
- *
  */
 class SoundPlayerThread {
 
@@ -160,7 +167,8 @@ class SoundPlayerThread {
 						int length = 40000;
 						
 						if(bytesWritten + length > soundData.length) {
-							length = soundData.length - bytesWritten;
+							length = soundData.length - bytesWritten; // prevent errors where we would request more
+																		// bytes than the available to be read
 						}
 						
 						bytesWritten += sourceLine.write(soundData, bytesWritten, length);

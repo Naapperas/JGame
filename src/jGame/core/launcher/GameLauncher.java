@@ -373,7 +373,7 @@ public class GameLauncher {
 
 		private static final UIHudButtonElement RESUME_BUTTON = new UIHudButtonElement(0, 0, 200, 75, "Resume",
 				Constraints.concat(Constraints.FROM_LEFT_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
-				new int[] { 0, 0, 20, 50 }) {
+				new int[] { 0, 0, 20, 95 }) {
 
 			@Override
 			protected void processClick(MouseEvent e) {
@@ -389,7 +389,7 @@ public class GameLauncher {
 		private static final UIHudButtonElement PAUSE_BACK_MENU_BUTTON = new UIHudButtonElement(350, 300, 200, 75,
 				"Back to Menu",
 				Constraints.concat(Constraints.FROM_RIGHT_CONSTRAINT, Constraints.FROM_BOTTOM_CONSTRAINT),
-				new int[] { 0, 50, 20, 0 }) {
+				new int[] { 0, 95, 20, 0 }) {
 
 			@Override
 			protected void processClick(MouseEvent e) {
@@ -441,7 +441,7 @@ public class GameLauncher {
 		public static void removePauseMenuElement(UIHudElement element) {
 			if (!singleton.elementList.contains(element))
 				return;
-			if (singleton.elementList.size() > 3)
+			if (singleton.elementList.size() > 3) // we always have 1 text element and 2 button elements
 				singleton.elementList.remove(element);
 		}
 
