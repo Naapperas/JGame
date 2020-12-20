@@ -1,5 +1,8 @@
 package jGame.core.sound;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -30,18 +33,18 @@ public class SoundPlayer {
 	public enum SoundType {
 
 		/**
-		 * Represents sound effects.
-		 * 
-		 * @since 2.0.0
-		 */
-		SFX(2),
-		
-		/**
 		 * Represents background music.
 		 * 
 		 * @since 2.0.0
 		 */
-		BACKGROUND_MUSIC(1);
+		BACKGROUND_MUSIC(1),
+		
+		/**
+		 * Represents sound effects.
+		 * 
+		 * @since 2.0.0
+		 */
+		SFX(2);
 
 		int type;
 
@@ -63,6 +66,8 @@ public class SoundPlayer {
 
 	protected static float[] volumeLevels = { 1.0f, /* BACKGROUND MUSIC */1.0f, /* SFX */1.0f };
 	static boolean hasSound = true;
+
+	private static Map<String, Boolean> loopingSounds = new HashMap<String, Boolean>();
 
 	private SoundPlayer() {
 		// make uninstantiable
@@ -166,11 +171,11 @@ class SoundPlayerThread {
 
 						int length = 40000;
 						
-						if(bytesWritten + length > soundData.length) {
+						if (bytesWritten + length > soundData.length)
 							length = soundData.length - bytesWritten; // prevent errors where we would request more
 																		// bytes than the available to be read
-						}
 						
+
 						bytesWritten += sourceLine.write(soundData, bytesWritten, length);
 
 					}
