@@ -7,7 +7,7 @@ module jGame {
 	requires transitive java.logging;
 
 	requires javatuples;
-	
+
 	exports jGame.core.launcher;
 	exports jGame.core.ui;
 	exports jGame.core.ui.hud;

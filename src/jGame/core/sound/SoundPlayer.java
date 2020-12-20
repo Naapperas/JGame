@@ -1,8 +1,5 @@
 package jGame.core.sound;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -66,8 +63,6 @@ public class SoundPlayer {
 
 	protected static float[] volumeLevels = { 1.0f, /* BACKGROUND MUSIC */1.0f, /* SFX */1.0f };
 	static boolean hasSound = true;
-
-	private static Map<String, Boolean> loopingSounds = new HashMap<String, Boolean>();
 
 	private SoundPlayer() {
 		// make uninstantiable
