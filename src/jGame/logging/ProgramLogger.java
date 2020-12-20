@@ -56,7 +56,7 @@ public class ProgramLogger {
 		  
 		  try { 
 			  fileHandler = new FileHandler(f.getAbsolutePath(), true); 
-		  } catch (SecurityException | IOException e) { // TODO Auto-generated catch block
+		  } catch (SecurityException | IOException e) {
 			  e.printStackTrace(); 
 		  }
 		  
