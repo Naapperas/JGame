@@ -28,7 +28,7 @@ public class ProgramLogger {
 
 	/**
 	 * <code>Handler</code> object that writes logs requested by the {@link #LOGGER}
-	 * to a ".log" file
+	 * to a ".log" file.
 	 * 
 	 * @see Handler
 	 * @since 1.0.0
@@ -37,14 +37,15 @@ public class ProgramLogger {
 
 	static {
 		
-		File f = new File("C:\\Users\\nunoa\\OneDrive\\Desktop\\" + Calendar.getInstance().get(Calendar.YEAR) + "-"
+		Calendar c = Calendar.getInstance();
+
+		File f = new File("C:\\Users\\nunoa\\OneDrive\\Desktop\\" + c.get(Calendar.YEAR) + "-"
 				+
-		  (Calendar.getInstance().get(Calendar.MONTH) < 10 ? "0" +
-		  Calendar.getInstance().get(Calendar.MONTH) :
-		  Calendar.getInstance().get(Calendar.MONTH)) + "-" +
-		  (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 10 ? "0" +
-		  Calendar.getInstance() .get(Calendar.DAY_OF_MONTH) :
-		  Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + ".log");
+				(c.get(Calendar.MONTH) < 10 ? "0" + (c.get(Calendar.MONTH) + 1) : (c.get(Calendar.MONTH))
+								+ 1)
+				+ "-" +
+				(c.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + c.get(Calendar.DAY_OF_MONTH) : c.get(Calendar.DAY_OF_MONTH))
+				+ ".log");
 		  
 		if (!f.exists())
 			try {
