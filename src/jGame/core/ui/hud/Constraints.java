@@ -40,6 +40,18 @@ public class Constraints {
 	}
 
 	/**
+	 * Returns the default constraints to apply to a {@link UIHudElement}.
+	 * 
+	 * @param theElement the element to which the default constraints should be
+	 *                   applied
+	 * @return the default constraints for the given element
+	 * @since 2.0.0
+	 */
+	public static Constraints defaultFor(UIHudElement theElement) {
+		return new Constraints(theElement, Constraints.NONE, null);
+	}
+
+	/**
 	 * The constraint code for no constraints, position is set by the client.
 	 * 
 	 * @since 1.1.0

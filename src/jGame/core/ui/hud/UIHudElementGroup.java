@@ -22,19 +22,37 @@ public class UIHudElementGroup extends UIHudElement {
 	 */
 	private List<UIHudElement> elementGroup = new LinkedList<UIHudElement>();
 
+	/*
+	 * Padding is used to set the inner bounds of the "element area", i.e., elements
+	 * are placed in a space smaller than the actual element group size: how smaller
+	 * is determined by the padding.
+	 */
 	private int paddingTop, paddingRight, paddingBottom, paddingLeft;
+
+	/*
+	 * Margin is used to space elements inside the element group: how separated is
+	 * determined by the margin.
+	 */
 	private int marginTop, marginRight, marginBottom, marginLeft;
 
 	/**
-	 * Creates an element group in the given position, wit the given dimensions and
+	 * The slack, in pixels, to give when sizing this element: if we can fit another
+	 * element within the group's width plus this threshold, increase the width.
+	 * 
+	 * @since 2.0.0
+	 */
+	public static final int SIZE_THRESHOLD = 15;
+
+	/**
+	 * Creates an element group in the given position, with the given dimensions and
 	 * using the given constraints. The group stars with no elements.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param constraintType
-	 * @param constraintValues
+	 * @param x                the horizontal position of the element group
+	 * @param y                the vertical position of the element group
+	 * @param width            the width of the element group
+	 * @param height           the height of the element group
+	 * @param constraintType   the type of constraint to apply
+	 * @param constraintValues the values to apply when constraining this element
 	 * @since 2.0.0
 	 */
 	public UIHudElementGroup(int x, int y, int width, int height, int constraintType, int[] constraintValues) {
@@ -53,7 +71,7 @@ public class UIHudElementGroup extends UIHudElement {
 	 */
 	public UIHudElementGroup(int x, int y, int width, int height, List<UIHudElement> itemsToAdd) {
 		super(x, y, width, height);
-		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
+		this.drawConstraints = Constraints.defaultFor(this);
 		this.elementGroup.addAll(itemsToAdd);
 	}
 

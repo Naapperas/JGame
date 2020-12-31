@@ -1,5 +1,7 @@
 package jGame.core.utils;
 
+import java.util.Collection;
+
 /**
  * 
  * This class provides a set of utility Math methods that can be potentially
@@ -380,5 +382,27 @@ public final class MathUtils {
 		double yOffset = destinyMin - slope*originMin; 
 		
 		return slope*number + yOffset;
+	}
+
+	/**
+	 * Inspired by Python's built-in 'reduce' function.
+	 * 
+	 * @param nums
+	 * 
+	 * @since 2.0.0
+	 */
+	public static void reduce(Number[] nums) {
+
+	}
+
+	/**
+	 * Inspired by Python's built-in 'reduce' function.
+	 * 
+	 * @param nums
+	 * 
+	 * @since 2.0.0
+	 */
+	public static void reduce(Collection<Number> nums) {
+
 	}
 }
