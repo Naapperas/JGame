@@ -1,6 +1,7 @@
 package jGame.core.utils;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * 
@@ -387,9 +388,24 @@ public final class MathUtils {
 	/**
 	 * 
 	 * @author nunoa
-	 *
+	 * @since 2.0.0
 	 */
 	public interface ReduceLambda{
+
+		/**
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUM_INT = (x, y) -> { return x.intValue() + y.intValue(); };
+
+		/**
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda PRODUCT_INT = (x, y) -> { return x.intValue() * y.intValue(); };
+
+		/**
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUBTRACTION_INT = (x, y) -> { return x.intValue() - y.intValue(); };
 		public Number accept(Number x, Number y);
 	}
 
@@ -415,10 +431,28 @@ public final class MathUtils {
 	 * Inspired by Python's built-in 'reduce' function.
 	 * 
 	 * @param nums
+	 * @param reduceFunc
+	 * @return
 	 * 
 	 * @since 2.0.0
 	 */
-	public static void reduce(Collection<Number> nums) {
+	public static Number reduce(Collection<Number> nums, ReduceLambda reduceFunc) {
+
+		Iterator<Number> numsIterator = nums.iterator();
+
+		System.out.println(nums.size());
+
+		Number accumulator = reduceFunc.accept(numsIterator.next(), numsIterator.next());
+
+		System.out.println(accumulator);
+
+		for (Number n = numsIterator.next(); numsIterator.hasNext();) {
+			System.out.println("Number is " + n);
+			accumulator = reduceFunc.accept(accumulator, n);
+			numsIterator.next();
+		}
+
+		return accumulator;
 
 	}
 }

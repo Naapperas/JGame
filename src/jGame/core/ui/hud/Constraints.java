@@ -129,7 +129,7 @@ public class Constraints {
 			throws NullPointerException {
 		this.constrainedElement = Objects.requireNonNull(constrainedElement);
 		this.constraintType = constraintType;
-		if (constraintType != Constraints.NONE)
+		if (constraintType != Constraints.NONE && (constraintType & Constraints.CENTER_POINT_CONSTRAINT) == 0)
 			Objects.requireNonNull(constraintValues); // can't have select constraining without providing values
 		this.constraintValues = constraintValues;
 	}
