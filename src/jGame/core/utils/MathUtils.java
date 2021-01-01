@@ -455,4 +455,53 @@ public final class MathUtils {
 		return accumulator;
 
 	}
+
+	/**
+	 * Inspired by Python's built-in 'reduce' function.
+	 * 
+	 * @param startValue
+	 * @param nums
+	 * @param reduceFunc
+	 * @return
+	 * 
+	 * @since 2.0.0
+	 */
+	public static Number reduce(Number startValue, Number[] nums, ReduceLambda reduceFunc) {
+		Number accumulator = reduceFunc.accept(startValue, nums[0]);
+
+		for (int i = 1; i < nums.length; i++)
+			accumulator = reduceFunc.accept(accumulator, nums[i]);
+
+		return accumulator;
+	}
+
+	/**
+	 * Inspired by Python's built-in 'reduce' function.
+	 * 
+	 * @param startValue
+	 * @param nums
+	 * @param reduceFunc
+	 * @return
+	 * 
+	 * @since 2.0.0
+	 */
+	public static Number reduce(Number startValue, Collection<Number> nums, ReduceLambda reduceFunc) {
+
+		Iterator<Number> numsIterator = nums.iterator();
+
+		System.out.println(nums.size());
+
+		Number accumulator = reduceFunc.accept(startValue, numsIterator.next());
+
+		System.out.println(accumulator);
+
+		for (Number n = numsIterator.next(); numsIterator.hasNext();) {
+			System.out.println("Number is " + n);
+			accumulator = reduceFunc.accept(accumulator, n);
+			numsIterator.next();
+		}
+
+		return accumulator;
+
+	}
 }
