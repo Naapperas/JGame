@@ -385,14 +385,30 @@ public final class MathUtils {
 	}
 
 	/**
+	 * 
+	 * @author nunoa
+	 *
+	 */
+	public interface ReduceLambda{
+		public Number accept(Number x, Number y);
+	}
+
+	/**
 	 * Inspired by Python's built-in 'reduce' function.
 	 * 
 	 * @param nums
+	 * @param reduceFunc
+	 * @return
 	 * 
 	 * @since 2.0.0
 	 */
-	public static void reduce(Number[] nums) {
+	public static Number reduce(Number[] nums, ReduceLambda reduceFunc) {
+		Number accumulator = reduceFunc.accept(nums[0], nums[1]);
 
+		for (int i = 2; i < nums.length; i++)
+			accumulator = reduceFunc.accept(accumulator, nums[i]);
+
+		return accumulator;
 	}
 
 	/**

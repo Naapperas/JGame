@@ -114,18 +114,24 @@ public class Constraints {
 	public static int FROM_LEFT_CONSTRAINT = BIT_MASK(6);
 
 	/**
-	 * Constructs a Contraints object for the given {@code constrainedElement}, of
+	 * Constructs a Constraints object for the given {@code constrainedElement}, of
 	 * type {@code constraintType} and using the values in {@code contraintValues}
 	 * 
 	 * @param constrainedElement the element to constrain
 	 * @param constraintType     the type of constraint to apply to the element
-	 * @param contraintValues    the values to apply when constraining the object
+	 * @param constraintValues   the values to apply when constraining the object
+	 * @throws NullPointerException if constraintType is different from
+	 *                              {@link Constraints#NONE} and constraintValues is
+	 *                              null
 	 * @since 1.1.0
 	 */
-	public Constraints(UIHudElement constrainedElement, int constraintType, int[] contraintValues) {
+	public Constraints(UIHudElement constrainedElement, int constraintType, int[] constraintValues)
+			throws NullPointerException {
 		this.constrainedElement = Objects.requireNonNull(constrainedElement);
 		this.constraintType = constraintType;
-		this.constraintValues = contraintValues;
+		if (constraintType != Constraints.NONE)
+			Objects.requireNonNull(constraintValues); // can't have select constraining without providing values
+		this.constraintValues = constraintValues;
 	}
 
 	/**
