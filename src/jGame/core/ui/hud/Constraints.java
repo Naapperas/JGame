@@ -240,8 +240,12 @@ public class Constraints {
 							- this.constraintValues[Constraints.BOTTOM] - this.constrainedElement.height;
 				}
 			}
-		} else
-			return constrainedElement.y;
+		} else {
+			if (this.constrainedElement instanceof UIHudTextElement) {
+				return constrainedElement.y + constrainedElement.height;
+			} else
+				return constrainedElement.y;
+		}
 	}
 
 	@Override

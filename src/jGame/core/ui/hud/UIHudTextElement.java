@@ -306,10 +306,10 @@ public class UIHudTextElement extends UIHudElement {
 	public void render(Graphics2D g) {
 
 		Font startingFont = g.getFont();
+		Color startingColor = g.getColor();
 
 		if (textFont != null)
 			g.setFont(textFont);
-
 
 		if (textColor != null)
 			g.setColor(textColor);
@@ -323,7 +323,7 @@ public class UIHudTextElement extends UIHudElement {
 
 		g.drawString(textToDisplay, this.x, this.y);
 
-		g.setColor(Color.BLACK);
+		g.setColor(startingColor);
 		g.setFont(startingFont);
 
 	}

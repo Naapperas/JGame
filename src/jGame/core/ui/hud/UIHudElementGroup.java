@@ -1,5 +1,6 @@
 package jGame.core.ui.hud;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,21 @@ public class UIHudElementGroup extends UIHudElement {
 	public static final int SIZE_THRESHOLD = 15;
 
 	/**
+	 * @since 2.0.0
+	 */
+	private String displayMode = "";
+
+	/**
+	 * @since 2.0.0
+	 */
+	public static final String DISPLAY_MODE_CENTER_HORIZONTAL = "center_horizontal";
+
+	/**
+	 * @since 2.0.0
+	 */
+	public static final String DISPLAY_MODE_CENTER_VERTICAL = "center_vertical";
+
+	/**
 	 * Creates an element group in the given position, with the given dimensions and
 	 * using the given constraints. The group stars with no elements.
 	 * 
@@ -74,6 +90,7 @@ public class UIHudElementGroup extends UIHudElement {
 	public UIHudElementGroup(int x, int y, int width, int height, List<UIHudElement> itemsToAdd) {
 		super(x, y, width, height);
 		this.drawConstraints = Constraints.defaultFor(this);
+		for (UIHudElement uiHudElement : itemsToAdd) { uiHudElement.setParentElement(this); }
 		this.elementGroup.addAll(itemsToAdd);
 	}
 
@@ -94,6 +111,7 @@ public class UIHudElementGroup extends UIHudElement {
 			List<UIHudElement> itemsToAdd) {
 		super(x, y, width, height);
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
+		for (UIHudElement uiHudElement : itemsToAdd) { uiHudElement.setParentElement(this); }
 		this.elementGroup.addAll(itemsToAdd);
 	}
 
@@ -278,8 +296,45 @@ public class UIHudElementGroup extends UIHudElement {
 
 	@Override
 	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
 
+		Color startingColor = g.getColor();
+		
+		this.x = this.drawConstraints.getXLocation();
+		this.y = this.drawConstraints.getYLocation();
+
+		int startingX = this.x + this.paddingLeft;
+		int startingY = this.y + this.paddingTop;
+		
+		boolean newLine = false;
+
+		for (UIHudElement uiHudElement : elementGroup) {
+
+			uiHudElement.x = startingX + this.marginRight;
+			uiHudElement.y = startingY + this.marginTop;
+
+			if ((
+					(uiHudElement.x + uiHudElement.width) - (this.x + this.width)) < UIHudElementGroup.SIZE_THRESHOLD) {
+				this.width += Math.abs((uiHudElement.x + uiHudElement.width) - (this.x + this.width))
+						+ UIHudElementGroup.SIZE_THRESHOLD;
+				newLine = true;
+			}
+				
+			if ((
+					(uiHudElement.y + uiHudElement.height) - (this.y + this.height)) < UIHudElementGroup.SIZE_THRESHOLD)
+				this.height += Math.abs((uiHudElement.y + uiHudElement.height) - (this.y + this.height))
+						+ UIHudElementGroup.SIZE_THRESHOLD;
+
+			uiHudElement.render(g);
+
+			startingX = uiHudElement.x + uiHudElement.width + this.marginLeft;
+			
+		}
+
+		g.setColor(Color.WHITE);
+
+		g.drawRect(x, y, width, height);
+
+		g.setColor(startingColor);
 	}
 
 	@Override
