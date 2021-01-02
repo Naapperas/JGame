@@ -12,7 +12,6 @@ import jGame.core.sound.SoundStore;
 import jGame.logging.ProgramLogger;
 
 /**
- * 
  * Class responsible for collecting important properties from a file in the file
  * system to be used.
  * 
@@ -21,7 +20,8 @@ import jGame.logging.ProgramLogger;
  */
 public class PropertiesManager {
 
-	// the properties file containing serializable data about the game
+	// the properties file containing serializable data about the game's internal
+	// state
 	private static Properties properties = new Properties();
 	
 	private static boolean propertiesFetched = false;
@@ -34,7 +34,8 @@ public class PropertiesManager {
 	 * @since 1.0.0
 	 */
 	public static void fetchProperties(InputStream propertiesFileIS) {
-		if(propertiesFetched)return;
+		if (propertiesFetched)
+			return;
 		
 		ProgramLogger.writeLog("Fetching main properties!");
 
@@ -56,6 +57,8 @@ public class PropertiesManager {
 	 * @since 1.0.0
 	 */
 	public static void fetchProperties(File propertiesFile) {
+		if (propertiesFetched)
+			return;
 		
 		if (propertiesFile == null || !propertiesFile.exists())
 			throw new IllegalArgumentException("Invalid file argument!");
@@ -87,6 +90,8 @@ public class PropertiesManager {
 	 * @since 1.0.0
 	 */
 	public static void fetchProperties(String propertiesFilePath) {
+		if (propertiesFetched)
+			return;
 
 		if (propertiesFilePath.isBlank())
 			throw new IllegalArgumentException("Invalid file path argument!");
@@ -107,12 +112,16 @@ public class PropertiesManager {
 		URL propertiesPathURL = getDataStream(resourcePath);
 
 		if (propertiesPathURL == null) {
+
 			ProgramLogger.writeLog("No property files detected");
 		} else {
+
 			try {
+
 				URL propertiesURL = new URL(propertiesPathURL.toString() + "app.properties");
 				fetchProperties(propertiesURL.openStream());
 			} catch (IOException e) {
+
 				ProgramLogger.writeErrorLog(e);
 			}
 		}
@@ -145,6 +154,7 @@ public class PropertiesManager {
 		return properties.getProperty(propertyName, defaultValue);
 	}
 
+	// not necessary but gives more certainty as to getting a URL object
 	private static URL getDataStream(String resource) {
 
 		URL audioInPath = Thread.currentThread().getContextClassLoader().getResource(resource);

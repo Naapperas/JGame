@@ -61,12 +61,14 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Creates an element group in the given position, with the given dimensions,
+	 * out of the given list of {@link UIHudElement}s.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param itemsToAdd
+	 * @param x          the horizontal position of the element group
+	 * @param y          the vertical position of the element group
+	 * @param width      the width of the element group
+	 * @param height     the height of the element group
+	 * @param itemsToAdd the initial elements to add to the group
 	 * @since 2.0.0
 	 */
 	public UIHudElementGroup(int x, int y, int width, int height, List<UIHudElement> itemsToAdd) {
@@ -76,14 +78,16 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Creates an element group in the given position, with the given dimensions and
+	 * using the given constraints, out of the given list of {@link UIHudElement}s.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param constraintType
-	 * @param constraintValues
-	 * @param itemsToAdd
+	 * @param x                the horizontal position of the element group
+	 * @param y                the vertical position of the element group
+	 * @param width            the width of the element group
+	 * @param height           the height of the element group
+	 * @param constraintType   the type of constraint to apply
+	 * @param constraintValues the values to apply when constraining this element
+	 * @param itemsToAdd       the initial elements to add to the group
 	 * @since 2.0.0
 	 */
 	public UIHudElementGroup(int x, int y, int width, int height, int constraintType, int[] constraintValues,
@@ -94,8 +98,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Adds an element to this element to group.
 	 * 
-	 * @param elementToAdd
+	 * @param elementToAdd the element to add to the element group
 	 * @since 2.0.0
 	 */
 	public void addGroupElement(UIHudElement elementToAdd) {
@@ -104,8 +109,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Adds a collection of elements to this element group.
 	 * 
-	 * @param elementsToAdd
+	 * @param elementsToAdd the list of element to add to this element group.
 	 * @since 2.0.0
 	 */
 	public void addGroupElements(List<UIHudElement> elementsToAdd) {
@@ -114,17 +120,22 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Adds to this element group all elements of the {@code elementGroup} passed
+	 * in.
 	 * 
-	 * @param elementGroup
+	 * @param elementGroup the {@link UIHudElementGroup} object whose elements are
+	 *                     to be added to this element group.
 	 * @since 2.0.0
 	 */
 	public void addGroupElements(UIHudElementGroup elementGroup) {
-		this.addGroupElements(elementGroup.elementGroup);
+		if (elementGroup != this)
+			this.addGroupElements(elementGroup.elementGroup);
 	}
 
 	/**
+	 * Sets the top padding on this element group.
 	 * 
-	 * @param paddingTop
+	 * @param paddingTop the new value for the top padding
 	 * @since 2.0.0
 	 */
 	public void setPaddingTop(int paddingTop) {
@@ -132,8 +143,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the right padding on this element group.
 	 * 
-	 * @param paddingRight
+	 * @param paddingRight the new value of the right padding
 	 * @since 2.0.0
 	 */
 	public void setPaddingRight(int paddingRight) {
@@ -141,8 +153,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the bottom padding on this element group.
 	 * 
-	 * @param paddingBottom
+	 * @param paddingBottom the new value of the bottom padding
 	 * @since 2.0.0
 	 */
 	public void setPaddingBottom(int paddingBottom) {
@@ -150,8 +163,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the left padding on this element group.
 	 * 
-	 * @param paddingLeft
+	 * @param paddingLeft the new value of the left padding
 	 * @since 2.0.0
 	 */
 	public void setPaddingLeft(int paddingLeft) {
@@ -159,8 +173,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the top margin on this element group.
 	 * 
-	 * @param marginTop
+	 * @param marginTop the new value for the top margin
 	 * @since 2.0.0
 	 */
 	public void setMarginTop(int marginTop) {
@@ -168,8 +183,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the right margin for this element group.
 	 * 
-	 * @param marginRight
+	 * @param marginRight the new value for the right margin
 	 * @since 2.0.0
 	 */
 	public void setMarginRight(int marginRight) {
@@ -177,8 +193,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the bottom margin for this element group.
 	 * 
-	 * @param marginBottom
+	 * @param marginBottom the new value for the bottom margin
 	 * @since 2.0.0
 	 */
 	public void setMarginBottom(int marginBottom) {
@@ -186,8 +203,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the left margin for this element group.
 	 * 
-	 * @param marginLeft
+	 * @param marginLeft the new value for the left margin
 	 * @since 2.0.0
 	 */
 	public void setMarginLeft(int marginLeft) {

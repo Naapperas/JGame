@@ -1,7 +1,6 @@
 package jGame.core.utils;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * 
@@ -386,35 +385,58 @@ public final class MathUtils {
 	}
 
 	/**
+	 * Represents an operation that can be applied to 2 numbers. Usually used in
+	 * conjunction with the 'reduce' method.
 	 * 
-	 * @author nunoa
+	 * @author Nuno Pereira
 	 * @since 2.0.0
 	 */
+	@FunctionalInterface
 	public interface ReduceLambda{
 
 		/**
+		 * Sum between 2 integer values.
+		 * 
 		 * @since 2.0.0
 		 */
 		public static final ReduceLambda SUM_INT = (x, y) -> { return x.intValue() + y.intValue(); };
 
 		/**
+		 * Product of 2 integer values.
+		 * 
 		 * @since 2.0.0
 		 */
 		public static final ReduceLambda PRODUCT_INT = (x, y) -> { return x.intValue() * y.intValue(); };
 
 		/**
+		 * Difference of 2 integer values.
+		 * 
 		 * @since 2.0.0
 		 */
 		public static final ReduceLambda SUBTRACTION_INT = (x, y) -> { return x.intValue() - y.intValue(); };
+
+		// division not implemented due to the 'error-prone' nature of the operation
+
+		// TODO: implement more operations for more data types
+
+		/**
+		 * Accepts 2 numbers as input and return a number as an output.
+		 * 
+		 * @param x the first number
+		 * @param y the second number
+		 * @return the output of the implemented operation
+		 * @since 2.0.0
+		 */
 		public Number accept(Number x, Number y);
 	}
 
 	/**
-	 * Inspired by Python's built-in 'reduce' function.
+	 * Inspired by Python's built-in 'reduce' function. Reduce an array of numbers
+	 * to a single value, according to the specified function passed in.
 	 * 
-	 * @param nums
-	 * @param reduceFunc
-	 * @return
+	 * @param nums       the array of numbers to reduce
+	 * @param reduceFunc the function to apply when reducing the array
+	 * @return a value corresponding to the reduced array
 	 * 
 	 * @since 2.0.0
 	 */
@@ -428,41 +450,28 @@ public final class MathUtils {
 	}
 
 	/**
-	 * Inspired by Python's built-in 'reduce' function.
+	 * Inspired by Python's built-in 'reduce' function. Reduce a collection of
+	 * numbers to a single value, according to the specified function passed in.
 	 * 
-	 * @param nums
-	 * @param reduceFunc
-	 * @return
+	 * @param nums       the collection of numbers to reduce
+	 * @param reduceFunc the function to apply when reducing the array
+	 * @return a value corresponding to the reduced array
 	 * 
 	 * @since 2.0.0
 	 */
 	public static Number reduce(Collection<Number> nums, ReduceLambda reduceFunc) {
-
-		Iterator<Number> numsIterator = nums.iterator();
-
-		System.out.println(nums.size());
-
-		Number accumulator = reduceFunc.accept(numsIterator.next(), numsIterator.next());
-
-		System.out.println(accumulator);
-
-		for (Number n = numsIterator.next(); numsIterator.hasNext();) {
-			System.out.println("Number is " + n);
-			accumulator = reduceFunc.accept(accumulator, n);
-			numsIterator.next();
-		}
-
-		return accumulator;
-
+		return reduce((Number[]) nums.toArray(), reduceFunc);
 	}
 
 	/**
-	 * Inspired by Python's built-in 'reduce' function.
+	 * Inspired by Python's built-in 'reduce' function. Reduce an array of numbers
+	 * to a single value, using an initial value, according to the specified
+	 * function passed in.
 	 * 
-	 * @param startValue
-	 * @param nums
-	 * @param reduceFunc
-	 * @return
+	 * @param startValue the initial value
+	 * @param nums       the array of numbers to reduce
+	 * @param reduceFunc the function to apply when reducing the array
+	 * @return a value corresponding to the reduced array
 	 * 
 	 * @since 2.0.0
 	 */
@@ -476,32 +485,18 @@ public final class MathUtils {
 	}
 
 	/**
-	 * Inspired by Python's built-in 'reduce' function.
+	 * Inspired by Python's built-in 'reduce' function. Reduce a collection of
+	 * numbers to a single value, using an initial value, according to the specified
+	 * function passed in.
 	 * 
-	 * @param startValue
-	 * @param nums
-	 * @param reduceFunc
-	 * @return
+	 * @param startValue the initial value
+	 * @param nums       the collection of numbers to reduce
+	 * @param reduceFunc the function to apply when reducing the array
+	 * @return a value corresponding to the reduced array
 	 * 
 	 * @since 2.0.0
 	 */
 	public static Number reduce(Number startValue, Collection<Number> nums, ReduceLambda reduceFunc) {
-
-		Iterator<Number> numsIterator = nums.iterator();
-
-		System.out.println(nums.size());
-
-		Number accumulator = reduceFunc.accept(startValue, numsIterator.next());
-
-		System.out.println(accumulator);
-
-		for (Number n = numsIterator.next(); numsIterator.hasNext();) {
-			System.out.println("Number is " + n);
-			accumulator = reduceFunc.accept(accumulator, n);
-			numsIterator.next();
-		}
-
-		return accumulator;
-
+		return reduce(startValue, (Number[]) nums.toArray(), reduceFunc);
 	}
 }
