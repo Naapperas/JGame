@@ -213,8 +213,10 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the vertical margin for this element group, i.e., the top and bottom
+	 * margins.
 	 * 
-	 * @param vertMargin
+	 * @param vertMargin the new value for the top and bottom margins
 	 * @since 2.0.0
 	 */
 	public void setVerticalMargin(int vertMargin) {
@@ -222,8 +224,10 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the horizontal margin for this element group, i.e., the left and right
+	 * margin.
 	 * 
-	 * @param horizMargin
+	 * @param horizMargin the new value for the right and left margin
 	 * @since 2.0.0
 	 */
 	public void setHorizontalMargin(int horizMargin) {
@@ -231,8 +235,10 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the vertical padding for this element group, i.e., the bottom and top
+	 * padding.
 	 * 
-	 * @param vertPadding
+	 * @param vertPadding the new value for the bottom and top padding
 	 * @since 2.0.0
 	 */
 	public void setVerticalPadding(int vertPadding) {
@@ -240,8 +246,10 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the horizontal padding or this element group, i.e., the right and left
+	 * padding.
 	 * 
-	 * @param horizPadding
+	 * @param horizPadding the new value for the right and left padding
 	 * @since 2.0.0
 	 */
 	public void setHorizontalPadding(int horizPadding) {
@@ -249,8 +257,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the margin for this element group.
 	 * 
-	 * @param margin
+	 * @param margin the new value for the margin of this element group
 	 * @since 2.0.0
 	 */
 	public void setMargin(int margin) {
@@ -258,8 +267,9 @@ public class UIHudElementGroup extends UIHudElement {
 	}
 
 	/**
+	 * Sets the padding for this element group.
 	 * 
-	 * @param padding
+	 * @param padding the new value for the padding of this element group
 	 * @since 2.0.0
 	 */
 	public void setPadding(int padding) {
