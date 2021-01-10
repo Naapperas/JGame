@@ -47,7 +47,7 @@ public class Tuple implements Iterable<Object>, Comparable<Object>{
 	@Override
 	public Iterator<Object> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.elements.iterator();
 	}
 
 	@Override
