@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"jGame"}]
+moduleSearchIndex = [{"l":"jGame"}];updateSearchResults();
