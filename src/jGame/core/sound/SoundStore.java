@@ -7,8 +7,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-import org.javatuples.Pair;
-
+import JTuples.Tuple;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -90,7 +89,7 @@ public class SoundStore {
 	}
 
 	// the actual mappings from identifier and sound info (format and actual data)
-	private static HashMap<String, Pair<AudioFormat, byte[]>> soundMap = new HashMap<String, Pair<AudioFormat, byte[]>>();
+	private static HashMap<String, Tuple> soundMap = new HashMap<String, Tuple>();
 
 	/**
 	 * Stores the given audio data in this audio bank.
@@ -101,12 +100,12 @@ public class SoundStore {
 	 * @since 2.0.0
 	 */
 	public static void cacheSound(String soundIdentifier, byte[] soundData, AudioFormat format) {
-		cacheSound(soundIdentifier, Pair.with(format, soundData));
+		cacheSound(soundIdentifier, Tuple.from(format, soundData));
 	}
 
 	// private method to serve as a bridge between the "pure" Java data types and
 	// the "javatuples" Pair
-	private static void cacheSound(String soundIdentifier, Pair<AudioFormat, byte[]> audio) {
+	private static void cacheSound(String soundIdentifier, Tuple audio) {
 		soundMap.put(soundIdentifier, audio);
 	}
 
@@ -123,7 +122,7 @@ public class SoundStore {
 			ProgramLogger.writeLog("No sound named: " + soundIdentifier);
 			return null;
 		}
-		return (byte[]) soundMap.get(soundIdentifier).getValue(1);
+		return (byte[]) soundMap.get(soundIdentifier).get(1);
 	}
 
 	/**
@@ -139,7 +138,7 @@ public class SoundStore {
 			ProgramLogger.writeLog("No sound named: " + soundIdentifier);
 			return null;
 		}
-		return (AudioFormat) soundMap.get(soundIdentifier).getValue(0);
+		return (AudioFormat) soundMap.get(soundIdentifier).get(0);
 	}
 
 	// not necessary, but useful to guarantee that we get something
@@ -152,7 +151,7 @@ public class SoundStore {
 
 	// parses the given path and constructs a Pair object with the data and format
 	// of the data
-	private static Pair<AudioFormat, byte[]> getSoundData(URL parentDirectoryURL, String resource) {
+	private static Tuple getSoundData(URL parentDirectoryURL, String resource) {
 		byte[] sound = null;
 		AudioFormat format = null;
 
@@ -172,6 +171,6 @@ public class SoundStore {
 		} catch (Exception e) {
 			ProgramLogger.writeErrorLog(e);
 		}
-		return Pair.with(format, sound);
+		return Tuple.from(format, sound);
 	}
 }
