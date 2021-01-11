@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Tuple representation in Java.
  * 
- * @author nunoa
+ * @author Nuno Pereira
  * @since 2.0.0
  */
 public class Tuple implements Iterable<Object>, Comparable<Object>{
@@ -29,7 +30,7 @@ public class Tuple implements Iterable<Object>, Comparable<Object>{
 	}
 	
 	/**
-	 * 
+	 * h
 	 * @param index
 	 * @return
 	 * @since 2.0.0
