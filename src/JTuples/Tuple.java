@@ -11,18 +11,21 @@ import java.util.List;
  * @author Nuno Pereira
  * @since 2.0.0
  */
-public class Tuple implements Iterable<Object>, Comparable<Object>{
+public class Tuple implements Iterable<Object>, Comparable<Object> { // this class was made as a javadoc-compatible
+																		// replacement of the javatuples library
 
 	private List<Object> elements = new ArrayList<Object>();
 	
+	// make tuples only instantiable through factory methods
 	private Tuple(Object... elements) {
 		this.elements = Arrays.asList(elements);
 	}
 	
 	/**
+	 * Forms a Tuple object out of the given elements provided.
 	 * 
-	 * @param elements
-	 * @return
+	 * @param elements a variable number of objects to pack in the tuple
+	 * @return the {@link Tuple} object containing the elements given
 	 * @since 2.0.0
 	 */
 	public static Tuple from(Object... elements) {
@@ -30,7 +33,7 @@ public class Tuple implements Iterable<Object>, Comparable<Object>{
 	}
 	
 	/**
-	 * h
+	 * 
 	 * @param index
 	 * @return
 	 * @since 2.0.0
