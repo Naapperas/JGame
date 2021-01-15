@@ -313,14 +313,14 @@ public class UIHudElementGroup extends UIHudElement {
 			uiHudElement.y = startingY + this.marginTop;
 
 			if ((
-					(uiHudElement.x + uiHudElement.width) - (this.x + this.width)) < UIHudElementGroup.SIZE_THRESHOLD) {
+					(uiHudElement.x + uiHudElement.width) - (this.x + this.width)) - this.paddingRight < UIHudElementGroup.SIZE_THRESHOLD) {
 				this.width += Math.abs((uiHudElement.x + uiHudElement.width) - (this.x + this.width))
 						+ UIHudElementGroup.SIZE_THRESHOLD;
 				newLine = true;
 			}
 				
 			if ((
-					(uiHudElement.y + uiHudElement.height) - (this.y + this.height)) < UIHudElementGroup.SIZE_THRESHOLD)
+					(uiHudElement.y + uiHudElement.height) - (this.y + this.height)) - this.paddingBottom < UIHudElementGroup.SIZE_THRESHOLD)
 				this.height += Math.abs((uiHudElement.y + uiHudElement.height) - (this.y + this.height))
 						+ UIHudElementGroup.SIZE_THRESHOLD;
 

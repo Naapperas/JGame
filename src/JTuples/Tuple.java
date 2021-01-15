@@ -14,6 +14,7 @@ import java.util.List;
 public class Tuple implements Iterable<Object>, Comparable<Object> { // this class was made as a javadoc-compatible
 																		// replacement of the javatuples library
 
+	// the list holding objects contained in this tuple object
 	private List<Object> elements = new ArrayList<Object>();
 	
 	// make tuples only instantiable through factory methods
@@ -33,9 +34,10 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 	}
 	
 	/**
+	 * Returns this tuple's element at index {@code index}.
 	 * 
-	 * @param index
-	 * @return
+	 * @param index the index of the desired tuple
+	 * @return the object at the given index
 	 * @since 2.0.0
 	 */
 	public Object get(int index) {
@@ -44,13 +46,18 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		Tuple other = (Tuple)o;
+		
+		if (this.elements.size() < other.elements.size())
+			return -1;
+		else if (this.elements.size() > other.elements.size())
+			return 1;
+		else
+			return 0;
 	}
 
 	@Override
 	public Iterator<Object> iterator() {
-		// TODO Auto-generated method stub
 		return this.elements.iterator();
 	}
 
@@ -79,7 +86,9 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 
 	@Override
 	public String toString() {
-		return "Tuple [elements=" + elements + "]";
+		StringBuilder sb = new StringBuilder();
+		elements.forEach((e) -> {sb.append(e);});
+		return "Tuple [elements=" + sb.toString() + "]";
 	}
 	
 }
