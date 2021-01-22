@@ -1,6 +1,9 @@
 package jGame.core.entity.component;
 
 import jGame.core.entity.Entity;
+import jGame.core.entity.EntityManager;
+import jGame.core.entity.event.CollisionEvent;
+import jGame.core.launcher.GameLauncher;
 
 /**
  * The default implementation of a collision component.
@@ -29,7 +32,41 @@ public class CollisionComponent extends Component {
 	
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+
+		// wall collision code
+		if (this.entity.getColisionBounds().getX() <= 0
+				|| this.entity.getColisionBounds().getX() + this.entity.getColisionBounds().getWidth() >= GameLauncher
+				.getMainWindow().getWindowCanvas().getBounds().getWidth()) {
+			CollisionEvent theCollision = new CollisionEvent(this.entity, null, "left/right wall hit",
+					this.entity.getColisionBounds().x,
+					this.entity.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
+
+			this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision);
+			});
+		}
+		
+		if (this.entity.getColisionBounds().getY() <= 0
+				|| this.entity.getColisionBounds().getY() + this.entity.getColisionBounds().getHeight() >= GameLauncher.getMainWindow()
+						.getWindowCanvas().getBounds().getHeight()) {
+			CollisionEvent theCollision = new CollisionEvent(this.entity, null, "top/botton wall hit",
+					this.entity.getColisionBounds().x, this.entity.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
+
+			this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision); });
+		}
+
+		// entity collision code
+		for (Entity entity : EntityManager.getEntitiesList()) {
+
+			if (this.entity.getColisionBounds().intersects(entity.getColisionBounds())) {
+
+				CollisionEvent theCollision = new CollisionEvent(this.entity, entity, entity.toString() + " hit",
+						this.entity.getColisionBounds().x, this.entity.getColisionBounds().y,
+						CollisionEvent.CollisionType.ENTITY_ENTITY);
+
+				this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision); });
+
+			}
+		}
 
 	}
 

@@ -302,6 +302,15 @@ public abstract class Entity implements Serializable {
 	public void addColisionListener(CollisionListener collListener) {
 		this.collisionListeners.add(collListener);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @since 2.0.0
+	 */
+	public LinkedList<CollisionListener> getCollisionListeners() {
+		return this.collisionListeners;
+	}
 
 	@Override
 	public String toString() {

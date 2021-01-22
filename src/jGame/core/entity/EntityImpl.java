@@ -206,40 +206,7 @@ public final class EntityImpl extends Entity {
 	@Override
 	public synchronized void tick() {
 
-		// wall collision code
-		if (this.colisionBounds.getX() <= 0
-				|| this.colisionBounds.getX() + this.colisionBounds.getWidth() >= GameLauncher
-				.getMainWindow().getWindowCanvas().getBounds().getWidth()) {
-			CollisionEvent theCollision = new CollisionEvent(this, null, "left/right wall hit",
-					this.getColisionBounds().x,
-					this.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
-
-			collisionListeners.forEach((listener) -> { listener.onCollision(theCollision);
-			});
-		}
-		
-		if (this.colisionBounds.getY() <= 0
-				|| this.colisionBounds.getY() + this.colisionBounds.getHeight() >= GameLauncher.getMainWindow()
-						.getWindowCanvas().getBounds().getHeight()) {
-			CollisionEvent theCollision = new CollisionEvent(this, null, "top/botton wall hit",
-					this.getColisionBounds().x, this.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
-
-			collisionListeners.forEach((listener) -> { listener.onCollision(theCollision); });
-		}
-
-		// entity collision code
-		for (Entity entity : EntityManager.getEntitiesList()) {
-
-			if (this.getColisionBounds().intersects(entity.getColisionBounds())) {
-
-				CollisionEvent theCollision = new CollisionEvent(this, entity, entity.toString() + " hit",
-						this.getColisionBounds().x, this.getColisionBounds().y,
-						CollisionEvent.CollisionType.ENTITY_ENTITY);
-
-				collisionListeners.forEach((listener) -> { listener.onCollision(theCollision); });
-
-			}
-		}
+		this.cc.execute();
 
 		this.mc.execute();
 	}
