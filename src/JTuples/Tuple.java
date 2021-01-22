@@ -21,7 +21,7 @@ import jGame.logging.ProgramLogger;
  */
 public class Tuple implements Iterable<Object>, Comparable<Object> { // this class was made as a javadoc-compatible
 																		// replacement of the javatuples library
-
+						
 	// the list holding objects contained in this tuple object
 	private List<Object> elements = new ArrayList<Object>();
 	
