@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 
 import jGame.core.entity.event.CollisionEvent;
 import jGame.core.launcher.GameLauncher;
-import jGame.core.utils.MathUtils;
 
 /**
  * Basic implementation of a square entity that is controlled by the player
@@ -241,38 +240,7 @@ public final class EntityImpl extends Entity {
 			}
 		}
 
-		// movement direction code
-		if (moveUp && !moveDown)
-			moveVertical = -1;
-		else if (moveDown && !moveUp)
-			moveVertical = 1;
-		else if (!moveUp && !moveDown)
-			moveVertical = 0;
-
-		if (moveRight && !moveLeft)
-			moveHorizontal = 1;
-		else if (moveLeft && !moveRight)
-			moveHorizontal = -1;
-		else if (!moveRight && !moveLeft)
-			moveHorizontal = 0;
-		
-		velX = moveHorizontal * speed;
-		velY = moveVertical * speed;
-
-		// movement code
-		x += velX;
-		y += velY;
-
-		// movement constraints code
-
-		// make so the x and y coordinates don't make the entity go out of the window
-		x = MathUtils.clamp(x, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
-				- this.getColisionBounds().getWidth()));
-		y = MathUtils.clamp(y, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-				- this.getColisionBounds().getHeight()));
-
-		// collision bounds relocation code
-		colisionBounds.setLocation(x, y);
+		this.mc.execute();
 	}
 
 	@Override

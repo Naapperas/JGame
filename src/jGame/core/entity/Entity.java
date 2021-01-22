@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import jGame.core.entity.component.CollisionComponent;
+import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.launcher.GameLauncher;
 
@@ -30,7 +32,7 @@ public abstract class Entity implements Serializable {
 	protected String name;
 
 	// display properties
-	protected int x, y, startingX, startingY, velX, velY;
+	public int x, y, startingX, startingY, velX, velY;
 	protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
@@ -39,12 +41,14 @@ public abstract class Entity implements Serializable {
 	// these fields are responsible for the movement of each entity, should there be
 	// any movement
 	protected KeyAdapter inputListener;
-	protected boolean moveLeft, moveRight, moveUp, moveDown;
-	protected int moveHorizontal, moveVertical;
+	public boolean moveLeft, moveRight, moveUp, moveDown;
+	public int moveHorizontal, moveVertical;
 
 	// this is the default speed of an entity, in case there is no speed
 	// specification
-	protected int speed = 5;
+	public int speed = 5;
+	protected MovementComponent mc = MovementComponent.create(this);
+	protected CollisionComponent cc = CollisionComponent.create(this);
 	
 	// list of collision listeners
 	protected LinkedList<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
@@ -244,6 +248,17 @@ public abstract class Entity implements Serializable {
 	 * @since 1.0.0
 	 */
 	public abstract void restart();
+	
+	/**
+	 * 
+	 * @param <T>
+	 * @param componentClass
+	 * @return
+	 * @since 2.0.0
+	 */
+	public static <T> T getComponent(Class<T> componentClass) {
+		return null;
+	}
 
 	/**
 	 * Returns the bounds of this entity in the game.
