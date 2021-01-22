@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import jGame.core.entity.event.CollisionEvent;
+import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
 
 /**

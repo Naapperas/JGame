@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import jGame.core.entity.component.CollisionComponent;
 import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
+import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
 
 /**

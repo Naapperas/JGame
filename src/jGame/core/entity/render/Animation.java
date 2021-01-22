@@ -1,4 +1,4 @@
-package jGame.core.entity;
+package jGame.core.entity.render;
 
 import java.awt.Image;
 import java.awt.Rectangle;

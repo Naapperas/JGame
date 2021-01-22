@@ -1,4 +1,4 @@
-package jGame.core.entity;
+package jGame.core.entity.render;
 
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
+
+import jGame.core.entity.Entity;
 
 /**
  * This class acts as a way of displaying custom entity visuals, supporting animations for said entities.
