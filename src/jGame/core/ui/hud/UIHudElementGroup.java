@@ -90,7 +90,10 @@ public class UIHudElementGroup extends UIHudElement {
 	public UIHudElementGroup(int x, int y, int width, int height, List<UIHudElement> itemsToAdd) {
 		super(x, y, width, height);
 		this.drawConstraints = Constraints.defaultFor(this);
-		for (UIHudElement uiHudElement : itemsToAdd) { uiHudElement.setParentElement(this); }
+		for (UIHudElement uiHudElement : itemsToAdd) {
+			uiHudElement.setDrawConstraints(Constraints.defaultFor(uiHudElement));
+			uiHudElement.setParentElement(this);
+		}
 		this.elementGroup.addAll(itemsToAdd);
 	}
 
@@ -111,7 +114,10 @@ public class UIHudElementGroup extends UIHudElement {
 			List<UIHudElement> itemsToAdd) {
 		super(x, y, width, height);
 		this.drawConstraints = new Constraints(this, constraintType, constraintValues);
-		for (UIHudElement uiHudElement : itemsToAdd) { uiHudElement.setParentElement(this); }
+		for (UIHudElement uiHudElement : itemsToAdd) {
+			uiHudElement.setDrawConstraints(Constraints.defaultFor(uiHudElement));
+			uiHudElement.setParentElement(this);
+		}
 		this.elementGroup.addAll(itemsToAdd);
 	}
 

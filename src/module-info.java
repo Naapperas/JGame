@@ -14,6 +14,8 @@ module jGame {
 	exports jGame.core.utils.properties;
 	exports jGame.core.entity;
 	exports jGame.core.entity.event;
+	exports jGame.core.entity.render;
+	exports jGame.core.entity.component;
 	exports jGame.core.sound;
 	exports jGame.logging;
 }

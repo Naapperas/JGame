@@ -18,6 +18,7 @@ public class UIHudTextElement extends UIHudElement {
 	private String textToDisplay = "";
 	private Font textFont = null;
 	private Color textColor = Color.WHITE;
+	int startingY;
 
 	{
 		this.zIndex = 50;
@@ -36,6 +37,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y) {
 		super(x, y);
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -52,6 +54,7 @@ public class UIHudTextElement extends UIHudElement {
 		super(x, y);
 		this.textToDisplay = displayString;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 	
@@ -68,6 +71,7 @@ public class UIHudTextElement extends UIHudElement {
 		super(x, y);
 		this.textColor = displayColor;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -85,6 +89,7 @@ public class UIHudTextElement extends UIHudElement {
 		this(x, y, displayString);
 		textColor = displayColor;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -101,6 +106,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, Font displayFont) {
 		this(x, y);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -117,6 +123,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, String displayString, Font displayFont) {
 		this(x, y, displayString);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 	
@@ -133,6 +140,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, Color displayColor, Font displayFont) {
 		this(x, y, displayColor);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 
@@ -151,6 +159,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, String displayString, Color displayColor, Font displayFont) {
 		this(x, y, displayString, displayColor);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, Constraints.NONE, null);
 	}
 	
@@ -167,6 +176,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, int constraintSpecs, int[] constraintValues) {
 		super(x, y);
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -185,6 +195,7 @@ public class UIHudTextElement extends UIHudElement {
 		super(x, y);
 		this.textToDisplay = displayString;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -203,6 +214,7 @@ public class UIHudTextElement extends UIHudElement {
 		super(x, y);
 		this.textColor = displayColor;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -223,6 +235,7 @@ public class UIHudTextElement extends UIHudElement {
 		this(x, y, displayString);
 		textColor = displayColor;
 		textFont = null;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -240,6 +253,7 @@ public class UIHudTextElement extends UIHudElement {
 	public UIHudTextElement(int x, int y, Font displayFont, int constraintSpecs, int[] constraintValues) {
 		this(x, y);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -259,6 +273,7 @@ public class UIHudTextElement extends UIHudElement {
 			int[] constraintValues) {
 		this(x, y, displayString);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -278,6 +293,7 @@ public class UIHudTextElement extends UIHudElement {
 			int[] constraintValues) {
 		this(x, y, displayColor);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 
@@ -299,6 +315,7 @@ public class UIHudTextElement extends UIHudElement {
 			int constraintSpecs, int[] constraintValues) {
 		this(x, y, displayString, displayColor);
 		this.textFont = displayFont;
+		this.startingY = y;
 		this.drawConstraints = new Constraints(this, constraintSpecs, constraintValues);
 	}
 

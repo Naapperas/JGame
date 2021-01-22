@@ -242,7 +242,7 @@ public class Constraints {
 			}
 		} else {
 			if (this.constrainedElement instanceof UIHudTextElement) {
-				return constrainedElement.y + constrainedElement.height;
+				return ((UIHudTextElement) constrainedElement).startingY + constrainedElement.height;
 			} else
 				return constrainedElement.y;
 		}
