@@ -2,7 +2,9 @@ module:jGame
 jGame
 jGame.core
 jGame.core.entity
+jGame.core.entity.component
 jGame.core.entity.event
+jGame.core.entity.render
 jGame.core.launcher
 jGame.core.serializable
 jGame.core.sound
