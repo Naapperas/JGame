@@ -5,9 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import jGame.core.entity.event.CollisionEvent;
 import jGame.core.entity.render.Sprite;
-import jGame.core.launcher.GameLauncher;
 
 /**
  * Basic implementation of a square entity that is controlled by the player

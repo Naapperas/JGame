@@ -10,6 +10,11 @@ import jGame.core.entity.Entity;
  */
 public abstract class Component {
 
+	/**
+	 * The entity to which this component is attached to.
+	 * 
+	 * @since 2.0.0
+	 */
 	protected Entity entity;
 	
 	/**
