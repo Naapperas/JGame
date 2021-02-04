@@ -312,23 +312,13 @@ public class UIHudElementGroup extends UIHudElement {
 		int startingY = this.y + this.paddingTop;
 		
 		boolean newLine = false;
-
+		
 		for (UIHudElement uiHudElement : elementGroup) {
 
 			uiHudElement.x = startingX + this.marginRight;
 			uiHudElement.y = startingY + this.marginTop;
-
-			if ((
-					(uiHudElement.x + uiHudElement.width) - (this.x + this.width)) - this.paddingRight < UIHudElementGroup.SIZE_THRESHOLD) {
-				this.width += Math.abs((uiHudElement.x + uiHudElement.width) - (this.x + this.width))
-						+ UIHudElementGroup.SIZE_THRESHOLD;
-				newLine = true;
-			}
-				
-			if ((
-					(uiHudElement.y + uiHudElement.height) - (this.y + this.height)) - this.paddingBottom < UIHudElementGroup.SIZE_THRESHOLD)
-				this.height += Math.abs((uiHudElement.y + uiHudElement.height) - (this.y + this.height))
-						+ UIHudElementGroup.SIZE_THRESHOLD;
+			
+			// TODO: update group dimensions based on element width being within threshold
 
 			uiHudElement.render(g);
 
