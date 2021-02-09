@@ -14,7 +14,7 @@ public class MovementComponent extends Component {
 
 	private MovementComponent() {
 		// make uninstantiable
-	}	
+	}
 	
 	/**
 	 * Creates a movement component attached to this entity.
