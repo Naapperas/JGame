@@ -160,6 +160,8 @@ public final class EntityImpl extends Entity {
 	@Override
 	public void setUpInputListener() {
 
+		this.mc.setInputListener();
+		
 		this.inputListener = new KeyAdapter() {
 
 			/*

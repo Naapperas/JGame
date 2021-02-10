@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 import jGame.core.entity.component.CollisionComponent;
+import jGame.core.entity.component.Component;
 import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
@@ -251,13 +252,18 @@ public abstract class Entity implements Serializable {
 	public abstract void restart();
 	
 	/**
+	 * Returns the component of class {@code componentClass} registered to this entity.
 	 * 
-	 * @param <T>
-	 * @param componentClass
-	 * @return
+	 * @param <T> the type of component to return
+	 * @param componentClass the class of the component to be returned
+	 * @return the component of the given class
 	 * @since 2.0.0
 	 */
-	public static <T> T getComponent(Class<T> componentClass) {
+	public static <T> Component getComponent(Class<T> componentClass, Entity entity) {
+		if(componentClass == MovementComponent.class)
+			return entity.mc;
+		else if (componentClass == CollisionComponent.class)
+			return entity.cc;
 		return null;
 	}
 
@@ -316,7 +322,5 @@ public abstract class Entity implements Serializable {
 	public String toString() {
 		return "Entity [name=" + name + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", speed="
 				+ speed + "]";
-	}
-
-
+	}	
 }

@@ -57,6 +57,9 @@ public class CollisionComponent extends Component {
 		// entity collision code
 		for (Entity entity : EntityManager.getEntitiesList()) {
 
+			if(entity == this.entity)
+				continue; //can't collide with ourselves
+			
 			if (this.entity.getColisionBounds().intersects(entity.getColisionBounds())) {
 
 				CollisionEvent theCollision = new CollisionEvent(this.entity, entity, entity.toString() + " hit",

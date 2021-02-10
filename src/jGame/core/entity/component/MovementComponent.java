@@ -29,6 +29,10 @@ public class MovementComponent extends Component {
 		return mc;
 	}
 	
+	public void setInputListener() {
+		
+	}
+	
 	@Override
 	public void execute() {
 		// movement direction code

@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
 
+import jGame.logging.ProgramLogger;
+
 /**
  * Represents a group of {@link UIHudElement}s to be grouped in a certain area.
  * This makes it so that any elements inside this are constrained relative to
@@ -323,7 +325,7 @@ public class UIHudElementGroup extends UIHudElement {
 			if (uiHudElement.x + uiHudElement.width + this.marginRight > this.x + this.width && uiHudElement.x
 					+ uiHudElement.width + this.marginRight < this.x + this.width + UIHudElementGroup.SIZE_THRESHOLD) {
 				this.width += UIHudElementGroup.SIZE_THRESHOLD;
-				System.out.println("AAAAAAAAAAAAAAAAA");
+				ProgramLogger.writeLog("Resizing element group {" + this.toString() + "} width");
 			}
 			
 			if (uiHudElement.y + uiHudElement.height + this.marginBottom > this.y + this.height
@@ -331,7 +333,7 @@ public class UIHudElementGroup extends UIHudElement {
 							+ UIHudElementGroup.SIZE_THRESHOLD) {
 
 					this.height += UIHudElementGroup.SIZE_THRESHOLD;
-				System.out.println("BBBBBBBBBBBBBB");
+					ProgramLogger.writeLog("Resizing element group {" + this.toString() + "} height");
 
 			}
 			
@@ -344,7 +346,7 @@ public class UIHudElementGroup extends UIHudElement {
 		g.setColor(Color.WHITE);
 
 		g.drawRect(x, y, width, height);
-
+		
 		g.setColor(startingColor);
 	}
 
