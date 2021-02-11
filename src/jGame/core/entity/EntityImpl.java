@@ -18,11 +18,6 @@ import jGame.core.entity.render.Sprite;
  */
 public final class EntityImpl extends Entity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7533119592298769774L;
-
 	protected EntityImpl() {
 	}
 

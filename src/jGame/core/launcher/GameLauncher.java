@@ -56,6 +56,18 @@ public class GameLauncher {
 
 	//number of buffers to use in the canvas
 	private static final int BUFFER_AMOUNT = 3;
+	
+	private static Color backgroundColor = Color.BLACK;
+	
+	/**
+	 * Ste the new color to be rendered as the game's background.
+	 * 
+	 * @param c the new background color
+	 * @since 2.0.0
+	 */
+	public static void setBackgroundColor(Color c) {
+		GameLauncher.backgroundColor = c;
+	}
 
 	private static UIHudTextElement FPSCounter = new UIHudTextElement(0, 0, "FPS: ", Color.GREEN,
 			Constraints.concat(Constraints.FROM_TOP_CONSTRAINT, Constraints.FROM_LEFT_CONSTRAINT),
@@ -244,6 +256,8 @@ public class GameLauncher {
 
 		//insert rendering code here
 
+		g2d.setBackground(backgroundColor);
+		
 		g2d.clearRect(0, 0, (int) mainWindow.getWindowCanvas().getBounds().getWidth(),
 				(int) mainWindow.getWindowCanvas().getBounds().getHeight());
 		g2d.setColor(mainWindow.getWindowCanvas().getBackground());

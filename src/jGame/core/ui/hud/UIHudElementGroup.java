@@ -16,6 +16,7 @@ import jGame.logging.ProgramLogger;
  * @author Nuno Pereira
  * @since 2.0.0
  */
+@SuppressWarnings("unused")
 public class UIHudElementGroup extends UIHudElement {
 
 	/**
