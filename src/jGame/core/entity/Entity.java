@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
-import java.io.Serializable;
 import java.util.LinkedList;
 
 import jGame.core.entity.component.CollisionComponent;
@@ -13,6 +12,7 @@ import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
+import jGame.logging.ProgramLogger;
 
 /**
  * 
@@ -23,12 +23,7 @@ import jGame.core.launcher.GameLauncher;
  * @author Nuno Pereira
  * @since 1.0.0
  */
-public abstract class Entity implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8613907952876835836L;
+public abstract class Entity {
 
 	// name of this entity
 	protected String name;
@@ -49,8 +44,12 @@ public abstract class Entity implements Serializable {
 	// this is the default speed of an entity, in case there is no speed
 	// specification
 	public int speed = 5;
+	
+	//these are the default components each entity must have, and a list of components that can be registered after
 	protected MovementComponent mc = MovementComponent.create(this);
 	protected CollisionComponent cc = CollisionComponent.create(this);
+	
+	protected LinkedList<Component> components = null;
 	
 	// list of collision listeners
 	protected LinkedList<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
@@ -259,12 +258,21 @@ public abstract class Entity implements Serializable {
 	 * @return the component of the given class
 	 * @since 2.0.0
 	 */
-	public static <T> Component getComponent(Class<T> componentClass, Entity entity) {
+	public <T> Component getComponent(Class<T> componentClass) {
 		if(componentClass == MovementComponent.class)
-			return entity.mc;
+			return this.mc;
 		else if (componentClass == CollisionComponent.class)
-			return entity.cc;
+			return this.cc;
+		else
+			for(Component c : components)
+				if(componentClass == c.getClass())
+					return c;
 		return null;
+	}
+	
+	public void registerComponent(Component c) {
+		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
+		components.add(c);
 	}
 
 	/**
