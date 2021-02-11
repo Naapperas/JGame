@@ -214,7 +214,17 @@ public abstract class Entity {
 	 * @see CollisionListener
 	 * @since 1.0.0
 	 */
-	public abstract void tick();
+	public void tick() {
+		// check collisions and notify listeners
+		this.cc.execute();
+
+		// move according to user input and collisions
+		this.mc.execute();
+		
+		// execute all other components
+		if(this.components != null)
+			this.components.forEach(Component::execute);
+	};
 
 	/**
 	 * Checks if the entity is currently renderable. This method is only intended to

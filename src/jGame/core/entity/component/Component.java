@@ -34,5 +34,9 @@ public abstract class Component {
 	 * @since 2.0.0
 	 */
 	public abstract void execute();
-	
+
+	@Override
+	public String toString() {
+		return "Component [entity=" + entity + "]";
+	}
 }

@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import jGame.core.entity.component.Component;
 import jGame.core.entity.render.Sprite;
 
 /**
@@ -209,6 +210,9 @@ public final class EntityImpl extends Entity {
 		this.cc.execute();
 
 		this.mc.execute();
+		
+		if(this.components != null)
+			this.components.forEach(Component::execute);
 	}
 
 	@Override
