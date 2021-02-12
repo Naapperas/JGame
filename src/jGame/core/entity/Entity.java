@@ -37,7 +37,7 @@ public abstract class Entity {
 
 	// these fields are responsible for the movement of each entity, should there be
 	// any movement
-	protected KeyAdapter inputListener;
+	public KeyAdapter inputListener;
 	public boolean moveLeft, moveRight, moveUp, moveDown;
 	public int moveHorizontal, moveVertical;
 
@@ -250,7 +250,9 @@ public abstract class Entity {
 	 * 
 	 * @since 1.0.0
 	 */
-	protected abstract void setUpInputListener();
+	protected void setUpInputListener() {
+		this.mc.setInputListener();
+	};
 
 	/**
 	 * Restarts the player inside the game. Implementation is dependent on the

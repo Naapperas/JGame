@@ -1,5 +1,8 @@
 package jGame.core.entity.component;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import jGame.core.entity.Entity;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
@@ -12,6 +15,10 @@ import jGame.core.utils.MathUtils;
  */
 public class MovementComponent extends Component {
 
+	// the movement parts of the movement component
+	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D};	
+	public static final int MOVE_UP = 0, MOVE_DOWN = 1, MOVE_LEFT = 2, MOVE_RIGHT = 3;
+	
 	private MovementComponent() {
 		// make uninstantiable
 	}
@@ -31,6 +38,47 @@ public class MovementComponent extends Component {
 	
 	public void setInputListener() {
 		
+		this.entity.inputListener = new KeyAdapter() {
+
+			/*
+			 * Set boolean variable instead of directly changing velX and velY so movement
+			 * is smoother, as it happens in the tick method.
+			 */
+		
+			MovementComponent mc = MovementComponent.this;
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				int eventKeyCode = e.getKeyCode();
+
+				if(eventKeyCode == mc.movementKeys[MOVE_UP]) {
+					entity.moveUp = true;
+				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
+					entity.moveDown = true;
+				} else if (eventKeyCode ==  mc.movementKeys[MOVE_LEFT]) {
+					entity.moveLeft = true;
+				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
+					entity.moveRight = true;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				int eventKeyCode = e.getKeyCode();
+
+				if (eventKeyCode == mc.movementKeys[MOVE_UP]) {
+					entity.moveUp = false;
+				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
+					entity.moveDown = false; 
+				} else if (eventKeyCode == mc.movementKeys[MOVE_LEFT]) {
+					entity.moveLeft = false;
+				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
+					entity.moveRight = false; 
+				}
+			}
+		};
 	}
 	
 	@Override

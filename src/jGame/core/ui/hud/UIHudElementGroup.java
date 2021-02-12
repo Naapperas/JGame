@@ -336,7 +336,7 @@ public class UIHudElementGroup extends UIHudElement {
 					this.height += UIHudElementGroup.SIZE_THRESHOLD;
 					ProgramLogger.writeLog("Resizing element group {" + this.toString() + "} height");
 
-			}
+			}			
 			
 			uiHudElement.render(g);
 
@@ -360,5 +360,4 @@ public class UIHudElementGroup extends UIHudElement {
 	public void removeInputListener() {
 		elementGroup.forEach(UIHudElement::removeInputListener);
 	}
-
 }

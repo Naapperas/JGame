@@ -2,8 +2,6 @@ package jGame.core.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import jGame.core.entity.component.Component;
 import jGame.core.entity.render.Sprite;
@@ -151,52 +149,6 @@ public final class EntityImpl extends Entity {
 	public EntityImpl(int startingX, int startingY, Sprite texture, int speed, String name) {
 		super(startingX, startingY, texture, speed, name);
 		renderSprite = true;
-	}
-
-	@Override
-	public void setUpInputListener() {
-
-		this.mc.setInputListener();
-		
-		this.inputListener = new KeyAdapter() {
-
-			/*
-			 * Set boolean variable instead of directly changing velX and velY so movement
-			 * is smoother, as it happens in the tick method.
-			 */
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				int eventId = e.getKeyCode();
-
-				if(eventId == KeyEvent.VK_W) {
-					moveUp = true;
-				} else if (eventId == KeyEvent.VK_S) {
-					moveDown = true;
-				} else if (eventId == KeyEvent.VK_A) {
-					moveLeft = true;
-				} else if (eventId == KeyEvent.VK_D) { 
-					moveRight = true;
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-				int eventId = e.getKeyCode();
-
-				if (eventId == KeyEvent.VK_W) {
-					moveUp = false;
-				} else if (eventId == KeyEvent.VK_S) {
-					moveDown = false; 
-				} else if (eventId == KeyEvent.VK_A) {
-					moveLeft = false;
-				} else if (eventId == KeyEvent.VK_D) { 
-					moveRight = false; 
-				}
-			}
-		};
 	}
 
 	@Override
