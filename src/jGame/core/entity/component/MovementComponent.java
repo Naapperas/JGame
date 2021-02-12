@@ -117,4 +117,16 @@ public class MovementComponent extends Component {
 		this.entity.getColisionBounds().setLocation(this.entity.x, this.entity.y);
 	}
 
+	/**
+	 * Assigns a new key binding to the specified control.
+	 * 
+	 * @param newKey the new key binded to the control
+	 * @param keyControl the control of the specified key
+	 * @since 2.0.0
+	 * @see KeyEvent
+	 */
+	public void setKeyControl(int newKey, int keyControl) {
+		this.movementKeys[keyControl] = newKey;
+	}
+	
 }

@@ -251,7 +251,7 @@ public abstract class Entity {
 	 * @since 1.0.0
 	 */
 	protected void setUpInputListener() {
-		this.mc.setInputListener();
+		this.mc.setInputListener(); // delegate input listener registration to movement component
 	};
 
 	/**
@@ -282,8 +282,18 @@ public abstract class Entity {
 		return null;
 	}
 	
+	/**
+	 * Registers a new component to this entity object. The general contract of the ECS is that only one component of each type can be registered on a given entity at all times. This is subject to change.
+	 * 
+	 * @param c the new {@code Component} to be registered
+	 * @since 2.0.0
+	 */
 	public void registerComponent(Component c) {
 		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
+		for (Component component : components) {
+			if(c.getClass() == component.getClass())
+				return;
+		}
 		components.add(c);
 	}
 
