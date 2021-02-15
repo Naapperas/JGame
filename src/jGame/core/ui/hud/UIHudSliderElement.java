@@ -334,6 +334,16 @@ public class UIHudSliderElement extends UIHudElement {
 	public float getValue() {
 		return value;
 	}
+	
+	/**
+	 * Sets the new value for this slider.
+	 * 
+	 * @param newValue the new value for this slider
+	 * @since 2.0.0
+	 */
+	public void setValue(float newValue) {
+		this.value = newValue;
+	}
 
 	/**
 	 * Add a callback to be called when this slider value changes.
