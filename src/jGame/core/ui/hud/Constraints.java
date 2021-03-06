@@ -17,7 +17,7 @@ public class Constraints {
 	private int constraintType;
 	private int[] constraintValues = new int[4];
 
-	public static int TOP = 0, RIGHT = 1, BOTTOM = 2, LEFT = 3;
+	public static final int TOP = 0, RIGHT = 1, BOTTOM = 2, LEFT = 3;
 
 	// generate bit masks for given constraint codes
 	private static int BIT_MASK(int i) {
@@ -184,9 +184,7 @@ public class Constraints {
 		/*
 		 * Strings get drawn from the left bottom corner (baseline), as opposed to other
 		 * elements, check special cases
-		 */
-
-		/*
+		 * 
 		 * If parent element is not null, constraint relative to the parent element
 		 */
 
@@ -243,13 +241,16 @@ public class Constraints {
 		} else {
 			if (this.constrainedElement instanceof UIHudTextElement) {
 				return ((UIHudTextElement) constrainedElement).startingY + constrainedElement.height;
-			} else
-				return constrainedElement.y;
+			} else {
+				return constrainedElement.y; }
 		}
 	}
 
 	@Override
 	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
 		return "Constraints [constraintType=" + constraintType + "]";
 	}
 

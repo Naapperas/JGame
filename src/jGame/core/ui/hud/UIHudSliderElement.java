@@ -32,7 +32,7 @@ import jGame.logging.ProgramLogger;
 public class UIHudSliderElement extends UIHudElement {
 
 
-	// current, mimum and maximum values for the slider
+	// current, minimum and maximum values for the slider
 	private float value = 0, minValue = 0, maxValue = 0;
 
 	/**

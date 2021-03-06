@@ -2,8 +2,11 @@ package jGame.core.entity.component;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import jGame.core.entity.Entity;
+import jGame.core.entity.component.MovementComponent.MovementAction;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
 
@@ -15,9 +18,29 @@ import jGame.core.utils.MathUtils;
  */
 public class MovementComponent extends Component {
 
+	/**
+	 * An action to be performed when a specified keybinding is pressed. Acts as the "executor" to keys other than the default ones.
+	 * 
+	 * @author Nuno Pereira
+	 * @since 2.0.0
+	 */
+	public interface MovementAction{
+		
+		/**
+		 * Executes the given action.
+		 * 
+		 * @since 2.0.0
+		 */
+		public void execute();
+	}
+	
 	// the movement parts of the movement component
 	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D};	
 	public static final int MOVE_UP = 0, MOVE_DOWN = 1, MOVE_LEFT = 2, MOVE_RIGHT = 3;
+	
+	private Map<String, Boolean> bindingMap = new HashMap<String, Boolean>();
+	private Map<String, MovementAction> actionBindingMap = new HashMap<String, MovementAction>();
+	private Map<String, MovementAction> offActionBindingMap = new HashMap<String, MovementAction>();
 	
 	private MovementComponent() {
 		// make uninstantiable
@@ -60,6 +83,8 @@ public class MovementComponent extends Component {
 					entity.moveLeft = true;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
 					entity.moveRight = true;
+				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
+					mc.bindingMap.put("" + eventKeyCode, true);
 				}
 			}
 
@@ -76,6 +101,9 @@ public class MovementComponent extends Component {
 					entity.moveLeft = false;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
 					entity.moveRight = false; 
+				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
+					mc.bindingMap.put("" + eventKeyCode, false);
+					mc.offActionBindingMap.get("" + eventKeyCode).execute();
 				}
 			}
 		};
@@ -83,6 +111,13 @@ public class MovementComponent extends Component {
 	
 	@Override
 	public void execute() {
+		
+		for (String key : this.actionBindingMap.keySet()) {
+			if(this.bindingMap.containsKey(key) && this.bindingMap.get(key)) {
+				this.actionBindingMap.get(key).execute();
+			}
+		}
+		
 		// movement direction code
 		if (this.entity.moveUp && !this.entity.moveDown)
 			this.entity.moveVertical = -1;
@@ -125,8 +160,26 @@ public class MovementComponent extends Component {
 	 * @since 2.0.0
 	 * @see KeyEvent
 	 */
-	public void setKeyControl(int newKey, int keyControl) {
+	public void setMovementKeyControl(int newKey, int keyControl) {
 		this.movementKeys[keyControl] = newKey;
 	}
 	
+	/**
+	 * 
+	 * @param keyBinding
+	 * @param onAction
+	 * @throws IllegalArgumentException
+	 * @since 2.0.0
+	 */
+	public void setKeyBinding(int keyBinding, MovementAction onAction, MovementAction offAction) throws IllegalArgumentException {
+		
+		for (int i : movementKeys) {
+			if(i == keyBinding)
+				throw new IllegalArgumentException("Cannot bind an action to a movement binding.");
+		}
+		
+		this.bindingMap.put("" + keyBinding, false);
+		this.actionBindingMap.put("" + keyBinding, onAction);
+		this.offActionBindingMap.put("" + keyBinding, offAction);
+	}
 }

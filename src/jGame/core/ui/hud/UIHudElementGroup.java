@@ -319,10 +319,17 @@ public class UIHudElementGroup extends UIHudElement {
 		for (UIHudElement uiHudElement : elementGroup) {
 
 			uiHudElement.x = startingX + this.marginLeft;
-			uiHudElement.y = startingY + this.marginTop;
+			if (uiHudElement instanceof UIHudTextElement)
+				((UIHudTextElement) uiHudElement).startingY = startingY + this.marginTop;
+			else
+				uiHudElement.y = startingY + this.marginTop;
 			
 			// TODO: update group dimensions based on element width being within threshold
-
+			
+			if(uiHudElement instanceof UIHudTextElement) {
+				System.out.println("y before render: " + uiHudElement.y);
+			}
+			
 			if (uiHudElement.x + uiHudElement.width + this.marginRight > this.x + this.width && uiHudElement.x
 					+ uiHudElement.width + this.marginRight < this.x + this.width + UIHudElementGroup.SIZE_THRESHOLD) {
 				this.width += UIHudElementGroup.SIZE_THRESHOLD;
@@ -340,6 +347,10 @@ public class UIHudElementGroup extends UIHudElement {
 			
 			uiHudElement.render(g);
 
+			if(uiHudElement instanceof UIHudTextElement) {
+				System.out.println("y after render: " + uiHudElement.y);
+			}
+			
 			startingX = uiHudElement.x + uiHudElement.width + this.marginLeft;
 			
 		}
