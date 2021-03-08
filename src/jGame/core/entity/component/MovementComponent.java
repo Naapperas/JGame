@@ -33,8 +33,20 @@ public class MovementComponent extends Component {
 		public void execute();
 	}
 	
+	private boolean userControled = true; // set default for true;
+
+	/**
+	 * Sets if the entity should be user controled.
+	 * 
+	 * @param userControled the userControled to set
+	 * @since 2.0.0
+	 */
+	public void setUserControled(boolean userControled) {
+		this.userControled = userControled;
+	}
+
 	// the movement parts of the movement component
-	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D};	
+	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}; //default for every entity, to be changed later
 	public static final int MOVE_UP = 0, MOVE_DOWN = 1, MOVE_LEFT = 2, MOVE_RIGHT = 3;
 	
 	private Map<String, Boolean> bindingMap = new HashMap<String, Boolean>();
@@ -111,24 +123,26 @@ public class MovementComponent extends Component {
 	@Override
 	public void execute() {
 		
-		for (String key : this.actionBindingMap.keySet())
-			if(this.bindingMap.containsKey(key) && this.bindingMap.get(key))
-				this.actionBindingMap.get(key).execute();
-		
-		// movement direction code
-		if (this.entity.moveUp && !this.entity.moveDown)
-			this.entity.moveVertical = -1;
-		else if (this.entity.moveDown && !this.entity.moveUp)
-			this.entity.moveVertical = 1;
-		else if (!this.entity.moveUp && !this.entity.moveDown)
-			this.entity.moveVertical = 0;
-
-		if (this.entity.moveRight && !this.entity.moveLeft)
-			this.entity.moveHorizontal = 1;
-		else if (this.entity.moveLeft && !this.entity.moveRight)
-			this.entity.moveHorizontal = -1;
-		else if (!this.entity.moveRight && !this.entity.moveLeft)
-			this.entity.moveHorizontal = 0;
+		if (userControled) {
+			for (String key : this.actionBindingMap.keySet())
+				if(this.bindingMap.containsKey(key) && this.bindingMap.get(key))
+					this.actionBindingMap.get(key).execute();
+			
+			// movement direction code
+			if (this.entity.moveUp && !this.entity.moveDown)
+				this.entity.moveVertical = -1;
+			else if (this.entity.moveDown && !this.entity.moveUp)
+				this.entity.moveVertical = 1;
+			else if (!this.entity.moveUp && !this.entity.moveDown)
+				this.entity.moveVertical = 0;
+	
+			if (this.entity.moveRight && !this.entity.moveLeft)
+				this.entity.moveHorizontal = 1;
+			else if (this.entity.moveLeft && !this.entity.moveRight)
+				this.entity.moveHorizontal = -1;
+			else if (!this.entity.moveRight && !this.entity.moveLeft)
+				this.entity.moveHorizontal = 0;
+		}
 		
 		this.entity.velX = this.entity.moveHorizontal * this.entity.speed;
 		this.entity.velY = this.entity.moveVertical * this.entity.speed;

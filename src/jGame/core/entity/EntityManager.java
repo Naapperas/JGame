@@ -138,7 +138,7 @@ public class EntityManager {
 		}
 
 		if (!ENTITIES_LIST.isEmpty())
-			ENTITIES_LIST.forEach((entity) -> { entity.tick(); });
+			ENTITIES_LIST.forEach((entity) -> {if(!entity.started) { entity.startup(); entity.started = true; return; } entity.tick(); });
 	}
 
 	/**

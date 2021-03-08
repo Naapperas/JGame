@@ -54,6 +54,8 @@ public abstract class Entity {
 	// list of collision listeners
 	protected LinkedList<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
 
+	public boolean started = false;
+	
 	protected Entity() {
 	}
 
@@ -216,10 +218,12 @@ public abstract class Entity {
 	 */
 	public void tick() {
 		// check collisions and notify listeners
-		this.cc.execute();
+		if (this.cc != null)
+			this.cc.execute();
 
 		// move according to user input and collisions
-		this.mc.execute();
+		if (this.mc != null)
+			this.mc.execute();
 		
 		// execute all other components
 		if(this.components != null)
@@ -347,6 +351,13 @@ public abstract class Entity {
 	public LinkedList<CollisionListener> getCollisionListeners() {
 		return this.collisionListeners;
 	}
+	
+	/**
+	 * Initial startup process for this entity.
+	 * 
+	 * @since 2.0.0
+	 */
+	public void startup() { return; }
 
 	@Override
 	public String toString() {

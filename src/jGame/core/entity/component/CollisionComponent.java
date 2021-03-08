@@ -61,7 +61,7 @@ public class CollisionComponent extends Component {
 		if (this.entity.getColisionBounds().getY() <= 0
 				|| this.entity.getColisionBounds().getY() + this.entity.getColisionBounds().getHeight() >= GameLauncher.getMainWindow()
 						.getWindowCanvas().getBounds().getHeight()) {
-			CollisionEvent theCollision = new CollisionEvent(this.entity, null, "top/botton wall hit",
+			CollisionEvent theCollision = new CollisionEvent(this.entity, null, "top/bottom wall hit",
 					this.entity.getColisionBounds().x, this.entity.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
 
 			this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision); });
