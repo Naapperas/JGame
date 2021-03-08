@@ -339,8 +339,9 @@ public abstract class Entity {
 	}
 	
 	/**
+	 * Returns the collision listeners registered for this entity.
 	 * 
-	 * @return
+	 * @return the collision listeners registered for this entity
 	 * @since 2.0.0
 	 */
 	public LinkedList<CollisionListener> getCollisionListeners() {

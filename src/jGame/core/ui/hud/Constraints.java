@@ -239,19 +239,43 @@ public class Constraints {
 				}
 			}
 		} else {
-			if (this.constrainedElement instanceof UIHudTextElement) {
+			if (this.constrainedElement instanceof UIHudTextElement) 
 				return ((UIHudTextElement) constrainedElement).startingY + constrainedElement.height;
-			} else {
-				return constrainedElement.y; }
+			else 
+				return constrainedElement.y; 
 		}
 	}
 
 	@Override
 	public String toString() {
 		
-		StringBuilder sb = new StringBuilder();
+		//TODO: implement better toString to represent constraintType
 		
-		return "Constraints [constraintType=" + constraintType + "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Constraints [constraintType=");
+		
+		if (this.constraintType == Constraints.NONE)
+			sb.append("None, ");
+		else if (this.constraintType == Constraints.CENTER_POINT_CONSTRAINT)
+			sb.append("Center Point, ");
+		else {
+			
+			if ((this.constraintType & Constraints.CENTER_HORIZONTAL_CONSTRAINT) != 0)
+				sb.append("Center Horizontal, ");
+			else if ((this.constraintType & Constraints.CENTER_VERTICAL_CONSTRAINT) != 0)
+				sb.append("Center Vertical, ");
+			
+			if ((this.constraintType & Constraints.FROM_BOTTOM_CONSTRAINT) != 0)
+				sb.append("From Bottom, ");
+			if ((this.constraintType & Constraints.FROM_TOP_CONSTRAINT) != 0)
+				sb.append("From Top, ");
+			if ((this.constraintType & Constraints.FROM_LEFT_CONSTRAINT) != 0)
+				sb.append("From Left, ");
+			if ((this.constraintType & Constraints.FROM_RIGHT_CONSTRAINT) != 0)
+				sb.append("From Right, ");
+			
+		}
+		
+		return sb.substring(0, sb.length() - 2).concat("]");
 	}
-
 }

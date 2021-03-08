@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jGame.core.entity.Entity;
-import jGame.core.entity.component.MovementComponent.MovementAction;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
 
@@ -112,11 +111,9 @@ public class MovementComponent extends Component {
 	@Override
 	public void execute() {
 		
-		for (String key : this.actionBindingMap.keySet()) {
-			if(this.bindingMap.containsKey(key) && this.bindingMap.get(key)) {
+		for (String key : this.actionBindingMap.keySet())
+			if(this.bindingMap.containsKey(key) && this.bindingMap.get(key))
 				this.actionBindingMap.get(key).execute();
-			}
-		}
 		
 		// movement direction code
 		if (this.entity.moveUp && !this.entity.moveDown)
@@ -165,18 +162,19 @@ public class MovementComponent extends Component {
 	}
 	
 	/**
+	 * Sets a key binding for a specific action. An 'offAction' parameter must be also passed in to be activated when the key stops being pressed.
 	 * 
-	 * @param keyBinding
-	 * @param onAction
-	 * @throws IllegalArgumentException
+	 * @param keyBinding the keyCode of the key that triggers this action
+	 * @param onAction the action to perform when the key is pressed
+	 * @param offAction the action to perform when the key is no longer pressed
+	 * @throws IllegalArgumentException if we try to bind an action to a movement key
 	 * @since 2.0.0
 	 */
 	public void setKeyBinding(int keyBinding, MovementAction onAction, MovementAction offAction) throws IllegalArgumentException {
 		
-		for (int i : movementKeys) {
+		for (int i : movementKeys)
 			if(i == keyBinding)
 				throw new IllegalArgumentException("Cannot bind an action to a movement binding.");
-		}
 		
 		this.bindingMap.put("" + keyBinding, false);
 		this.actionBindingMap.put("" + keyBinding, onAction);

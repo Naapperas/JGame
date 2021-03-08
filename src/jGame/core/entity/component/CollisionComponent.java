@@ -17,7 +17,7 @@ public class CollisionComponent extends Component {
 		// make uninstantiable
 	}
 	
-	private Runnable collider;
+	private Runnable collider = null;
 	
 	/**
 	 * Sets the custom collider for this collider component.
@@ -29,7 +29,7 @@ public class CollisionComponent extends Component {
 		this.collider = collider;
 	}
 
-	private void collide() {if(collider != null)collider.run();}
+	private void collide() {if(collider != null) collider.run();}
 	
 	/**
 	 * Creates a collision component attached to this entity.
@@ -55,8 +55,7 @@ public class CollisionComponent extends Component {
 					this.entity.getColisionBounds().x,
 					this.entity.getColisionBounds().y, CollisionEvent.CollisionType.ENTITY_WALL);
 
-			this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision);
-			});
+			this.entity.getCollisionListeners().forEach((listener) -> { listener.onCollision(theCollision); });
 		}
 		
 		if (this.entity.getColisionBounds().getY() <= 0

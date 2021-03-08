@@ -110,7 +110,7 @@ public abstract class UIHudElement {
 
 		return this.getClass().getSimpleName() + " [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height
 				+ ", drawConstraints="
-				+ drawConstraints + ", zIndex=" + zIndex + "]";
+				+ drawConstraints.toString() + ", zIndex=" + zIndex + "]";
 	}
 
 }
