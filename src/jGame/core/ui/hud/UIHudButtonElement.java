@@ -125,8 +125,8 @@ public class UIHudButtonElement extends UIHudElement {
 
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
-
-		if (isMouseOver() && checkForMouse) { // draw alternate look for hovered buttons
+		
+		if (checkForMouse && isMouseOver()) { // draw alternate look for hovered buttons
 			// fill the frame of the button
 			g.fillRect(this.x, this.y, width + 1, height);
 			

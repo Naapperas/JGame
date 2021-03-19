@@ -302,6 +302,16 @@ public class UIHudElementGroup extends UIHudElement {
 	public void setPadding(int padding) {
 		this.paddingBottom = this.paddingLeft = this.paddingRight = this.paddingTop = padding;
 	}
+	
+	/**
+	 * Returns the elements of this group.
+	 * 
+	 * @return the elements of this group
+	 * @since 2.0.0
+	 */
+	public List<UIHudElement> getElements() {
+		return this.elementGroup;
+	}
 
 	@Override
 	public void render(Graphics2D g) {

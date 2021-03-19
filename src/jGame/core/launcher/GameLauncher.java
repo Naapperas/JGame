@@ -22,6 +22,7 @@ import jGame.core.ui.hud.Constraints;
 import jGame.core.ui.hud.UIHud;
 import jGame.core.ui.hud.UIHudButtonElement;
 import jGame.core.ui.hud.UIHudElement;
+import jGame.core.ui.hud.UIHudElementGroup;
 import jGame.core.ui.hud.UIHudTextElement;
 import jGame.core.ui.hud.fonts.FontManager;
 import jGame.core.utils.properties.PropertiesManager;
@@ -111,13 +112,35 @@ public class GameLauncher {
 			}
 			ProgramLogger.writeLog("Pausing/Unpausing game");
 			if (!pause) {
-				UIHud.getHud().forEach((element) -> {element.removeInputListener();});
+				UIHud.getHud().forEach((element) -> {
+					if (element == pauseMenuButton) 
+						return;
+					
+					if(element instanceof UIHudButtonElement) {
+						((UIHudButtonElement)element).checkForMouse(false);
+					} else if (element instanceof UIHudElementGroup) {
+						((UIHudElementGroup)element).getElements().forEach((subElement) -> {if (subElement instanceof UIHudButtonElement) {((UIHudButtonElement)subElement).checkForMouse(false);}});
+					}
+					
+					element.removeInputListener();
+				});
 				pauseMenu.registerInputListener();
 				UIHud.addHUDUIElement(pauseMenu);
 			} else {
 				pauseMenu.removeInputListener();
 				UIHud.removeHUDUIElement(pauseMenu);
-				UIHud.getHud().forEach((element) -> {element.registerInputListener();});
+				UIHud.getHud().forEach((element) -> {
+					if (element == pauseMenuButton) 
+						return;
+					
+					if(element instanceof UIHudButtonElement) {
+						((UIHudButtonElement)element).checkForMouse(true);
+					} else if (element instanceof UIHudElementGroup) {
+						((UIHudElementGroup)element).getElements().forEach((subElement) -> {if (subElement instanceof UIHudButtonElement) {((UIHudButtonElement)subElement).checkForMouse(true);}});
+					}
+					
+					element.registerInputListener();
+				});
 			}
 			
 			pause = !pause;
