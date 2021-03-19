@@ -71,7 +71,7 @@ public class CollisionComponent extends Component {
 		for (Entity entity : EntityManager.getEntitiesList()) {
 
 			if(entity == this.entity)
-				continue; //can't collide with ourselves
+				continue; // can't collide with ourselves
 			
 			if (this.entity.getColisionBounds().intersects(entity.getColisionBounds())) {
 

@@ -293,10 +293,10 @@ public abstract class Entity {
 	 * @since 2.0.0
 	 */
 	public void registerComponent(Component c) {
-		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
 		for (Component component : components) 
 			if(c.getClass() == component.getClass())
 				return;	
+		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
 		components.add(c);
 	}
 

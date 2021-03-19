@@ -28,21 +28,22 @@ public class MovementComponent extends Component {
 		/**
 		 * Executes the given action.
 		 * 
+		 * @author Nuno Pereira
 		 * @since 2.0.0
 		 */
 		public void execute();
 	}
 	
-	private boolean userControled = true; // set default for true;
+	private boolean userControlled = true; // set default for true;
 
 	/**
-	 * Sets if the entity should be user controled.
+	 * Sets if the entity should be user controlled.
 	 * 
 	 * @param userControled the userControled to set
 	 * @since 2.0.0
 	 */
-	public void setUserControled(boolean userControled) {
-		this.userControled = userControled;
+	public void setUserControlled(boolean userControlled) {
+		this.userControlled = userControlled;
 	}
 
 	// the movement parts of the movement component
@@ -123,7 +124,7 @@ public class MovementComponent extends Component {
 	@Override
 	public void execute() {
 		
-		if (userControled) {
+		if (userControlled) {
 			for (String key : this.actionBindingMap.keySet())
 				if(this.bindingMap.containsKey(key) && this.bindingMap.get(key))
 					this.actionBindingMap.get(key).execute();
