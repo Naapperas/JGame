@@ -111,11 +111,13 @@ public class GameLauncher {
 			}
 			ProgramLogger.writeLog("Pausing/Unpausing game");
 			if (!pause) {
+				UIHud.getHud().forEach((element) -> {element.removeInputListener();});
 				pauseMenu.registerInputListener();
 				UIHud.addHUDUIElement(pauseMenu);
 			} else {
 				pauseMenu.removeInputListener();
 				UIHud.removeHUDUIElement(pauseMenu);
+				UIHud.getHud().forEach((element) -> {element.registerInputListener();});
 			}
 			
 			pause = !pause;
