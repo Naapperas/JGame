@@ -9,6 +9,8 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -24,11 +26,30 @@ import jGame.core.launcher.GameLauncher;
  */
 public class UIHudButtonElement extends UIHudElement {
 
+	/**
+	 * An action to be performed when the button is pressed.
+	 * 
+	 * @author Nuno Pereira
+	 * @since 2.0.0
+	 */
+	public static interface ButtonAction {
+				
+		/**
+		 * Execute the given action.
+		 * 
+		 * @since 2.0.0
+		 */
+		void execute();
+		
+	}
+	
 	// element coords and displayable text
 	protected Rectangle bounds;
 	private String buttonText;
 
 	private boolean checkForMouse = true;
+	
+	private List<ButtonAction> actions = new ArrayList<ButtonAction>();
 
 	// the actual listener responsible for handling user input
 	private MouseAdapter mouseListener = new MouseAdapter() {
@@ -40,7 +61,7 @@ public class UIHudButtonElement extends UIHudElement {
 			if (e.isConsumed())
 				return;
 
-			if (bounds.contains(e.getPoint()) && checkForMouse) {
+			if (checkForMouse && bounds.contains(e.getPoint())) {
 				theElement.processClick(e);
 				e.consume(); // we only want to consume the event if we process it
 			}
@@ -156,14 +177,23 @@ public class UIHudButtonElement extends UIHudElement {
 	}
 
 	/**
-	 * Processes a mouse click. The default implementation does nothing, so this
-	 * method should be overridden.
+	 * Registers a {@code ButtonAction} element to this button element.
+	 * 
+	 * @param ba the action to register
+	 * @since 2.0.0
+	 */
+	public void registerButtonAction(ButtonAction ba) {
+		actions.add(ba);
+	}
+	
+	/**
+	 * Processes a mouse click. The default implementation calls all {@code ButtonAction} objects registered to this button.
 	 * 
 	 * @param e the mouse event to be processed
 	 * @since 1.0.0
 	 */
 	protected void processClick(MouseEvent e) {
-		// default implementation does nothing
+		actions.forEach(ButtonAction::execute);
 	}
 
 	@Override
@@ -180,6 +210,12 @@ public class UIHudButtonElement extends UIHudElement {
 		return bounds.contains(mousePos);
 	}
 
+	/**
+	 * Sets whether this button element should check for mouse .
+	 * 
+	 * @param value the new value of the property
+	 * @since 1.1.0
+	 */
 	public void checkForMouse(boolean value) {
 		this.checkForMouse = value;
 	}
