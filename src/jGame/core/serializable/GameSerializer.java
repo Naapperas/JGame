@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import jGame.core.launcher.GameLauncher;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -16,7 +17,7 @@ import jGame.logging.ProgramLogger;
  */
 public class GameSerializer {
 
-	private static String pathToGameSaveFile;
+	private static String pathToGameSaveFolder;
 
 	/**
 	 * Serializes the game and its relevant aspects, like game states, entities and
@@ -26,17 +27,19 @@ public class GameSerializer {
 	 */
 	public static void serializeGame() {
 		
-		File saveFile = new File(pathToGameSaveFile);
+		File gameSaveFile = new File(pathToGameSaveFolder + "\\game.core.dat.txt");
 
-		try (BufferedWriter serializer = new BufferedWriter(new FileWriter(saveFile));) {
+		try (BufferedWriter gameSerializer = new BufferedWriter(new FileWriter(gameSaveFile))) {
 
 			ProgramLogger.writeLog("Serializing game!");
-			/*
-			 * serializer.write(GameLauncher.gameName);
-			 * serializer.write(System.lineSeparator());
-			 */
-
-			EntitySerializer.serializeEntities(saveFile);
+			
+			gameSerializer.write("Game.name=" + GameLauncher.gameName);
+			gameSerializer.write(System.lineSeparator());
+			gameSerializer.write(System.lineSeparator());
+			
+			gameSerializer.write("WINDOW STATS");
+			gameSerializer.write(System.lineSeparator());
+			GameLauncher.getMainWindow().serialize(gameSerializer);
 
 			ProgramLogger.writeLog("Done serializing!");
 
@@ -47,12 +50,12 @@ public class GameSerializer {
 	}
 
 	/**
-	 * Sets the path of the save game file.
+	 * Sets the path of the save game folder.
 	 * 
-	 * @param pathToGameSaveFile the path of the game save file
+	 * @param pathToGameSaveFile the path of the game save folder
 	 * @since 1.1.0
 	 */
-	public static void setPathToGameSaveFile(String pathToGameSaveFile) {
-		GameSerializer.pathToGameSaveFile = pathToGameSaveFile;
+	public static void setPathToGameSaveFile(String pathToGameSaveFolder) {
+		GameSerializer.pathToGameSaveFolder = pathToGameSaveFolder;
 	}
 }

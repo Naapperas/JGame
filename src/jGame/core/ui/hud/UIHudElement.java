@@ -2,6 +2,7 @@ package jGame.core.ui.hud;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 /**
  * This class represents a base element to be rendered in the HUD.
@@ -103,6 +104,16 @@ public abstract class UIHudElement {
 	 */
 	public void setDrawConstraints(Constraints drawConstraints) {
 		this.drawConstraints = drawConstraints;
+	}
+	
+	/**
+	 * 
+	 * @param indent
+	 * @throws IOException
+	 * @since 2.0.0
+	 */
+	public void serialize(int indent) throws IOException {
+		return;
 	}
 
 	@Override

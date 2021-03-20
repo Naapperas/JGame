@@ -10,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
@@ -243,9 +245,9 @@ public class Window {
 		if (mainWindowSet)
 			return;
 
-		windowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.windowFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-		windowFrame.addWindowListener(new WindowAdapter() {
+		this.windowFrame.addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -362,6 +364,15 @@ public class Window {
 	public void removeInputListener(KeyAdapter keyInputListener, UIHudElement element) {
 		ProgramLogger.writeLog("Removing key input listener for " + element);
 		windowCanvas.removeKeyListener(keyInputListener);
+	}
+	
+	public void serialize(BufferedWriter serializer) throws IOException {
+		
+		serializer.write("Window.title=" + this.windowFrame.getTitle());
+		serializer.write(System.lineSeparator());
+		serializer.write("Window.dimensions={WIDTH:" + this.getWidth() + ", HEIGHT:" + this.getHeight() + "}");
+		serializer.write(System.lineSeparator());
+		
 	}
 
 	/**

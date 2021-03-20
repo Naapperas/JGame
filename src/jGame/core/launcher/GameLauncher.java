@@ -16,6 +16,7 @@ import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import jGame.core.entity.EntityManager;
+import jGame.core.serializable.GameSerializer;
 import jGame.core.sound.SoundStore;
 import jGame.core.ui.Window;
 import jGame.core.ui.hud.Constraints;
@@ -43,7 +44,6 @@ public class GameLauncher {
 		PropertiesManager.fetchProperties();
 		FontManager.addFont("default", new Font(Font.DIALOG, Font.PLAIN, 12));
 		SoundStore.init(PropertiesManager.getPropertyOrDefault("sounds", ""));
-
 	}
 
 	// a thread pool to make code execution non-blocking
@@ -61,7 +61,7 @@ public class GameLauncher {
 	private static Color backgroundColor = Color.BLACK;
 	
 	/**
-	 * Ste the new color to be rendered as the game's background.
+	 * Set the new color to be rendered as the game's background.
 	 * 
 	 * @param c the new background color
 	 * @since 2.0.0
@@ -313,6 +313,7 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		GameStateManager.terminateState();
+		GameSerializer.serializeGame();
 		ProgramLogger.writeLog("Terminating game!");
 		System.exit(0);
 
@@ -447,12 +448,15 @@ public class GameLauncher {
 			this.width = (int) (GameLauncher.getMainWindow().getWidth() * .8);
 			this.height = (int) (GameLauncher.getMainWindow().getWidth() * .6);
 			this.zIndex = 500;
+			
 			RESUME_BUTTON.setZIndex(this.zIndex + 1);
 			RESUME_BUTTON.setParentElement(this);
 			elementList.add(RESUME_BUTTON);
+			
 			PAUSED_SCREEN_TITLE.setZIndex(this.zIndex + 1);
 			PAUSED_SCREEN_TITLE.setParentElement(this);
 			elementList.add(PAUSED_SCREEN_TITLE);
+			
 			PAUSE_BACK_MENU_BUTTON.setZIndex(this.zIndex + 1);
 			PAUSE_BACK_MENU_BUTTON.setParentElement(this);
 			elementList.add(PAUSE_BACK_MENU_BUTTON);

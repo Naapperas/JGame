@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import jGame.core.entity.component.CollisionComponent;
@@ -358,6 +359,17 @@ public abstract class Entity {
 	 * @since 2.0.0
 	 */
 	public void startup() { return; }
+	
+	/**
+	 * Serializes this entity.
+	 * 
+	 * @param indent the level of indentation to apply when serializing this entity
+	 * @throws IOException if an IOException occurs
+	 * @since 2.0.0
+	 */
+	public void serialize(int indent) throws IOException {
+		return;
+	}
 
 	@Override
 	public String toString() {
