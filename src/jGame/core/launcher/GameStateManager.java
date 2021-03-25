@@ -30,8 +30,8 @@ public class GameStateManager {
 	private GameStateManager() {
 	}
 
-	private static HashMap<String,GameState> gameStates = new HashMap<String, GameState>();
-	private static GameState currentState;
+	private static HashMap<String, GameState> gameStates = new HashMap<String, GameState>();
+	private static GameState currentState; // keeps track of the current game state
 
 	/**
 	 * Initializes the {@code currentState}.
@@ -157,5 +157,22 @@ public class GameStateManager {
 		ProgramLogger.writeLog("Adding Board");
 		addGameState("Board", board);
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 * @since 2.0.0
+	 */
+	public static GameState getCurrentGameState() {
+		return currentState;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @since 2.0.0
+	 */
+	public static List<GameState> getGameStates() {
+		return List.copyOf(gameStates.values());
+	}
 }

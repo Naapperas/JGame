@@ -160,7 +160,7 @@ public class Window {
 				windowCanvas.requestFocus();
 			});
 		} catch (InvocationTargetException | InterruptedException e) {
-			e.printStackTrace();
+			ProgramLogger.writeErrorLog(e);
 		}
 	}
 
@@ -366,11 +366,30 @@ public class Window {
 		windowCanvas.removeKeyListener(keyInputListener);
 	}
 	
-	public void serialize(BufferedWriter serializer) throws IOException {
+	/**
+	 * Serializes the window.
+	 * 
+	 * @param serializer the serializer object that registers this component
+	 * @param indent the indent level
+	 * @throws IOException if an IOException
+	 * @since 2.0.0
+	 */
+	public void serialize(BufferedWriter serializer, int indent) throws IOException {
 		
-		serializer.write("Window.title=" + this.windowFrame.getTitle());
+		serializer.write("Window.title=");
+		serializer.write(this.windowFrame.getTitle());
 		serializer.write(System.lineSeparator());
-		serializer.write("Window.dimensions={WIDTH:" + this.getWidth() + ", HEIGHT:" + this.getHeight() + "}");
+		serializer.write("Window.dimensions={WIDTH:");
+		serializer.write(Integer.toString(this.getWidth()));
+		serializer.write(", HEIGHT:");
+		serializer.write(Integer.toString(this.getHeight()));
+		serializer.write('}');
+		serializer.write(System.lineSeparator());
+		serializer.write("Window.isMainWindow=");
+		serializer.write(this.windowFrame.getDefaultCloseOperation() == JFrame.DO_NOTHING_ON_CLOSE ? "true" : "false");
+		serializer.write(System.lineSeparator());
+		serializer.write("Window.isShowable=");
+		serializer.write(this.isShowable() ? "true" : "false");
 		serializer.write(System.lineSeparator());
 		
 	}
@@ -381,7 +400,7 @@ public class Window {
 	 * @since 1.1.0
 	 */
 	public void toggleFullscreen() {
-
+		
 		if (!fullScreen) {
 			windowFrame.setVisible(false);
 			windowFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);

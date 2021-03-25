@@ -10,7 +10,7 @@ import jGame.logging.ProgramLogger;
 
 /**
  * Class responsible for the serialization of the game in its current state.
- * Delegates methods to other serializers.
+ * Delegates serialization to other serializers.
  * 
  * @author Nuno Pereira
  * @since 1.1.0
@@ -27,6 +27,8 @@ public class GameSerializer {
 	 */
 	public static void serializeGame() {
 		
+		int indent = 0;
+		
 		File gameSaveFile = new File(pathToGameSaveFolder + "\\game.core.dat.txt");
 
 		try (BufferedWriter gameSerializer = new BufferedWriter(new FileWriter(gameSaveFile))) {
@@ -39,10 +41,12 @@ public class GameSerializer {
 			
 			gameSerializer.write("WINDOW STATS");
 			gameSerializer.write(System.lineSeparator());
-			GameLauncher.getMainWindow().serialize(gameSerializer);
+			GameLauncher.getMainWindow().serialize(gameSerializer, indent);
 
+			
+			
+			
 			ProgramLogger.writeLog("Done serializing!");
-
 
 		} catch (IOException e) {
 			ProgramLogger.writeErrorLog(e, "Error while trying to serialize game!");
