@@ -35,13 +35,19 @@ public class GameSerializer {
 
 			ProgramLogger.writeLog("Serializing game!");
 			
+			gameSerializer.write("#GAME STATS");
+			gameSerializer.write(System.lineSeparator());
 			gameSerializer.write("Game.name=" + GameLauncher.gameName);
 			gameSerializer.write(System.lineSeparator());
+			GameLauncher.serialize(gameSerializer, indent);
 			gameSerializer.write(System.lineSeparator());
 			
-			gameSerializer.write("WINDOW STATS");
+			gameSerializer.write(System.lineSeparator());
+			
+			gameSerializer.write("#WINDOW STATS");
 			gameSerializer.write(System.lineSeparator());
 			GameLauncher.getMainWindow().serialize(gameSerializer, indent);
+			gameSerializer.write(System.lineSeparator());
 
 			
 			
@@ -61,5 +67,14 @@ public class GameSerializer {
 	 */
 	public static void setPathToGameSaveFile(String pathToGameSaveFolder) {
 		GameSerializer.pathToGameSaveFolder = pathToGameSaveFolder;
+	}
+	
+	/**
+	 * Checks whether the file path for the game save file has been set.
+	 * 
+	 * @return true if the file path for the game save file has been set
+	 */
+	public static boolean isGameSaveFilePathSet() {
+		return GameSerializer.pathToGameSaveFolder != null;
 	}
 }

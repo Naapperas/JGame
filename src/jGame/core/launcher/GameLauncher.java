@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -313,7 +315,8 @@ public class GameLauncher {
 	private static void processGameTermination() {
 
 		GameStateManager.terminateState();
-		GameSerializer.serializeGame();
+		if(GameSerializer.isGameSaveFilePathSet())
+			GameSerializer.serializeGame();
 		ProgramLogger.writeLog("Terminating game!");
 		System.exit(0);
 
@@ -515,5 +518,30 @@ public class GameLauncher {
 		public void removeInputListener() {
 			for (UIHudElement uiHudElement : elementList) { uiHudElement.removeInputListener(); }
 		}
+	}
+
+	/**
+	 * Serializes the GameLauncher.
+	 * 
+	 * @param gameSerializer the serializer to serialize this game launcher
+	 * @param indent the indent level to use when serializing this game
+	 * @throws IOException if a I/O exception occurs
+	 */
+	public static void serialize(BufferedWriter gameSerializer, int indent) throws IOException {
+		
+		gameSerializer.write("Game.backgroundColor=");
+		gameSerializer.write(GameLauncher.backgroundColor.toString());
+		gameSerializer.write(System.lineSeparator());
+		gameSerializer.write("Game.bufferAmount=");
+		gameSerializer.write(Integer.toString(GameLauncher.BUFFER_AMOUNT));
+		gameSerializer.write(System.lineSeparator());
+		gameSerializer.write("Game.defaultWidth=");
+		gameSerializer.write(Integer.toString(GameLauncher.DEFAULT_WIDTH));
+		gameSerializer.write(System.lineSeparator());
+		gameSerializer.write("Game.defaultHeight=");
+		gameSerializer.write(Integer.toString(GameLauncher.DEFAULT_HEIGHT));
+		gameSerializer.write(System.lineSeparator());
+			
+	
 	}
 }

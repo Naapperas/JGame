@@ -28,7 +28,7 @@ public class PropertiesManager {
 	
 	/**
 	 * Loads all the properties from the input stream and makes them available for
-	 * use.
+	 * use. It is the responsibility of the client to close the {@code InputStream} object.
 	 * 
 	 * @param propertiesFileIS the input stream pointing to the properties file.
 	 * @since 1.0.0
@@ -154,6 +154,9 @@ public class PropertiesManager {
 		return properties.getProperty(propertyName, defaultValue);
 	}
 
+	/*
+	 * this metho was made in the sound package and copied over into this class as it fits the same purpose, hence the names used don´t fit in.
+	 */
 	// not necessary but gives more certainty as to getting a URL object
 	private static URL getDataStream(String resource) {
 
