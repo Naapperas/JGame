@@ -23,6 +23,16 @@ public class GameState {
 	private String stateName;
 
 	/**
+	 * Returns the name of this {@code GameState}.
+	 * 
+	 * @return the stateName
+	 * @since 2.0.0
+	 */
+	public String getStateName() {
+		return stateName;
+	}
+
+	/**
 	 * Create a new {@link GameState} object with the given entities and HUD
 	 * elements.
 	 * 

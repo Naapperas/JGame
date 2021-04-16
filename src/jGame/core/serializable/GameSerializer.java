@@ -48,9 +48,10 @@ public class GameSerializer {
 			gameSerializer.write(System.lineSeparator());
 			GameLauncher.getMainWindow().serialize(gameSerializer, indent);
 			gameSerializer.write(System.lineSeparator());
+			
+			gameSerializer.write(System.lineSeparator());
 
-			
-			
+			GameStateSerializer.serialize(gameSerializer, indent + 1);
 			
 			ProgramLogger.writeLog("Done serializing!");
 

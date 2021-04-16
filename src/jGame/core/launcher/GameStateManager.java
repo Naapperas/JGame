@@ -173,6 +173,7 @@ public class GameStateManager {
 	 * @since 2.0.0
 	 */
 	public static List<GameState> getGameStates() {
+		ProgramLogger.writeLog(gameStates.values().size()  + "");
 		return List.copyOf(gameStates.values());
 	}
 }
