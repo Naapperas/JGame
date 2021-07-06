@@ -25,6 +25,8 @@ public class ProgramLogger {
 
 	// The <code>Logger</code> object that logs all events.
 	private static final Logger LOGGER = Logger.getLogger(ProgramLogger.class.getName());
+	
+	private static final String LOG_FOLDER = "C:\\Users\\nunoa\\OneDrive\\Desktop\\";
 
 	/**
 	 * <code>Handler</code> object that writes logs requested by the {@link #LOGGER}
@@ -39,7 +41,7 @@ public class ProgramLogger {
 		
 		Calendar c = Calendar.getInstance();
 
-		File f = new File("C:\\Users\\nunoa\\OneDrive\\Desktop\\" + c.get(Calendar.YEAR) + "-"
+		File f = new File(LOG_FOLDER + c.get(Calendar.YEAR) + "-"
 				+
 				(c.get(Calendar.MONTH) < 10 ? "0" + (c.get(Calendar.MONTH) + 1) : (c.get(Calendar.MONTH))
 								+ 1)
@@ -51,7 +53,7 @@ public class ProgramLogger {
 			try {
 				f.createNewFile();
 			} catch (IOException e1) { // TODO Auto-generated catch block
-				e1.printStackTrace();
+				e1.printStackTrace(); // no logger setup, just dump the stack trace
 			}
 		  
 		  try { 

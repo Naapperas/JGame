@@ -103,7 +103,7 @@ public class SoundStore {
 		cacheSound(soundIdentifier, Tuple.from(format, soundData));
 	}
 
-	// private method to serve as a bridge b	etween the "pure" Java data types and
+	// private method to serve as a bridge between the "pure" Java data types and
 	// the Tuple defined in JTuples
 	private static void cacheSound(String soundIdentifier, Tuple audio) {
 		soundMap.put(soundIdentifier, audio);

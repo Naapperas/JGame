@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import jGame.logging.ProgramLogger;
-
 /**
  * <h1>Tuple representation in Java.</h1><br>
  * 
@@ -56,7 +54,7 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 			System.arraycopy(this.elements.toArray(), 0, newArr, 0, this.elements.size());
 			System.arraycopy(elements, 0, newArr, this.elements.size(), elements.length);
 		} catch (Exception e) {
-			ProgramLogger.writeErrorLog(e);
+			jGame.logging.ProgramLogger.writeErrorLog(e); // unnecessary import, write fully qualified name here
 		}
 			
 		return new Tuple(newArr);	
@@ -92,7 +90,7 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 		else if (this.elements.size() > other.elements.size())
 			return 1;
 		else
-			return 0;
+			return 0; // implement check based on elements, that might be hard to make since elements are not required to have the same type
 	}
 
 	@Override
@@ -126,8 +124,8 @@ public class Tuple implements Iterable<Object>, Comparable<Object> { // this cla
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		elements.forEach((e) -> {sb.append(e).append(", ");});
-		return "Tuple [elements=(" + sb.substring(0, sb.length()-2) + ")]";
+		elements.forEach(elem -> {sb.append(elem).append(", ");});
+		return "Tuple [elements=(" + sb.substring(0, sb.length()-2) + ")]"; // use substring to remove the leading ', '
 	}
 	
 }
