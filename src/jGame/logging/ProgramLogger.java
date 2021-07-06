@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import jGame.core.utils.properties.PropertiesManager;
+
 /**
  * The main logger for this application. All major logging requests are done to
  * this class, which outputs logs according to this implementation.
@@ -82,6 +84,9 @@ public class ProgramLogger {
 	 */
 	public static void writeLog(String msg) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		LOGGER.info(msg + System.lineSeparator());
 
 	}
@@ -99,6 +104,9 @@ public class ProgramLogger {
 	 */
 	public static void writeBigLog(Properties p) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		boolean firstLine = true;
 
 		StringBuilder sb = new StringBuilder();
@@ -130,6 +138,9 @@ public class ProgramLogger {
 	 */
 	public static void writeBigLog(Properties p, String comment) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		writeLog(comment);
 
 		writeBigLog(p);
@@ -146,6 +157,9 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(T[] collection) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		StringBuilder sb = new StringBuilder();
 		for (T t : collection)
 			sb.append(t);
@@ -165,6 +179,9 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(T[] collection, String comment) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		writeLog(comment);
 
 		writeBigLog(collection);
@@ -183,6 +200,9 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(Collection<T> collection) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		StringBuilder sb = new StringBuilder();
 		for (T t : collection)
 			sb.append(t);
@@ -205,6 +225,9 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(Collection<T> collection, String comment) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		writeLog(comment);
 
 		writeBigLog(collection);
@@ -220,6 +243,9 @@ public class ProgramLogger {
 	 */
 	public static void writeLog(Level level, String msg) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		LOGGER.log(level, msg + System.lineSeparator());
 
 	}
@@ -234,6 +260,9 @@ public class ProgramLogger {
 	 */
 	public static void writeErrorLog(Exception e) {
 
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		boolean firstLine = true;
 
 		StringBuilder sb = new StringBuilder();
@@ -258,6 +287,10 @@ public class ProgramLogger {
 	 * @since 1.0.0
 	 */
 	public static void writeErrorLog(Exception e, String comment) {
+		
+		if(!PropertiesManager.getProperty("logging").equals("on"))
+			return;
+		
 		writeLog(java.util.logging.Level.SEVERE, comment);
 
 		writeErrorLog(e);
