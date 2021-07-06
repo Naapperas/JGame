@@ -20,11 +20,25 @@ import jGame.logging.ProgramLogger;
  */
 public class PropertiesManager {
 
-	// the properties file containing serializable data about the game's internal
-	// state
-	private static Properties properties = new Properties();
+	// the properties file containing serializable data about the game's internal state
 	
-	private static boolean propertiesFetched = false;
+	private static final Properties defaultProperties = new Properties();
+	private static Properties properties = null;
+	
+	static {
+		
+		// load default properties, logging should be enabled by default
+		
+		defaultProperties.put("logging", "on");
+		properties = new Properties();
+		
+		for (Object key : defaultProperties.keySet()) { // need to do this to avoid recursive loop with ProgramLogger
+			key = (String) key;
+			properties.put(key, defaultProperties.get(key));
+		}
+	}
+	
+	private static boolean propertiesFetched = false, firstRound = true;
 	
 	/**
 	 * Loads all the properties from the input stream and makes them available for
@@ -37,7 +51,9 @@ public class PropertiesManager {
 		if (propertiesFetched)
 			return;
 		
-		ProgramLogger.writeLog("Fetching main properties!");
+		firstRound = false;
+		
+		ProgramLogger.writeLog("Fetching main properties!"); // this line always gets printed
 
 		try {
 			properties.load(propertiesFileIS);
@@ -59,6 +75,8 @@ public class PropertiesManager {
 	public static void fetchProperties(File propertiesFile) {
 		if (propertiesFetched)
 			return;
+
+		firstRound = false;
 		
 		if (propertiesFile == null || !propertiesFile.exists())
 			throw new IllegalArgumentException("Invalid file argument!");
@@ -92,6 +110,8 @@ public class PropertiesManager {
 	public static void fetchProperties(String propertiesFilePath) {
 		if (propertiesFetched)
 			return;
+		
+		firstRound = false;
 
 		if (propertiesFilePath.isBlank())
 			throw new IllegalArgumentException("Invalid file path argument!");
@@ -106,13 +126,17 @@ public class PropertiesManager {
 	 * @since 1.3.0
 	 */
 	public static void fetchProperties() {
-
+		
+		if (propertiesFetched)
+			return;
+		
+		firstRound = false;
+		
 		String resourcePath = "properties/";
 
 		URL propertiesPathURL = getDataStream(resourcePath);
 
 		if (propertiesPathURL == null) {
-
 			ProgramLogger.writeLog("No property files detected");
 		} else {
 
@@ -135,6 +159,9 @@ public class PropertiesManager {
 	 * @since 1.0.0
 	 */
 	public static String getProperty(String propertyName) {
+		
+		if(!propertiesFetched && firstRound) fetchProperties();
+		
 		return properties.getProperty(propertyName);
 	}
 	
@@ -151,11 +178,13 @@ public class PropertiesManager {
 	 * @since 1.0.0
 	 */
 	public static String getPropertyOrDefault(String propertyName, String defaultValue) {
+		if(!propertiesFetched && firstRound) fetchProperties();
+		
 		return properties.getProperty(propertyName, defaultValue);
 	}
 
 	/*
-	 * this metho was made in the sound package and copied over into this class as it fits the same purpose, hence the names used don´t fit in.
+	 * this method was made in the sound package and copied over into this class as it fits the same purpose, hence the names used don´t fit in.
 	 */
 	// not necessary but gives more certainty as to getting a URL object
 	private static URL getDataStream(String resource) {

@@ -84,7 +84,7 @@ public class ProgramLogger {
 	 */
 	public static void writeLog(String msg) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		LOGGER.info(msg + System.lineSeparator());
@@ -104,7 +104,7 @@ public class ProgramLogger {
 	 */
 	public static void writeBigLog(Properties p) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		boolean firstLine = true;
@@ -138,7 +138,7 @@ public class ProgramLogger {
 	 */
 	public static void writeBigLog(Properties p, String comment) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		writeLog(comment);
@@ -157,7 +157,7 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(T[] collection) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		StringBuilder sb = new StringBuilder();
@@ -179,7 +179,7 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(T[] collection, String comment) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		writeLog(comment);
@@ -200,7 +200,7 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(Collection<T> collection) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		StringBuilder sb = new StringBuilder();
@@ -225,7 +225,7 @@ public class ProgramLogger {
 	 */
 	public static <T> void writeBigLog(Collection<T> collection, String comment) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		writeLog(comment);
@@ -243,7 +243,7 @@ public class ProgramLogger {
 	 */
 	public static void writeLog(Level level, String msg) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		LOGGER.log(level, msg + System.lineSeparator());
@@ -260,7 +260,7 @@ public class ProgramLogger {
 	 */
 	public static void writeErrorLog(Exception e) {
 
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		boolean firstLine = true;
@@ -288,7 +288,7 @@ public class ProgramLogger {
 	 */
 	public static void writeErrorLog(Exception e, String comment) {
 		
-		if(!PropertiesManager.getProperty("logging").equals("on"))
+		if(!"on".equals(PropertiesManager.getProperty("logging")))
 			return;
 		
 		writeLog(java.util.logging.Level.SEVERE, comment);
