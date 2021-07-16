@@ -30,12 +30,10 @@ public class PropertiesManager {
 		// load default properties, logging should be enabled by default
 		
 		defaultProperties.put("logging", "on");
-		properties = new Properties();
+		defaultProperties.put("movement.defaultUserControlled", "true");
+		defaultProperties.put("entity.defaultSpeed", "5");
 		
-		for (Object key : defaultProperties.keySet()) { // need to do this to avoid recursive loop with ProgramLogger
-			key = (String) key;
-			properties.put(key, defaultProperties.get(key));
-		}
+		properties = new Properties(defaultProperties);
 	}
 	
 	private static boolean propertiesFetched = false, firstRound = true;

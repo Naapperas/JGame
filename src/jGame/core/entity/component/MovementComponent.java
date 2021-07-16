@@ -8,6 +8,7 @@ import java.util.Map;
 import jGame.core.entity.Entity;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
+import jGame.core.utils.properties.PropertiesManager;
 
 /**
  * The default implementation of a movement component.
@@ -34,7 +35,7 @@ public class MovementComponent extends Component {
 		public void execute();
 	}
 	
-	private boolean userControlled = true; // set default for true;
+	private boolean userControlled = Boolean.parseBoolean(PropertiesManager.getProperty("movement.defaultUserControlled")); // set default for true;
 
 	/**
 	 * Sets if the entity should be user controlled.

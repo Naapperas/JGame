@@ -34,6 +34,8 @@ public class UIHudSliderElement extends UIHudElement {
 
 	// current, minimum and maximum values for the slider
 	private float value = 0, minValue = 0, maxValue = 0;
+	
+	private static final DecimalFormat VALUE_FORMATTER = new DecimalFormat("#.#");
 
 	/**
 	 * Returns the minimum value that can be obtained from the slider.
@@ -254,6 +256,8 @@ public class UIHudSliderElement extends UIHudElement {
 
 		// original font is too small, double its size
 		g.setFont(startingFont.deriveFont(startingFont.getSize2D() * 2));
+		
+		FontMetrics fontMetrics = g.getFontMetrics();
 
 		this.x = this.drawConstraints.getXLocation();
 		this.y = this.drawConstraints.getYLocation();
@@ -265,7 +269,7 @@ public class UIHudSliderElement extends UIHudElement {
 			Point p = MouseInfo.getPointerInfo().getLocation();
 			SwingUtilities.convertPointFromScreen(p, GameLauncher.getMainWindow().getWindowCanvas());
 
-			// create temporary variable too check for updates
+			// create temporary variable to check for updates
 			float temp = MathUtils.clamp((int) p.getX() - handleXOffset, x, x + SLIDER_WIDTH - SLIDER_HANDLE_WIDTH + 1);
 
 			if (temp != handleX)
@@ -288,9 +292,7 @@ public class UIHudSliderElement extends UIHudElement {
 
 		g.fillRoundRect((int) handleX, handleY, SLIDER_HANDLE_WIDTH, SLIDER_HANDLE_HEIGHT, 15, 15);
 		
-		/////////////////////// DRAWING OF SLIDER TEXT///////////////////////////
-
-		FontMetrics fontMetrics = g.getFontMetrics();
+		/////////////////////// DRAWING OF SLIDER VALUE TEXT///////////////////////////
 
 		int minValueTextWidth = (int) fontMetrics.getStringBounds(minValue + "", g).getWidth();
 
@@ -299,9 +301,7 @@ public class UIHudSliderElement extends UIHudElement {
 
 		g.drawString(maxValue + "", x + SLIDER_WIDTH + 10, y + fontMetrics.getAscent() / 5 * 4);
 
-		DecimalFormat valueFormatter = new DecimalFormat("#.#");
-
-		String fomattedValue = valueFormatter.format(value);
+		String fomattedValue = VALUE_FORMATTER.format(value);
 
 		int valueTextWidth = (int) fontMetrics.getStringBounds(fomattedValue, g).getWidth();
 

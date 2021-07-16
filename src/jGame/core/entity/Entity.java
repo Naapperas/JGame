@@ -13,6 +13,7 @@ import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
+import jGame.core.utils.properties.PropertiesManager;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -44,7 +45,15 @@ public abstract class Entity {
 
 	// this is the default speed of an entity, in case there is no speed
 	// specification
-	public int speed = 5;
+	public int speed;
+	{
+		try {
+			// assume 5 as the "global" default speed
+			this.speed = Integer.parseInt(PropertiesManager.getPropertyOrDefault("entity.defaultSpeed", "5"));
+		} catch (Exception e) {
+			ProgramLogger.writeErrorLog(e);
+		}
+	}
 	
 	//these are the default components each entity must have, and a list of components that can be registered after
 	protected MovementComponent mc = MovementComponent.create(this);
