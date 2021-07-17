@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import jGame.core.entity.component.CollisionComponent;
 import jGame.core.entity.component.Component;
 import jGame.core.entity.component.MovementComponent;
+import jGame.core.entity.component.TransformComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
@@ -40,10 +41,10 @@ public abstract class Entity {
 	// any movement
 	public KeyAdapter inputListener;
 
-	
 	//these are the default components each entity must have, and a list of components that can be registered after
 	protected MovementComponent mc = MovementComponent.create(this);
 	protected CollisionComponent cc = CollisionComponent.create(this);
+	protected TransformComponent tc = TransformComponent.create(this);
 	
 	protected LinkedList<Component> components = new LinkedList<Component>();
 	
@@ -55,6 +56,7 @@ public abstract class Entity {
 	protected Entity() { this.initComponents();	}
 	
 	private void initComponents() {
+		this.tc.init();
 		this.mc.init();
 		this.cc.init();
 		
@@ -277,6 +279,8 @@ public abstract class Entity {
 			return this.mc;
 		else if (componentClass == CollisionComponent.class)
 			return this.cc;
+		else if (componentClass == TransformComponent.class)
+			return this.tc;
 		else
 			for(Component c : components)
 				if(componentClass == c.getClass())
@@ -291,8 +295,12 @@ public abstract class Entity {
 	 * @since 2.0.0
 	 */
 	public void registerComponent(Component c) {
+		Class clazz = c.getClass();
+		
+		if (clazz == TransformComponent.class || clazz == MovementComponent.class || clazz == CollisionComponent.class) return;
+		
 		for (Component component : components) 
-			if(c.getClass() == component.getClass())
+			if(clazz == component.getClass())
 				return;	
 		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
 		c.init();
