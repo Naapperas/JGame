@@ -34,6 +34,13 @@ public abstract class Component {
 	 * @since 2.0.0
 	 */
 	public abstract void execute();
+	
+	/**
+	 * The method to execute once when the entity this component is attached to is initialized
+	 * 
+	 * @since 2.0.0
+	 */
+	public abstract void init();
 
 	@Override
 	public String toString() {

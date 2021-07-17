@@ -111,7 +111,7 @@ public class EntityManager {
 	 * @since 1.0.0
 	 */
 	public static synchronized void renderEntities(java.awt.Graphics2D g) {
-		// since this is called after tick (when it is eventually called), we don'd need
+		// since this is called after tick (when it is eventually called), we don't need
 		// to check for removed entities, we only care about rendering what we have on
 		// the screen.
 		ENTITIES_LIST.forEach((entity)->{

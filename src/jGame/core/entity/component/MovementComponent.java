@@ -9,6 +9,7 @@ import jGame.core.entity.Entity;
 import jGame.core.launcher.GameLauncher;
 import jGame.core.utils.MathUtils;
 import jGame.core.utils.properties.PropertiesManager;
+import jGame.logging.ProgramLogger;
 
 /**
  * The default implementation of a movement component.
@@ -35,7 +36,7 @@ public class MovementComponent extends Component {
 		public void execute();
 	}
 	
-	private boolean userControlled = Boolean.parseBoolean(PropertiesManager.getProperty("movement.defaultUserControlled")); // set default for true;
+	private boolean userControlled = Boolean.parseBoolean(PropertiesManager.getPropertyOrDefault("movement.defaultUserControlled", "true")); // set default for true;
 
 	/**
 	 * Sets if the entity should be user controlled.
@@ -46,6 +47,11 @@ public class MovementComponent extends Component {
 	public void setUserControlled(boolean userControlled) {
 		this.userControlled = userControlled;
 	}
+
+	// move these fields from the entity itself into here because they are movement related
+	private int speed, velX, velY;
+	private boolean moveLeft, moveRight, moveUp, moveDown;
+	private int moveHorizontal, moveVertical;
 
 	// the movement parts of the movement component
 	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}; //default for every entity, to be changed later
@@ -89,13 +95,13 @@ public class MovementComponent extends Component {
 				int eventKeyCode = e.getKeyCode();
 
 				if(eventKeyCode == mc.movementKeys[MOVE_UP]) {
-					entity.moveUp = true;
+					mc.moveUp = true;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
-					entity.moveDown = true;
+					mc.moveDown = true;
 				} else if (eventKeyCode ==  mc.movementKeys[MOVE_LEFT]) {
-					entity.moveLeft = true;
+					mc.moveLeft = true;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
-					entity.moveRight = true;
+					mc.moveRight = true;
 				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
 					mc.bindingMap.put("" + eventKeyCode, true);
 				}
@@ -107,13 +113,13 @@ public class MovementComponent extends Component {
 				int eventKeyCode = e.getKeyCode();
 
 				if (eventKeyCode == mc.movementKeys[MOVE_UP]) {
-					entity.moveUp = false;
+					mc.moveUp = false;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
-					entity.moveDown = false; 
+					mc.moveDown = false; 
 				} else if (eventKeyCode == mc.movementKeys[MOVE_LEFT]) {
-					entity.moveLeft = false;
+					mc.moveLeft = false;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
-					entity.moveRight = false; 
+					mc.moveRight = false; 
 				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
 					mc.bindingMap.put("" + eventKeyCode, false);
 					mc.offActionBindingMap.get("" + eventKeyCode).execute();
@@ -127,31 +133,31 @@ public class MovementComponent extends Component {
 		
 		if (userControlled) {
 			for (String key : this.actionBindingMap.keySet())
-				if(this.bindingMap.containsKey(key) && this.bindingMap.get(key))
+				if (this.bindingMap.containsKey(key) && this.bindingMap.get(key))
 					this.actionBindingMap.get(key).execute();
 			
 			// movement direction code
-			if (this.entity.moveUp && !this.entity.moveDown)
-				this.entity.moveVertical = -1;
-			else if (this.entity.moveDown && !this.entity.moveUp)
-				this.entity.moveVertical = 1;
-			else if (!this.entity.moveUp && !this.entity.moveDown)
-				this.entity.moveVertical = 0;
+			if (this.moveUp && !this.moveDown)
+				this.moveVertical = -1;
+			else if (this.moveDown && !this.moveUp)
+				this.moveVertical = 1;
+			else if (!this.moveUp && !this.moveDown)
+				this.moveVertical = 0;
 	
-			if (this.entity.moveRight && !this.entity.moveLeft)
-				this.entity.moveHorizontal = 1;
-			else if (this.entity.moveLeft && !this.entity.moveRight)
-				this.entity.moveHorizontal = -1;
-			else if (!this.entity.moveRight && !this.entity.moveLeft)
-				this.entity.moveHorizontal = 0;
+			if (this.moveRight && !this.moveLeft)
+				this.moveHorizontal = 1;
+			else if (this.moveLeft && !this.moveRight)
+				this.moveHorizontal = -1;
+			else if (!this.moveRight && !this.moveLeft)
+				this.moveHorizontal = 0;
 		}
 		
-		this.entity.velX = this.entity.moveHorizontal * this.entity.speed;
-		this.entity.velY = this.entity.moveVertical * this.entity.speed;
+		this.velX = this.moveHorizontal * this.speed;
+		this.velY = this.moveVertical * this.speed;
 
 		// movement code
-		this.entity.x += this.entity.velX;
-		this.entity.y += this.entity.velY;
+		this.entity.x += this.velX;
+		this.entity.y += this.velY;
 
 		// movement constraints code
 
@@ -162,7 +168,7 @@ public class MovementComponent extends Component {
 				- this.entity.getColisionBounds().getHeight()));
 
 		// collision bounds relocation code
-		this.entity.getColisionBounds().setLocation(this.entity.x, this.entity.y);
+		((CollisionComponent)this.entity.getComponent(CollisionComponent.class)).moveBounds(this.entity.x, this.entity.y);
 	}
 
 	/**
@@ -170,10 +176,13 @@ public class MovementComponent extends Component {
 	 * 
 	 * @param newKey the new key binded to the control
 	 * @param keyControl the control of the specified key
+	 * @throws IllegalArgumentException if the specified keyControl isn't in range
 	 * @since 2.0.0
 	 * @see KeyEvent
 	 */
-	public void setMovementKeyControl(int newKey, int keyControl) {
+	public void setMovementKeyControl(int newKey, int keyControl) throws IllegalArgumentException {
+		if (keyControl >= this.movementKeys.length) throw new IllegalArgumentException("keyControl must be one of the pre-defined controls");
+		
 		this.movementKeys[keyControl] = newKey;
 	}
 	
@@ -195,5 +204,43 @@ public class MovementComponent extends Component {
 		this.bindingMap.put("" + keyBinding, false);
 		this.actionBindingMap.put("" + keyBinding, onAction);
 		this.offActionBindingMap.put("" + keyBinding, offAction);
+	}
+
+	/**
+	 * 
+	 * @param i
+	 */
+	public void setHorizontalMovement(int i) throws IllegalArgumentException {
+		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
+		this.moveHorizontal = i;
+	}
+	
+	/**
+	 * 
+	 */
+	public void bounceHorizontal () { this.moveHorizontal *= -1; }
+	
+	/**
+	 * 
+	 * @param i
+	 */
+	public void setVerticalMovement(int i) {
+		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
+		this.moveVertical = i;
+	}
+	
+	/**
+	 * 
+	 */
+	public void bounceVertical () { this.moveVertical *= -1; }
+	
+	@Override
+	public void init() {
+		try {
+			// assume 5 as the "global" default speed
+			this.speed = Integer.parseInt(PropertiesManager.getPropertyOrDefault("entity.defaultSpeed", "5"));
+		} catch (Exception e) {
+			ProgramLogger.writeErrorLog(e);
+		}
 	}
 }

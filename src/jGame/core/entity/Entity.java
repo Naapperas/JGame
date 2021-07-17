@@ -13,7 +13,6 @@ import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
 import jGame.core.launcher.GameLauncher;
-import jGame.core.utils.properties.PropertiesManager;
 import jGame.logging.ProgramLogger;
 
 /**
@@ -31,7 +30,7 @@ public abstract class Entity {
 	protected String name;
 
 	// display properties
-	public int x, y, startingX, startingY, velX, velY;
+	public int x, y, startingX, startingY;
 	protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
@@ -40,33 +39,26 @@ public abstract class Entity {
 	// these fields are responsible for the movement of each entity, should there be
 	// any movement
 	public KeyAdapter inputListener;
-	public boolean moveLeft, moveRight, moveUp, moveDown;
-	public int moveHorizontal, moveVertical;
 
-	// this is the default speed of an entity, in case there is no speed
-	// specification
-	public int speed;
-	{
-		try {
-			// assume 5 as the "global" default speed
-			this.speed = Integer.parseInt(PropertiesManager.getPropertyOrDefault("entity.defaultSpeed", "5"));
-		} catch (Exception e) {
-			ProgramLogger.writeErrorLog(e);
-		}
-	}
 	
 	//these are the default components each entity must have, and a list of components that can be registered after
 	protected MovementComponent mc = MovementComponent.create(this);
 	protected CollisionComponent cc = CollisionComponent.create(this);
 	
-	protected LinkedList<Component> components = null;
+	protected LinkedList<Component> components = new LinkedList<Component>();
 	
 	// list of collision listeners
 	protected LinkedList<CollisionListener> collisionListeners = new LinkedList<CollisionListener>();
 
 	public boolean started = false;
 	
-	protected Entity() {
+	protected Entity() { this.initComponents();	}
+	
+	private void initComponents() {
+		this.mc.init();
+		this.cc.init();
+		
+		components.forEach(Component::init);
 	}
 
 	/**
@@ -85,9 +77,9 @@ public abstract class Entity {
 		this.y = this.startingY = startingY;
 		this.width = width;
 		this.height = height;
-		velX = velY = 1;
 		colisionBounds = new Rectangle(width, height);
 		colisionBounds.setLocation(x, y);
+		this.initComponents();
 	}
 
 	/**
@@ -103,9 +95,9 @@ public abstract class Entity {
 		this.x = this.startingX = startingX;
 		this.y = this.startingY = startingY;
 		this.texture = texture;
-		velX = velY = 1;
 		this.colisionBounds = texture.getBounds();
 		colisionBounds.setLocation(x, y);
+		this.initComponents();
 	}
 
 	/**
@@ -122,7 +114,6 @@ public abstract class Entity {
 	 */
 	public Entity(int startingX, int startingY, int width, int height, int speed) {
 		this(startingX, startingY, width, height);
-		this.speed = speed;
 	}
 
 	/**
@@ -137,7 +128,6 @@ public abstract class Entity {
 	 */
 	public Entity(int startingX, int startingY, Sprite texture, int speed) {
 		this(startingX, startingY, texture);
-		this.speed = speed;
 	}
 
 	/**
@@ -191,9 +181,8 @@ public abstract class Entity {
 	 */
 	public Entity(int startingX, int startingY, int width, int height, int speed, String name) {
 		this(startingX, startingY, width, height, name);
-		this.speed = speed;
 	}
-
+	
 	/**
 	 * Creates an entity with the given {@link Sprite}. The collision bounds are set
 	 * based on the sprite's dimensions.
@@ -207,7 +196,6 @@ public abstract class Entity {
 	 */
 	public Entity(int startingX, int startingY, Sprite texture, int speed, String name) {
 		this(startingX, startingY, texture, name);
-		this.speed = speed;
 	}
 
 	/**
@@ -284,7 +272,7 @@ public abstract class Entity {
 	 * @return the component of the given class
 	 * @since 2.0.0
 	 */
-	public <T> Component getComponent(Class<T> componentClass) {
+	public <T extends Component> Component getComponent(Class<T> componentClass) {
 		if(componentClass == MovementComponent.class)
 			return this.mc;
 		else if (componentClass == CollisionComponent.class)
@@ -307,6 +295,7 @@ public abstract class Entity {
 			if(c.getClass() == component.getClass())
 				return;	
 		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
+		c.init();
 		components.add(c);
 	}
 
@@ -382,7 +371,6 @@ public abstract class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [name=" + name + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", speed="
-				+ speed + "]";
+		return "Entity [name=" + name + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
 	}	
 }

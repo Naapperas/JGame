@@ -1,5 +1,7 @@
 package jGame.core.entity.component;
 
+import java.awt.Point;
+
 import jGame.core.entity.Entity;
 import jGame.core.entity.EntityManager;
 import jGame.core.entity.event.CollisionEvent;
@@ -84,5 +86,34 @@ public class CollisionComponent extends Component {
 			}
 		}		
 		this.collide();
+	}
+	
+	/**
+	 * Moves the collision bounds of this entity to the given {@code x} and {@code y} coordinates.
+	 * 
+	 * @param x the new x position of the collision bounds
+	 * @param y the new y position of the collision bounds
+	 * @since 2.0.0
+	 */
+	public void moveBounds(int x, int y) {
+		this.entity.getColisionBounds().setLocation(x, y);
+	}
+	
+	/**
+	 * Moves the top left corner of the collision bounds to the point given.
+	 * 
+	 * @param p the new position of the top left corner of the collision bounds
+	 * @since 2.0.0
+	 */
+	public void moveBounds(Point p) {
+		moveBounds(p.x, p.y);
+	}
+
+	@Override
+	public void init() {
+
+		
+		
+		
 	}
 }
