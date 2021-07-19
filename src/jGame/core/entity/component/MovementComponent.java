@@ -78,6 +78,20 @@ public class MovementComponent extends Component {
 		return mc;
 	}
 	
+	/**
+	 * Changes the speed of the entity this component is attached to.
+	 * 
+	 * @param newSpeed the new speed of the entity this component is attached to
+	 * @throws IllegalArgumentException if the argument is not positive
+	 * @since 2.0.0
+	 */
+	public void changeSpeed(int newSpeed) throws IllegalArgumentException {
+		
+		if (newSpeed <= 0) throw new IllegalArgumentException("Speed must only be a positive integer");
+		
+		this.speed = newSpeed;
+	}
+	
 	public void setInputListener() {
 		
 		this.entity.inputListener = new KeyAdapter() {
@@ -131,6 +145,9 @@ public class MovementComponent extends Component {
 	@Override
 	public void execute() {
 		
+		CollisionComponent cc = (CollisionComponent) this.entity.getComponent(CollisionComponent.class);
+		TransformComponent tc = (TransformComponent) this.entity.getComponent(TransformComponent.class);
+		
 		if (userControlled) {
 			for (String key : this.actionBindingMap.keySet())
 				if (this.bindingMap.containsKey(key) && this.bindingMap.get(key))
@@ -154,11 +171,17 @@ public class MovementComponent extends Component {
 		
 		this.velX = this.moveHorizontal * this.speed;
 		this.velY = this.moveVertical * this.speed;
-
+		
+		int tempX = tc.getX();
+		int tempY = tc.getY();
+		
+		tempX += this.velX;
+		tempY += this.velY;
+		
 		// movement code
 		this.entity.x += this.velX;
 		this.entity.y += this.velY;
-
+		
 		// movement constraints code
 
 		// make so the x and y coordinates don't make the entity go out of the window
@@ -166,9 +189,18 @@ public class MovementComponent extends Component {
 				- this.entity.getColisionBounds().getWidth()));
 		this.entity.y = MathUtils.clamp(this.entity.y, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
 				- this.entity.getColisionBounds().getHeight()));
-
+		
+		tempX = MathUtils.clamp(tempX, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
+				- this.entity.getColisionBounds().getWidth()));
+		tempY = MathUtils.clamp(tempY, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
+				- this.entity.getColisionBounds().getHeight()));
+		
 		// collision bounds relocation code
-		((CollisionComponent)this.entity.getComponent(CollisionComponent.class)).moveBounds(this.entity.x, this.entity.y);
+		
+		tc.setX(tempX);
+		tc.setY(tempY);
+				
+		cc.moveBounds(tc.getX(), tc.getY());
 	}
 
 	/**
@@ -207,8 +239,10 @@ public class MovementComponent extends Component {
 	}
 
 	/**
+	 * Sets the value for this component's moveHorizontal.
 	 * 
-	 * @param i
+	 * @param i the new value for {@code moveHorizontal}
+	 * @since 2.0.0
 	 */
 	public void setHorizontalMovement(int i) throws IllegalArgumentException {
 		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
@@ -216,13 +250,17 @@ public class MovementComponent extends Component {
 	}
 	
 	/**
+	 * Reverses this components horizontal velocity.
 	 * 
+	 * @since 2.0.0
 	 */
 	public void bounceHorizontal () { this.moveHorizontal *= -1; }
 	
 	/**
+	 * Sets the value for this component's moveVertical.
 	 * 
-	 * @param i
+	 * @param i the new value for {@code moveVertical}
+	 * @since 2.0.0
 	 */
 	public void setVerticalMovement(int i) {
 		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
@@ -230,7 +268,9 @@ public class MovementComponent extends Component {
 	}
 	
 	/**
+	 * Reverses this components vertical velocity.
 	 * 
+	 * @since 2.0.0
 	 */
 	public void bounceVertical () { this.moveVertical *= -1; }
 	

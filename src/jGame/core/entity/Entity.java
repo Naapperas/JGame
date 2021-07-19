@@ -295,7 +295,7 @@ public abstract class Entity {
 	 * @since 2.0.0
 	 */
 	public void registerComponent(Component c) {
-		Class clazz = c.getClass();
+		Class<? extends Component> clazz = c.getClass();
 		
 		if (clazz == TransformComponent.class || clazz == MovementComponent.class || clazz == CollisionComponent.class) return;
 		

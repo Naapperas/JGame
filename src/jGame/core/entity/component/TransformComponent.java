@@ -26,11 +26,99 @@ public class TransformComponent extends Component {
 		return tc;
 	}
 	
+	/**
+	 * Returns this component's entity's x position.
+	 * 
+	 * @return the x position of this component's entity on the game board
+	 * @since 2.0.0
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Sets the new x position of this component's entity.
+	 * 
+	 * @param x the new x position of this component's entity
+	 * @since 2.0.0
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * Returns this component's entity's y position.
+	 * 
+	 * @return the y position of this component's entity on the game board
+	 * @since 2.0.0
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * Sets the new y position of this component's entity.
+	 * 
+	 * @param x the new y position of this component's entity
+	 * @since 2.0.0
+	 */
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	/**
+	 * Returns this component's entity's startingX position.
+	 * 
+	 * @return the startingX position of this component's entity on the game board
+	 * @since 2.0.0
+	 */
+	public int getStartingX() {
+		return startingX;
+	}
+
+	/**
+	 * Sets the new startingX position of this component's entity.
+	 * 
+	 * @param x the new startingX position of this component's entity
+	 * @since 2.0.0
+	 */
+	public void setStartingX(int startingX) {
+		this.startingX = startingX;
+	}
+
+	/**
+	 * Returns this component's entity's startingY position.
+	 * 
+	 * @return the startingY position of this component's entity on the game board
+	 * @since 2.0.0
+	 */
+	public int getStartingY() {
+		return startingY;
+	}
+
+	/**
+	 * Sets the new startingY position of this component's entity.
+	 * 
+	 * @param x the new startingY position of this component's entity
+	 * @since 2.0.0
+	 */
+	public void setStartingY(int startingY) {
+		this.startingY = startingY;
+	}
+
 	@Override
 	public void execute() { return; }
 
 	@Override
-	public void init() {
+	public void init() { 
+		this.setStartingX(this.entity.startingX);
+		this.setStartingY(this.entity.startingY);
+		this.setX(this.entity.x);
+		this.setY(this.entity.y);
+	}
 
+	@Override
+	public String toString() {
+		return "TransformComponent [x=" + x + ", y=" + y + "]";
 	}
 }
