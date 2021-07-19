@@ -175,30 +175,22 @@ public class MovementComponent extends Component {
 		int tempX = tc.getX();
 		int tempY = tc.getY();
 		
+		// movement code
 		tempX += this.velX;
 		tempY += this.velY;
-		
-		// movement code
-		this.entity.x += this.velX;
-		this.entity.y += this.velY;
-		
+
 		// movement constraints code
 
 		// make so the x and y coordinates don't make the entity go out of the window
-		this.entity.x = MathUtils.clamp(this.entity.x, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
-				- this.entity.getColisionBounds().getWidth()));
-		this.entity.y = MathUtils.clamp(this.entity.y, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
-				- this.entity.getColisionBounds().getHeight()));
-		
 		tempX = MathUtils.clamp(tempX, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getWidth()
 				- this.entity.getColisionBounds().getWidth()));
 		tempY = MathUtils.clamp(tempY, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
 				- this.entity.getColisionBounds().getHeight()));
 		
-		// collision bounds relocation code
-		
 		tc.setX(tempX);
 		tc.setY(tempY);
+		
+		// collision bounds relocation code
 				
 		cc.moveBounds(tc.getX(), tc.getY());
 	}

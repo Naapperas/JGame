@@ -27,11 +27,13 @@ import jGame.logging.ProgramLogger;
  */
 public abstract class Entity {
 
+	private static int ENTIY_NUMBER = 1;
+	
 	// name of this entity
-	protected String name;
+	protected String name = "Entity_" + (ENTIY_NUMBER++);
 
 	// display properties
-	public int x, y, startingX, startingY;
+	public int x, y, startingX, startingY; //TODO: change these to private or delete them
 	protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
