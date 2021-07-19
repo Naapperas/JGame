@@ -20,6 +20,15 @@ public class CollisionComponent extends Component {
 	}
 	
 	private Runnable collider = null;
+	private boolean collisionsAllowed = true;
+	
+	/**
+	 * 
+	 * @param allow
+	 */
+	public void allowCollsions(boolean allow) {
+		this.collisionsAllowed = allow;
+	}
 	
 	/**
 	 * Sets the custom collider for this collider component.
@@ -49,6 +58,8 @@ public class CollisionComponent extends Component {
 	@Override
 	public void execute() {
 
+		if (!this.collisionsAllowed) return;
+		
 		// wall collision code
 		if (this.entity.getColisionBounds().getX() <= 0
 				|| this.entity.getColisionBounds().getX() + this.entity.getColisionBounds().getWidth() >= GameLauncher
