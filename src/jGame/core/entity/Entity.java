@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import jGame.core.entity.component.CollisionComponent;
 import jGame.core.entity.component.Component;
 import jGame.core.entity.component.MovementComponent;
+import jGame.core.entity.component.RenderComponent;
 import jGame.core.entity.component.TransformComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
@@ -33,11 +34,11 @@ public abstract class Entity {
 	protected String name = "Entity_" + (ENTIY_NUMBER++);
 
 	// display properties
-	public int x, y, startingX, startingY; //TODO: change these to private or delete them
 	protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
 	protected boolean renderSprite;
+	public boolean hasSprite(Component caller) { if (caller instanceof RenderComponent) return this.renderSprite; return false;}
 
 	// these fields are responsible for the movement of each entity, should there be
 	// any movement
@@ -47,6 +48,7 @@ public abstract class Entity {
 	protected MovementComponent mc = MovementComponent.create(this);
 	protected CollisionComponent cc = CollisionComponent.create(this);
 	protected TransformComponent tc = TransformComponent.create(this);
+	protected RenderComponent rc = RenderComponent.create(this);
 	
 	protected LinkedList<Component> components = new LinkedList<Component>();
 	
@@ -61,6 +63,7 @@ public abstract class Entity {
 		this.tc.init();
 		this.mc.init();
 		this.cc.init();
+		this.rc.init();
 		
 		components.forEach(Component::init);
 	}
@@ -77,12 +80,14 @@ public abstract class Entity {
 	 * @since 1.0.0
 	 */
 	public Entity(int startingX, int startingY, int width, int height) {
-		this.x = this.startingX = startingX;
-		this.y = this.startingY = startingY;
+		this.tc.setX(startingX);
+		this.tc.setStartingX(startingX);
+		this.tc.setY(startingY);
+		this.tc.setStartingY(startingY);
 		this.width = width;
 		this.height = height;
 		colisionBounds = new Rectangle(width, height);
-		colisionBounds.setLocation(x, y);
+		colisionBounds.setLocation(this.tc.getX(), this.tc.getY());
 		this.initComponents();
 	}
 
@@ -96,11 +101,13 @@ public abstract class Entity {
 	 * @since 1.0.0
 	 */
 	public Entity(int startingX, int startingY, Sprite texture) {
-		this.x = this.startingX = startingX;
-		this.y = this.startingY = startingY;
+		this.tc.setX(startingX);
+		this.tc.setStartingX(startingX);
+		this.tc.setY(startingY);
+		this.tc.setStartingY(startingY);
 		this.texture = texture;
 		this.colisionBounds = texture.getBounds();
-		colisionBounds.setLocation(x, y);
+		colisionBounds.setLocation(this.tc.getX(), this.tc.getY());
 		this.initComponents();
 	}
 
@@ -150,7 +157,7 @@ public abstract class Entity {
 		this(startingX, startingY, width, height);
 		this.name = name;
 		colisionBounds = new Rectangle(width, height);
-		colisionBounds.setLocation(x, y);
+		colisionBounds.setLocation(this.tc.getX(), this.tc.getY());
 	}
 
 	/**
@@ -167,7 +174,7 @@ public abstract class Entity {
 		this(startingX, startingY, texture);
 		this.name = name;
 		this.colisionBounds = texture.getBounds();
-		colisionBounds.setLocation(x, y);
+		colisionBounds.setLocation(this.tc.getX(), this.tc.getY());
 	}
 
 	/**
@@ -209,7 +216,9 @@ public abstract class Entity {
 	 * @see Graphics
 	 * @since 1.0.0
 	 */
-	public abstract void render(Graphics2D g);
+	public void render(Graphics2D g) {
+		this.rc.render(g);
+	};
 	
 	/**
 	 * Updates the entity and readies it for rendering. Also, all
@@ -230,6 +239,7 @@ public abstract class Entity {
 		// execute all other components
 		if(this.components != null)
 			this.components.forEach(Component::execute);
+		
 	};
 
 	/**
@@ -283,6 +293,8 @@ public abstract class Entity {
 			return this.cc;
 		else if (componentClass == TransformComponent.class)
 			return this.tc;
+		else if (componentClass == RenderComponent.class)
+			return this.rc;
 		else
 			for(Component c : components)
 				if(componentClass == c.getClass())
@@ -381,6 +393,6 @@ public abstract class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [name=" + name + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
+		return "Entity [name=" + name + ", x=" + this.tc.getX() + ", y=" +this.tc.getY() + ", width=" + width + ", height=" + height + "]";
 	}	
 }

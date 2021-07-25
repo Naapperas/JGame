@@ -5,6 +5,7 @@ import java.awt.Point;
 import jGame.core.entity.Entity;
 import jGame.core.entity.EntityManager;
 import jGame.core.entity.event.CollisionEvent;
+import jGame.core.entity.event.CollisionListener;
 import jGame.core.launcher.GameLauncher;
 
 /**

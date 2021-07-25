@@ -105,16 +105,40 @@ public class TransformComponent extends Component {
 	public void setStartingY(int startingY) {
 		this.startingY = startingY;
 	}
+	
+	/**
+	 * 
+	 */
+	public void resetX() {
+		this.x = this.startingX;
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetY() {
+		this.y = this.startingY;
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetPosition() {
+		this.resetX();
+		this.resetY();
+	}
 
 	@Override
 	public void execute() { return; }
 
 	@Override
 	public void init() { 
-		this.setStartingX(this.entity.startingX);
-		this.setStartingY(this.entity.startingY);
-		this.setX(this.entity.x);
-		this.setY(this.entity.y);
+		/*
+		 * This method used to initialize all the variables using the entities own variables, 
+		 * but since that contradicts the very purpose of this component, 
+		 * variable initialization is going to be done with setters
+		 */
+		return;
 	}
 
 	@Override

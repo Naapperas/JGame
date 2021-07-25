@@ -187,7 +187,6 @@ public final class EntityImpl extends Entity {
 
 	@Override
 	public void restart() {
-		x = startingX;
-		y = startingY;
+		this.tc.resetPosition();
 	}
 }

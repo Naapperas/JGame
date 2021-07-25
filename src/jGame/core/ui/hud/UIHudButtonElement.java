@@ -32,6 +32,7 @@ public class UIHudButtonElement extends UIHudElement {
 	 * @author Nuno Pereira
 	 * @since 2.0.0
 	 */
+	@FunctionalInterface
 	public static interface ButtonAction {
 				
 		/**
