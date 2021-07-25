@@ -34,7 +34,7 @@ public abstract class Entity {
 	protected String name = "Entity_" + (ENTIY_NUMBER++);
 
 	// display properties
-	protected int width, height;
+	//protected int width, height;
 	protected Sprite texture;
 	protected Rectangle colisionBounds;
 	protected boolean renderSprite;
@@ -84,8 +84,8 @@ public abstract class Entity {
 		this.tc.setStartingX(startingX);
 		this.tc.setY(startingY);
 		this.tc.setStartingY(startingY);
-		this.width = width;
-		this.height = height;
+		this.tc.setWidth(width);
+		this.tc.setHeight(height);
 		colisionBounds = new Rectangle(width, height);
 		colisionBounds.setLocation(this.tc.getX(), this.tc.getY());
 		this.initComponents();
@@ -393,6 +393,6 @@ public abstract class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [name=" + name + ", x=" + this.tc.getX() + ", y=" +this.tc.getY() + ", width=" + width + ", height=" + height + "]";
+		return "Entity [name=" + name + ", x=" + this.tc.getX() + ", y=" +this.tc.getY() + ", width=" + this.tc.getWidth() + ", height=" + this.tc.getHeight() + "]";
 	}	
 }

@@ -11,7 +11,7 @@ import jGame.core.entity.Entity;
  */
 public class TransformComponent extends Component {
 
-	private int x, y, startingX, startingY;
+	private int x, y, startingX, startingY, width, height;
 	
 	/**
 	 * Creates a movement component attached to this entity.
@@ -97,6 +97,46 @@ public class TransformComponent extends Component {
 	}
 
 	/**
+	 * Returns the width of this component's entity.
+	 * 
+	 * @return the width
+	 * @since 2.0.0
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Sets the new width of this component's entity
+	 * 
+	 * @param width the width to set
+	 * @since 2.0.0
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * Returns the height of this component's entity.
+	 * 
+	 * @return the height
+	 * @since 2.0.0
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * Sets the new height of this component's entity
+	 * 
+	 * @param height the height to set
+	 * @since 2.0.0
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
 	 * Sets the new startingY position of this component's entity.
 	 * 
 	 * @param x the new startingY position of this component's entity
@@ -107,21 +147,33 @@ public class TransformComponent extends Component {
 	}
 	
 	/**
+	 * Sets this component's entity's x position to the initial value.
 	 * 
+	 * @since 2.0.0
 	 */
 	public void resetX() {
 		this.x = this.startingX;
 	}
 	
 	/**
+	 * Sets this component's entity's y position to the initial value.
 	 * 
+	 * @since 2.0.0
 	 */
 	public void resetY() {
 		this.y = this.startingY;
 	}
 	
 	/**
+	 * Sets this component's entity's x and y positions to their initial value.
+	 * <br />
+	 * This method is implemented as:
+	 * <pre>
+	 * 	this.{@link #resetX()};
+	 * 	this.{@link #resetY()};
+	 * </pre>
 	 * 
+	 * @since 2.0.0
 	 */
 	public void resetPosition() {
 		this.resetX();
@@ -133,8 +185,7 @@ public class TransformComponent extends Component {
 
 	@Override
 	public void init() { 
-		/*
-		 * This method used to initialize all the variables using the entities own variables, 
+		/* This method used to initialize all the variables using the entities own variables, 
 		 * but since that contradicts the very purpose of this component, 
 		 * variable initialization is going to be done with setters
 		 */
