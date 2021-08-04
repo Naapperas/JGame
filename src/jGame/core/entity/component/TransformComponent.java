@@ -166,7 +166,7 @@ public class TransformComponent extends Component {
 	
 	/**
 	 * Sets this component's entity's x and y positions to their initial value.
-	 * <br />
+	 * <br /><br />
 	 * This method is implemented as:
 	 * <pre>
 	 * 	this.{@link #resetX()};

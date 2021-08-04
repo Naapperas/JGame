@@ -414,8 +414,111 @@ public final class MathUtils {
 		 * @since 2.0.0
 		 */
 		public static final ReduceLambda SUBTRACTION_INT = (x, y) -> { return x.intValue() - y.intValue(); };
+		
+		/**
+		 * Division of 2 integer values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda DIVISION_INT = (x, y) -> {
+			if (y.intValue() == 0) throw new ArithmeticException("Can't divide by zero!");
+			return x.intValue() / y.intValue();
+		};
+		
+		/**
+		 * Sum between 2 long values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUM_LONG = (x, y) -> { return x.longValue() + y.longValue(); };
 
-		// division not implemented due to the 'error-prone' nature of the operation
+		/**
+		 * Product of 2 long values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda PRODUCT_LONG = (x, y) -> { return x.longValue() * y.longValue(); };
+
+		/**
+		 * Difference of 2 long values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUBTRACTION_LONG = (x, y) -> { return x.longValue() - y.longValue(); };
+		
+		/**
+		 * Division of 2 long values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda DIVISION_LONG = (x, y) -> {
+			if (y.longValue() == 0) throw new ArithmeticException("Can't divide by zero!");
+			return x.longValue() / y.longValue();
+		};
+
+		/**
+		 * Sum between 2 single precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUM_FLOAT = (x, y) -> { return x.floatValue() + y.floatValue(); };
+
+		/**
+		 * Product of 2 single precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda PRODUCT_FLOAT = (x, y) -> { return x.floatValue() * y.floatValue(); };
+
+		/**
+		 * Difference of 2 single precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUBTRACTION_FLOAT = (x, y) -> { return x.floatValue() - y.floatValue(); };
+		
+		/**
+		 * Division of 2 single precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda DIVISION_FLOAT = (x, y) -> {
+			if (y.floatValue() == 0) throw new ArithmeticException("Can't divide by zero!");
+			return x.floatValue() / y.floatValue();
+		};
+		
+		/**
+		 * Sum between 2 double precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUM_DOUBLE = (x, y) -> { return x.doubleValue() + y.doubleValue(); };
+
+		/**
+		 * Product of 2 double precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda PRODUCT_DOUBLE = (x, y) -> { return x.doubleValue() * y.doubleValue(); };
+
+		/**
+		 * Difference of 2 double precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda SUBTRACTION_DOUBLE = (x, y) -> { return x.doubleValue() - y.doubleValue(); };
+		
+		/**
+		 * Division of 2 double precision floating point values.
+		 * 
+		 * @since 2.0.0
+		 */
+		public static final ReduceLambda DIVISION_DOUBLE = (x, y) -> {
+			if (y.doubleValue() == 0) throw new ArithmeticException("Can't divide by zero!");
+			return x.doubleValue() / y.doubleValue();
+		};
+		
+
 
 		// TODO: implement more operations for more data types
 
@@ -425,9 +528,10 @@ public final class MathUtils {
 		 * @param x the first number
 		 * @param y the second number
 		 * @return the output of the implemented operation
+		 * @throws ArithmeticException if a division by zero occurs
 		 * @since 2.0.0
 		 */
-		public Number accept(Number x, Number y);
+		public Number accept(Number x, Number y) throws ArithmeticException;
 	}
 
 	/**

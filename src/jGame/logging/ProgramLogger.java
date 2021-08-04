@@ -28,7 +28,7 @@ public class ProgramLogger {
 	// The <code>Logger</code> object that logs all events.
 	private static final Logger LOGGER = Logger.getLogger(ProgramLogger.class.getName());
 	
-	private static final String LOG_FOLDER = "C:\\Users\\nunoa\\OneDrive\\Desktop\\";
+	private static final String LOG_FOLDER = "C:\\Users\\nunoa\\OneDrive\\Desktop\\"; //FIXME: move this to properties file
 
 	/**
 	 * <code>Handler</code> object that writes logs requested by the {@link #LOGGER}
@@ -60,13 +60,13 @@ public class ProgramLogger {
 		  
 		  try { 
 			  fileHandler = new FileHandler(f.getAbsolutePath(), true); 
+
+			  // this has to be inside the try catch in order to not raise possible NPEs
+			  fileHandler.setFormatter(new LogFormatter());
+			  LOGGER.addHandler(fileHandler);
 		  } catch (SecurityException | IOException e) {
 			  e.printStackTrace(); 
 		  }
-		  
-		fileHandler.setFormatter(new LogFormatter());
-		LOGGER.addHandler(fileHandler);
-		 
 
 		LOGGER.setUseParentHandlers(false);
 
@@ -162,7 +162,7 @@ public class ProgramLogger {
 		
 		StringBuilder sb = new StringBuilder();
 		for (T t : collection)
-			sb.append(t);
+			sb.append(t.toString());
 
 		writeLog(sb.toString());
 	}
@@ -205,7 +205,7 @@ public class ProgramLogger {
 		
 		StringBuilder sb = new StringBuilder();
 		for (T t : collection)
-			sb.append(t);
+			sb.append(t.toString());
 
 		writeLog(sb.toString());
 

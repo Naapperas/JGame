@@ -99,6 +99,6 @@ public class FontManager {
 	 * @see Font
 	 */
 	public static Font getDefaultFont() {
-		return fonts.get("default");
+		return getFont("default");
 	}
 }

@@ -11,6 +11,7 @@ import jGame.core.entity.component.CollisionComponent;
 import jGame.core.entity.component.Component;
 import jGame.core.entity.component.MovementComponent;
 import jGame.core.entity.component.RenderComponent;
+import jGame.core.entity.component.ScriptComponent;
 import jGame.core.entity.component.TransformComponent;
 import jGame.core.entity.event.CollisionListener;
 import jGame.core.entity.render.Sprite;
@@ -311,11 +312,15 @@ public abstract class Entity {
 	public void registerComponent(Component c) {
 		Class<? extends Component> clazz = c.getClass();
 		
-		if (clazz == TransformComponent.class || clazz == MovementComponent.class || clazz == CollisionComponent.class) return;
+		if (clazz == TransformComponent.class || 
+			clazz == MovementComponent.class || 
+			clazz == CollisionComponent.class || 
+			clazz == RenderComponent.class) return;
 		
-		for (Component component : components) 
-			if(clazz == component.getClass())
-				return;	
+		if (clazz != ScriptComponent.class)
+			for (Component component : components) 
+				if(clazz == component.getClass())
+					return;	
 		ProgramLogger.writeLog("Registering component " + c.toString() + "!");
 		c.init();
 		components.add(c);
