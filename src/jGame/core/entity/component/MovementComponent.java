@@ -20,13 +20,14 @@ import jGame.logging.ProgramLogger;
 public class MovementComponent extends Component {
 
 	/**
-	 * An action to be performed when a specified keybinding is pressed. Acts as the "executor" to keys other than the default ones.
+	 * An action to be performed when a specified keybinding is pressed. Acts as the
+	 * "executor" to keys other than the default ones.
 	 * 
 	 * @author Nuno Pereira
 	 * @since 2.0.0
 	 */
-	public interface MovementAction{
-		
+	public interface MovementAction {
+
 		/**
 		 * Executes the given action.
 		 * 
@@ -35,8 +36,12 @@ public class MovementComponent extends Component {
 		 */
 		public void execute();
 	}
-	
-	private boolean userControlled = Boolean.parseBoolean(PropertiesManager.getPropertyOrDefault("movement.defaultUserControlled", "true")); // set default for true;
+
+	private boolean userControlled = Boolean
+			.parseBoolean(PropertiesManager.getPropertyOrDefault("movement.defaultUserControlled", "true")); // set
+																												// default
+																												// for
+																												// true;
 
 	/**
 	 * Sets if the entity should be user controlled.
@@ -48,23 +53,27 @@ public class MovementComponent extends Component {
 		this.userControlled = userControlled;
 	}
 
-	// move these fields from the entity itself into here because they are movement related
+	// move these fields from the entity itself into here because they are movement
+	// related
 	private int speed, velX, velY;
 	private boolean moveLeft, moveRight, moveUp, moveDown;
+	private boolean horizontalMovementEnabled = true, verticalMovementEnabled = true;
 	private int moveHorizontal, moveVertical;
 
 	// the movement parts of the movement component
-	private int[] movementKeys = {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}; //default for every entity, to be changed later
+	private int[] movementKeys = { KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D }; // default for every
+																									// entity, to be
+																									// changed later
 	public static final int MOVE_UP = 0, MOVE_DOWN = 1, MOVE_LEFT = 2, MOVE_RIGHT = 3;
-	
+
 	private Map<String, Boolean> bindingMap = new HashMap<String, Boolean>();
 	private Map<String, MovementAction> actionBindingMap = new HashMap<String, MovementAction>();
 	private Map<String, MovementAction> offActionBindingMap = new HashMap<String, MovementAction>();
-	
+
 	private MovementComponent() {
 		// make uninstantiable
 	}
-	
+
 	/**
 	 * Creates a movement component attached to this entity.
 	 * 
@@ -77,7 +86,7 @@ public class MovementComponent extends Component {
 		mc.entity = entity;
 		return mc;
 	}
-	
+
 	/**
 	 * Changes the speed of the entity this component is attached to.
 	 * 
@@ -86,21 +95,22 @@ public class MovementComponent extends Component {
 	 * @since 2.0.0
 	 */
 	public void changeSpeed(int newSpeed) throws IllegalArgumentException {
-		
-		if (newSpeed <= 0) throw new IllegalArgumentException("Speed must only be a positive integer");
-		
+
+		if (newSpeed <= 0)
+			throw new IllegalArgumentException("Speed must only be a positive integer");
+
 		this.speed = newSpeed;
 	}
-	
+
 	public void setInputListener() {
-		
+
 		this.entity.inputListener = new KeyAdapter() {
 
 			/*
 			 * Set boolean variable instead of directly changing velX and velY so movement
 			 * is smoother, as it happens in the tick method.
 			 */
-		
+
 			MovementComponent mc = MovementComponent.this;
 
 			@Override
@@ -108,13 +118,13 @@ public class MovementComponent extends Component {
 
 				int eventKeyCode = e.getKeyCode();
 
-				if(eventKeyCode == mc.movementKeys[MOVE_UP]) {
+				if (eventKeyCode == mc.movementKeys[MOVE_UP]) {
 					mc.moveUp = true;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
 					mc.moveDown = true;
-				} else if (eventKeyCode ==  mc.movementKeys[MOVE_LEFT]) {
+				} else if (eventKeyCode == mc.movementKeys[MOVE_LEFT]) {
 					mc.moveLeft = true;
-				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
+				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) {
 					mc.moveRight = true;
 				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
 					mc.bindingMap.put("" + eventKeyCode, true);
@@ -129,11 +139,11 @@ public class MovementComponent extends Component {
 				if (eventKeyCode == mc.movementKeys[MOVE_UP]) {
 					mc.moveUp = false;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_DOWN]) {
-					mc.moveDown = false; 
+					mc.moveDown = false;
 				} else if (eventKeyCode == mc.movementKeys[MOVE_LEFT]) {
 					mc.moveLeft = false;
-				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) { 
-					mc.moveRight = false; 
+				} else if (eventKeyCode == mc.movementKeys[MOVE_RIGHT]) {
+					mc.moveRight = false;
 				} else if (mc.bindingMap.containsKey("" + eventKeyCode)) {
 					mc.bindingMap.put("" + eventKeyCode, false);
 					mc.offActionBindingMap.get("" + eventKeyCode).execute();
@@ -141,40 +151,42 @@ public class MovementComponent extends Component {
 			}
 		};
 	}
-	
+
 	@Override
 	public void execute() {
-		
+
 		CollisionComponent cc = (CollisionComponent) this.entity.getComponent(CollisionComponent.class);
 		TransformComponent tc = (TransformComponent) this.entity.getComponent(TransformComponent.class);
-		
+
 		if (userControlled) {
 			for (String key : this.actionBindingMap.keySet())
 				if (this.bindingMap.containsKey(key) && this.bindingMap.get(key))
 					this.actionBindingMap.get(key).execute();
-			
+
 			// movement direction code
-			if (this.moveUp && !this.moveDown)
-				this.moveVertical = -1;
-			else if (this.moveDown && !this.moveUp)
-				this.moveVertical = 1;
-			else if (!this.moveUp && !this.moveDown)
-				this.moveVertical = 0;
-	
-			if (this.moveRight && !this.moveLeft)
-				this.moveHorizontal = 1;
-			else if (this.moveLeft && !this.moveRight)
-				this.moveHorizontal = -1;
-			else if (!this.moveRight && !this.moveLeft)
-				this.moveHorizontal = 0;
+			if (this.verticalMovementEnabled)
+				if (this.moveUp && !this.moveDown)
+					this.moveVertical = -1;
+				else if (this.moveDown && !this.moveUp)
+					this.moveVertical = 1;
+				else if (!this.moveUp && !this.moveDown)
+					this.moveVertical = 0;
+
+			if (this.horizontalMovementEnabled)
+				if (this.moveRight && !this.moveLeft)
+					this.moveHorizontal = 1;
+				else if (this.moveLeft && !this.moveRight)
+					this.moveHorizontal = -1;
+				else if (!this.moveRight && !this.moveLeft)
+					this.moveHorizontal = 0;
 		}
-		
+
 		this.velX = this.moveHorizontal * this.speed;
 		this.velY = this.moveVertical * this.speed;
-		
+
 		int tempX = tc.getX();
 		int tempY = tc.getY();
-		
+
 		// movement code
 		tempX += this.velX;
 		tempY += this.velY;
@@ -186,45 +198,49 @@ public class MovementComponent extends Component {
 				- this.entity.getColisionBounds().getWidth()));
 		tempY = MathUtils.clamp(tempY, 0, (int) (GameLauncher.getMainWindow().getWindowCanvas().getBounds().getHeight()
 				- this.entity.getColisionBounds().getHeight()));
-		
+
 		tc.setX(tempX);
 		tc.setY(tempY);
-		
+
 		// collision bounds relocation code
-				
+
 		cc.moveBounds(tc.getX(), tc.getY());
 	}
 
 	/**
 	 * Assigns a new key binding to the specified control.
 	 * 
-	 * @param newKey the new key binded to the control
+	 * @param newKey     the new key binded to the control
 	 * @param keyControl the control of the specified key
 	 * @throws IllegalArgumentException if the specified keyControl isn't in range
 	 * @since 2.0.0
 	 * @see KeyEvent
 	 */
 	public void setMovementKeyControl(int newKey, int keyControl) throws IllegalArgumentException {
-		if (keyControl >= this.movementKeys.length) throw new IllegalArgumentException("keyControl must be one of the pre-defined controls");
-		
+		if (keyControl >= this.movementKeys.length)
+			throw new IllegalArgumentException("keyControl must be one of the pre-defined controls");
+
 		this.movementKeys[keyControl] = newKey;
 	}
-	
+
 	/**
-	 * Sets a key binding for a specific action. An 'offAction' parameter must be also passed in to be activated when the key stops being pressed.
+	 * Sets a key binding for a specific action. An 'offAction' parameter must be
+	 * also passed in to be activated when the key stops being pressed.
 	 * 
 	 * @param keyBinding the keyCode of the key that triggers this action
-	 * @param onAction the action to perform when the key is pressed
-	 * @param offAction the action to perform when the key is no longer pressed
-	 * @throws IllegalArgumentException if we try to bind an action to a movement key
+	 * @param onAction   the action to perform when the key is pressed
+	 * @param offAction  the action to perform when the key is no longer pressed
+	 * @throws IllegalArgumentException if we try to bind an action to a movement
+	 *                                  key
 	 * @since 2.0.0
 	 */
-	public void setKeyBinding(int keyBinding, MovementAction onAction, MovementAction offAction) throws IllegalArgumentException {
-		
+	public void setKeyBinding(int keyBinding, MovementAction onAction, MovementAction offAction)
+			throws IllegalArgumentException {
+
 		for (int i : movementKeys)
-			if(i == keyBinding)
+			if (i == keyBinding)
 				throw new IllegalArgumentException("Cannot bind an action to a movement binding.");
-		
+
 		this.bindingMap.put("" + keyBinding, false);
 		this.actionBindingMap.put("" + keyBinding, onAction);
 		this.offActionBindingMap.put("" + keyBinding, offAction);
@@ -237,17 +253,20 @@ public class MovementComponent extends Component {
 	 * @since 2.0.0
 	 */
 	public void setHorizontalMovement(int i) throws IllegalArgumentException {
-		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
+		if (i != 0 && i != 1 && i != -1)
+			throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
 		this.moveHorizontal = i;
 	}
-	
+
 	/**
 	 * Reverses this components horizontal velocity.
 	 * 
 	 * @since 2.0.0
 	 */
-	public void bounceHorizontal () { this.moveHorizontal *= -1; }
-	
+	public void bounceHorizontal() {
+		this.moveHorizontal *= -1;
+	}
+
 	/**
 	 * Sets the value for this component's moveVertical.
 	 * 
@@ -255,17 +274,38 @@ public class MovementComponent extends Component {
 	 * @since 2.0.0
 	 */
 	public void setVerticalMovement(int i) {
-		if(i != 0 && i != 1 && i != -1) throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
+		if (i != 0 && i != 1 && i != -1)
+			throw new IllegalArgumentException("Argument must be -1, 0 or 1, got " + i);
 		this.moveVertical = i;
 	}
-	
+
 	/**
 	 * Reverses this components vertical velocity.
 	 * 
 	 * @since 2.0.0
 	 */
-	public void bounceVertical () { this.moveVertical *= -1; }
-	
+	public void bounceVertical() {
+		this.moveVertical *= -1;
+	}
+
+	/**
+	 * Toggles horizontal movement on or off.
+	 * 
+	 * @since 2.0.0
+	 */
+	public void toggleHorizontalMovement() {
+		this.horizontalMovementEnabled = !this.horizontalMovementEnabled;
+	}
+
+	/**
+	 * Toggles vertical movement on or off.
+	 * 
+	 * @since 2.0.0
+	 */
+	public void toggleVerticalMovement() {
+		this.verticalMovementEnabled = !this.verticalMovementEnabled;
+	}
+
 	@Override
 	public void init() {
 		try {

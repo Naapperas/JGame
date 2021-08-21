@@ -274,12 +274,14 @@ public class UIHudInputBoxElement extends UIHudElement {
 
 	@Override
 	public void registerInputListener() {
+		super.registerInputListener();
 		GameLauncher.getMainWindow().addInputListener(keyInputListener, this);
 		GameLauncher.getMainWindow().addMouseInputListener(mouseListener, this);
 	}
 
 	@Override
 	public void removeInputListener() {
+		super.removeInputListener();
 		GameLauncher.getMainWindow().removeInputListener(keyInputListener, this);
 		GameLauncher.getMainWindow().removeMouseInputListener(mouseListener, this);
 	}

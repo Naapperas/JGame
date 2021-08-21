@@ -2,7 +2,12 @@ package jGame.core.ui.hud;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
+
+import jGame.core.launcher.GameLauncher;
 
 /**
  * This class represents a base element to be rendered in the HUD.
@@ -16,9 +21,25 @@ public abstract class UIHudElement {
 	protected int x, y, width, height;
 	protected int zIndex;
 	protected Constraints drawConstraints;
-	
+
 	// support for nested elements
 	protected UIHudElement parentElement = null;
+
+	// add tooltip on hover
+	// since 2.0.0
+	protected UIHudTooltipElement tooltip = null;
+	protected boolean showTooltip = true;
+	private MouseAdapter mouseHoverListener = new MouseAdapter() {
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+	};
 
 	protected UIHudElement() {
 	}
@@ -66,7 +87,9 @@ public abstract class UIHudElement {
 	 * 
 	 * @since 1.0.0
 	 */
-	public abstract void registerInputListener();
+	public void registerInputListener() {
+		GameLauncher.getMainWindow().addMouseInputListener(this.mouseHoverListener, this);
+	}
 
 	/**
 	 * 
@@ -74,7 +97,9 @@ public abstract class UIHudElement {
 	 * 
 	 * @since 1.0.0
 	 */
-	public abstract void removeInputListener();
+	public void removeInputListener() {
+		GameLauncher.getMainWindow().removeMouseInputListener(this.mouseHoverListener, this);
+	};
 
 	/**
 	 * Sets the parent element of this element.
@@ -105,7 +130,7 @@ public abstract class UIHudElement {
 	public void setDrawConstraints(Constraints drawConstraints) {
 		this.drawConstraints = drawConstraints;
 	}
-	
+
 	/**
 	 * 
 	 * @param indent
@@ -120,8 +145,7 @@ public abstract class UIHudElement {
 	public String toString() {
 
 		return this.getClass().getSimpleName() + " [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height
-				+ ", drawConstraints="
-				+ drawConstraints.toString() + ", zIndex=" + zIndex + "]";
+				+ ", drawConstraints=" + drawConstraints.toString() + ", zIndex=" + zIndex + "]";
 	}
 
 }

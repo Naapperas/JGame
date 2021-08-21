@@ -317,11 +317,13 @@ public class UIHudSliderElement extends UIHudElement {
 
 	@Override
 	public void registerInputListener() {
+		super.registerInputListener();
 		GameLauncher.getMainWindow().addMouseInputListener(inputListener, this);
 	}
 
 	@Override
 	public void removeInputListener() {
+		super.removeInputListener();
 		GameLauncher.getMainWindow().removeMouseInputListener(inputListener, this);
 	}
 

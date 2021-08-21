@@ -534,12 +534,14 @@ public class UIHudDropdownElement extends UIHudElement {
 
 	@Override
 	public void registerInputListener() {
+		super.registerInputListener();
 		GameLauncher.getMainWindow().addMouseInputListener(mouseInput, this);
 		GameLauncher.getMainWindow().getWindowCanvas().addMouseWheelListener(mouseInput);
 	}
 
 	@Override
 	public void removeInputListener() {
+		super.removeInputListener();
 		GameLauncher.getMainWindow().removeMouseInputListener(mouseInput, this);
 		GameLauncher.getMainWindow().getWindowCanvas().removeMouseWheelListener(mouseInput);
 	}
