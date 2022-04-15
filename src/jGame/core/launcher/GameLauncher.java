@@ -118,17 +118,21 @@ public class GameLauncher {
 						return;
 					
 					element.removeInputListener();
+					element.setDisabled(true);
 				});
 				pauseMenu.registerInputListener();
+				pauseMenu.setDisabled(false);
 				UIHud.addHUDUIElement(pauseMenu);
 			} else {
 				pauseMenu.removeInputListener();
+				pauseMenu.setDisabled(true);
 				UIHud.removeHUDUIElement(pauseMenu);
 				UIHud.getHud().forEach((element) -> {
 					if (element == pauseMenuButton) 
 						return;
 					
 					element.registerInputListener();
+					element.setDisabled(false);
 				});
 			}
 			
@@ -150,7 +154,7 @@ public class GameLauncher {
 
 		@Override
 		protected void processClick(MouseEvent e) {
-			pauseAction.actionPerformed(null); // we already defined the behaviour for this previously, so no need to
+			pauseAction.actionPerformed(null); // we already defined the behavior for this previously, so no need to
 												// repeat.
 		}
 

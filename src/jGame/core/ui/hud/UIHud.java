@@ -73,21 +73,13 @@ public class UIHud {
 
 			@Override
 			public int compare(UIHudElement o1, UIHudElement o2) {
-				if (order) {
-					if (o1.zIndex > o2.zIndex)
-						return 1;
-					else if (o1.zIndex < o2.zIndex)
-						return -1;
-					else
-						return 0;
-				} else {
-					if (o1.zIndex > o2.zIndex)
-						return -1;
-					else if (o1.zIndex < o2.zIndex)
-						return 1;
-					else
-						return 0;
-				}
+				if (o1.zIndex > o2.zIndex)
+					return order ? 1 : -1;
+				else if (o1.zIndex < o2.zIndex)
+					return order ? -1 : 1;
+				else
+					return 0;
+			
 			}
 		});
 	}
@@ -99,8 +91,8 @@ public class UIHud {
 	 * @since 1.0.0
 	 */
 	public synchronized static void removeHUDUIElement(UIHudElement hudElement) {
-		ProgramLogger.writeLog("Removing " + hudElement);
-		HUD.remove(hudElement);
+		if (HUD.remove(hudElement))
+			ProgramLogger.writeLog("Removed " + hudElement);
 	}
 
 	/**
