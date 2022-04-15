@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class UIHudTooltipElement extends UIHudElement {
+public class UIHudTooltipElement extends UIHudTextElement {
 	
 	private String tooltipText;
 	
